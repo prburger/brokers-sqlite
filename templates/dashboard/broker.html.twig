@@ -1,0 +1,37 @@
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{asset('/build/app.css')}}">
+        {% endblock %}
+{% block body %}
+
+   <h4>{{'dashboard.title.brokers'|trans|raw}}</h4>
+
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>DateAdded</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for broker in brokers %}
+            <tr>
+                <td>{{ broker.name }}</td>
+                <td>{{ broker.dateAdded ? broker.dateAdded|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('broker_show', {'id': broker.id}) }}" title="View"><i class="far fa-eye" aria-hidden="true"></i></a>
+                    <a href="{{ path('broker_edit', {'id': broker.id}) }}" title="Edit"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
+
+    <a class="btn btn-primary" role="button" href="{{ path('broker_index') }}">Details</a>
+   
+{% endblock %}

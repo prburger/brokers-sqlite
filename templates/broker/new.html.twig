@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Broker{% endblock %}
+
+{% block body %}
+    <h1>Create new Broker</h1>
+
+    {{ include('broker/_form.html.twig') }}
+
+    <a href="{{ path('broker_index') }}">back to list</a>
+{% endblock %}

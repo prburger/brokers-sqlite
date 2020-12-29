@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Broker index{% endblock %}
+
+{% block body %}
+    <h1>Broker index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>DateAdded</th>
+                <th>DateEdited</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for broker in brokers %}
+            <tr>
+                <td>{{ broker.id }}</td>
+                <td>{{ broker.name }}</td>
+                <td>{{ broker.dateAdded ? broker.dateAdded|date('Y-m-d') : '' }}</td>
+                <td>{{ broker.dateEdited ? broker.dateEdited|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('broker_show', {'id': broker.id}) }}">show</a>
+                    <a href="{{ path('broker_edit', {'id': broker.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('broker_new') }}">Create new</a>
+{% endblock %}

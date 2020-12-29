@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Broker{% endblock %}
+
+{% block body %}
+    <h1>Edit Broker</h1>
+
+    {{ include('broker/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('broker_index') }}">back to list</a>
+
+    {{ include('broker/_delete_form.html.twig') }}
+{% endblock %}

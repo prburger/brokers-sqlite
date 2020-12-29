@@ -1,0 +1,30 @@
+{% block body %}
+   <h4>{{'dashboard.title.suppliers'|trans|raw}}</h4>
+
+    <table class="table" style="font-family:Calibri;font-size:10pt;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>DateAdded</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for supplier in suppliers %}
+            <tr><td>{{ supplier.name }}</td>
+                <td>{{ supplier.dateAdded ? supplier.dateAdded|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('supplier_show', {'id': supplier.id}) }}">show</a>
+                    <a href="{{ path('supplier_edit', {'id': supplier.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
+
+    <a class="btn btn-primary" role="button" href="{{ path('supplier_index') }}">Details</a>
+{% endblock %}

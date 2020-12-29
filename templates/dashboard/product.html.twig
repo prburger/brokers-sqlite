@@ -1,0 +1,31 @@
+{% block body %}
+   <h4>{{'dashboard.title.products'|trans|raw}}</h4>
+
+    <table class="table" style="font-family:Calibri;font-size:10pt;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>DateAdded</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.dateAdded ? product.dateAdded|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
+
+    <a class="btn btn-primary" role="button" href="{{ path('product_index') }}">Details</a>
+{% endblock %}
