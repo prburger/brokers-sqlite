@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Broker{% endblock %}
+{% block title %}{{'broker_new'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <h1>Create new Broker</h1>
-
+<div style="height:450px;">
+    <div class="page_form_heading">{{'broker_new'|trans|raw}}
+    <a class="return_to_list_label" href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}">
+    <i class="fas fa-undo page_icon"></i></a>
+    </div>
     {{ include('broker/_form.html.twig') }}
-
-    <a href="{{ path('broker_index') }}">back to list</a>
+</div>
 {% endblock %}

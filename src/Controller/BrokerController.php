@@ -79,7 +79,7 @@ class BrokerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="broker_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="broker_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Broker $broker): Response
     {

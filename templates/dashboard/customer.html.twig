@@ -1,10 +1,13 @@
-{# {% extends 'base.html.twig' %}
-{% block title %}Broker index{% endblock %} #}
-
 {% block body %}
-    <h4>{{'dashboard.title.customers'|trans|raw}}</h4>
-
-    <table class="table" style="font-family:Calibri;font-size:10pt;">
+<div class="row">
+        <div class="col">
+            <div class="dashboard_title">
+                {{'dashboard.title.customers'|trans|raw}}  
+            <a class="return_to_list_label" href="{{ path('customer_index') }}" title="Details"><i class="fas fa-file-alt page_icon"></i></a>
+            </div>
+        </div>
+    </div>
+    <table class="dashboard_table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -30,5 +33,4 @@
         </tbody>
     </table> 
 
-    <a class="btn btn-primary" role="button" href="{{ path('customer_index') }}">Details</a>
 {% endblock %}
