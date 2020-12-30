@@ -15,6 +15,10 @@ Encore
         "window.Bloodhound": require.resolve('bloodhound-js'),
         "jQuery.tagsinput": "bootstrap-tagsinput"
     })
+    .copyFiles({
+        from: './assets/images'
+    })
+
     .enableSassLoader()
     // when versioning is enabled, each filename will include a hash that changes
     // whenever the contents of that file change. This allows you to use aggressive

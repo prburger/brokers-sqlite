@@ -22,10 +22,9 @@ class PortalController extends AbstractController
 
     public function index(
         BrokerRepository $brokerRepository,
-    ProductRepository $productRepository,
-    CustomerRepository $customerRepository,
-    SupplierRepository $supplierRepository
-    ): Response
+        ProductRepository $productRepository,
+        CustomerRepository $customerRepository,
+        SupplierRepository $supplierRepository): Response
     {
         return $this->render('portal/index.html.twig', [
             'controller_name' => 'PortalController',

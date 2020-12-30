@@ -16,7 +16,7 @@
                 <th>Name</th>
                 <th>Date Added</th>
                 <th>Date Edited</th>
-                <th><i class="fab fa-bluetooth-b"></i></th>
+                <th></i></th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +25,9 @@
                 <td>{{ customer.name }}</td>
                 <td>{{ customer.dateAdded ? customer.dateAdded|date('Y-m-d') : '' }}</td>
                 <td>{{ customer.dateEdited ? customer.dateEdited|date('Y-m-d') : '' }}</td>
-                <td>
-                   <a href="{{ path('customer_new') }}" title="{{'create_new_broker'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
-        <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+                <td class="action_column">
+                  <a href="{{ path('customer_show', {'id': customer.id }) }}" title="Show"><i class="fas fa-glasses action_icon"></i></a>
+                    <a href="{{ path('customer_edit', {'id': customer.id }) }}" title="Edit"><i class="far fa-edit action_icon"></i></a>
                 </td>
             </tr>
         {% else %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Broker;
 use App\Form\BrokerType;
 use App\Repository\BrokerRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,11 +18,13 @@ class BrokerController extends AbstractController
 {
     /**
      * @Route("/", name="broker_index", methods={"GET"})
-     */
-    public function index(BrokerRepository $brokerRepository): Response
+    */
+    public function index(BrokerRepository $repository): Response
     {
-        return $this->render('broker/index.html.twig', [
-            'brokers' => $brokerRepository->findAll(),
+        $brokers = $repository->findAll();
+
+        return $this->render('broker/index.html.twig', [            
+            'brokers'=>$brokers,
         ]);
     }
 
