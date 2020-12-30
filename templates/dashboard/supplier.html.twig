@@ -10,23 +10,21 @@
     <table class="dashboard_table" >
         <thead>
             <tr>
-                <th>Name</th>
-                <th>DateAdded</th>
-                <th>Actions</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for supplier in suppliers %}
             <tr><td>{{ supplier.name }}</td>
-                <td>{{ supplier.dateAdded ? supplier.dateAdded|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('supplier_show', {'id': supplier.id}) }}">show</a>
-                    <a href="{{ path('supplier_edit', {'id': supplier.id}) }}">edit</a>
-                </td>
+                <td class="return_to_list_label">
+                        <a href="{{ path('supplier_show', {'id': supplier.id}) }}" title="View"><i class="far fa-eye dashboard_icon"></i></a>
+                        <a href="{{ path('supplieer_edit', {'id': supplier.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
+                    </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                 <td class="no_records_found" colspan="2">{{'table.no_records_found'|trans|raw}}</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -10,24 +10,22 @@
     <table class="dashboard_table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>DateAdded</th>
-                <th>actions</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for customer in customers %}
             <tr>
                 <td>{{ customer.name }}</td>
-                <td>{{ customer.dateAdded ? customer.dateAdded|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('customer_show', {'id': customer.id}) }}">show</a>
-                    <a href="{{ path('customer_edit', {'id': customer.id}) }}">edit</a>
+                <td class="return_to_list_label">
+                    <a href="{{ path('customer_show', {'id': customer.id}) }}" title="Show"><i class="far fa-eye dashboard_icon"></i></a>
+                    <a href="{{ path('customer_edit', {'id': customer.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td class="no_records_found" colspan="2">{{'table.no_records_found'|trans|raw}}</td>
             </tr>
         {% endfor %}
         </tbody>
