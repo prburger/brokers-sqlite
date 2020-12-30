@@ -1,39 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}{{'product_index'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
+    <div class="page_form_heading">
+    {{'product_index'|trans|raw}}
+        <div class="return_to_list_label">
+            <a href="{{ path('product_new') }}" title="{{'create_new_product'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
+            <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+        </div>
+    </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
-                <th>DateAdded</th>
-                <th>DateEdited</th>
-                <th>actions</th>
+                <th>Date Added</th>
+                <th>Date Edited</th>
+                <th><i class="fab fa-bluetooth-b"></i></th>
             </tr>
         </thead>
         <tbody>
         {% for product in products %}
             <tr>
-                <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.dateAdded ? product.dateAdded|date('Y-m-d') : '' }}</td>
                 <td>{{ product.dateEdited ? product.dateEdited|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                 <a href="{{ path('product_new') }}" title="{{'create_new_product'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
+                 <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td class="no_records_found" colspan="4">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('product_new') }}">Create new</a>
 {% endblock %}

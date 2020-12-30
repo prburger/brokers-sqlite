@@ -441,11 +441,11 @@
             </trans-unit>
             <trans-unit id="help.browse_app">
                 <source>help.browse_app</source>
-                <target><![CDATA[Browse the <strong>public section</strong> of the demo application.]]></target>
+                <target><![CDATA[Browse the <strong>broker section</strong> of the portal.]]></target>
             </trans-unit>
             <trans-unit id="help.browse_admin">
                 <source>help.browse_admin</source>
-                <target><![CDATA[Browse the <strong>admin backend</strong> of the demo application.]]></target>
+                <target><![CDATA[Browse the <strong>admin backend</strong> of the portal.]]></target>
             </trans-unit>
             <trans-unit id="help.login_users">
                 <source>help.login_users</source>
@@ -492,7 +492,38 @@
                 <source>info.change_password</source>
                 <target>After changing your password, you will be logged out of the application.</target>
             </trans-unit>
-
+            <trans-unit id="table.no_records_found">
+                <source>table.no_records_found</source>
+                <target>No records found</target>
+            </trans-unit>
+                 <trans-unit id="back_to_list">
+                <source>back_to_list</source>
+                <target>Back to list</target>
+            </trans-unit>
+                   <trans-unit id="back_to_portal">
+                <source>back_to_portal</source>
+                <target>Back to portal</target>
+            </trans-unit>
+            <trans-unit id="action_delete">
+                <source>action_delete</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="create_new_broker">
+                <source>create_new_broker</source>
+                <target>New broker</target>
+            </trans-unit>
+            <trans-unit id="create_new_customer">
+                <source>create_new_customer</source>
+                <target>New customer</target>
+            </trans-unit>
+            <trans-unit id="create_new_produuct">
+                <source>create_new_product</source>
+                <target>New product</target>
+            </trans-unit>
+            <trans-unit id="create_new_supplier">
+                <source>create_new_supplier</source>
+                <target>New supplier</target>
+            </trans-unit>
             <trans-unit id="rss.title">
                 <source>rss.title</source>
                 <target>NamBrokers</target>
@@ -570,8 +601,7 @@
                 <source>broker_edit</source>
                 <target>Edit Broker</target>
             </trans-unit>
-
-                        <trans-unit id="broker_index">
+            <trans-unit id="broker_index">
                 <source>broker_index</source>
                 <target>Broker Index</target>
             </trans-unit>

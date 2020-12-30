@@ -1,7 +1,13 @@
 {% block body %}
-   <h4>{{'dashboard.title.suppliers'|trans|raw}}</h4>
-
-    <table class="table" style="font-family:Calibri;font-size:10pt;">
+<div class="row">
+        <div class="col">
+            <div class="dashboard_title">
+                {{'dashboard.title.suppliers'|trans|raw}}  
+            <a class="return_to_list_label" href="{{ path('supplier_index') }}" title="Details"><i class="fas fa-file-alt page_icon"></i></a>
+            </div>
+        </div>
+    </div>
+    <table class="dashboard_table" >
         <thead>
             <tr>
                 <th>Name</th>
@@ -26,5 +32,4 @@
         </tbody>
     </table> 
 
-    <a class="btn btn-primary" role="button" href="{{ path('supplier_index') }}">Details</a>
 {% endblock %}
