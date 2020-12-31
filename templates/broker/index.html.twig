@@ -11,6 +11,7 @@
     </div>
     </div>
 
+<div class="index_table">
     <table class="table">
         <thead>
             <tr>
@@ -28,7 +29,7 @@
                 <td>{{ broker.dateEdited ? broker.dateEdited|date('Y-m-d') : '' }}</td>
                 <td class="action_column">
                     <a href="{{ path('broker_show', {'id': broker.id }) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
-                    <a href="{{ path('broker_edit', {'id': broker.id }) }}" title="{{'action_show'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
+                    <a href="{{ path('broker_edit', {'id': broker.id }) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -40,5 +41,5 @@
         {% endfor %}
         </tbody>
     </table>    
-
+</div>
 {% endblock %}

@@ -1,13 +1,13 @@
 {% block body %}
-<div class="row">
-        <div class="col">
-            <div class="dashboard_title">
-                {{'dashboard.title.customers'|trans|raw}}  
-            <a class="return_to_list_label" href="{{ path('customer_index') }}" title="Details"><i class="fas fa-file-alt page_icon"></i></a>
-            </div>
-        </div>
-    </div>
-    <table class="dashboard_table">
+
+<div class="dashboard_title">
+    {{'dashboard.title.customers'|trans|raw}}
+    <a class="return_to_list_label" href="{{ path('customer_index') }}" title="Details"><i class="fas fa-file-alt page_icon"></i></a>
+</div>  
+
+   
+   <div class="dashboard_table">
+    <table class="table">
         <thead>
             <tr>
                 <th></th>
@@ -24,12 +24,10 @@
                 </td>
             </tr>
         {% else %}
-        {% include 'no_dashboard_records_found.php' %}
-{#             <tr>
-                <td class="no_records_found" colspan="2">{{'table.no_records_found'|trans|raw}}</td>
-            </tr>
- #}        {% endfor %}
+            {%include 'no_dashboard_records_found.php' %}
+        {% endfor %}
         </tbody>
     </table> 
+</div>
 
 {% endblock %}
