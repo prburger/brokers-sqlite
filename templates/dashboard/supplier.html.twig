@@ -7,7 +7,7 @@
             </div>
         </div>
     </div>
-    <table class="dashboard_table" >
+    <table class="dashboard_table">
         <thead>
             <tr>
                 <th></th>
@@ -19,7 +19,7 @@
             <tr><td>{{ supplier.name }}</td>
                 <td class="return_to_list_label">
                         <a href="{{ path('supplier_show', {'id': supplier.id}) }}" title="View"><i class="far fa-eye dashboard_icon"></i></a>
-                        <a href="{{ path('supplieer_edit', {'id': supplier.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
+                        <a href="{{ path('supplier_edit', {'id': supplier.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
                     </td>
             </tr>
         {% else %}
