@@ -71,7 +71,6 @@ padding:0;
 .copyright{
   font-size:14px;
   font-weight: bold;
-  font-style: italic;
   color:black;  
 }
 
@@ -208,6 +207,9 @@ padding:0;
   text-align: left;
 }
 
+.mail_link{
+  color:black;
+}
 
 .table{
   width:100%;
@@ -304,6 +306,7 @@ header .locales a small {
   text-align: center;
   text-transform: uppercase;
 }
+
 header .locales .active small,
 header .locales a:hover small {
   color: inherit;
@@ -328,7 +331,6 @@ header .locales a:hover small {
   max-height: 525px;
   margin:0 auto;
   padding:0;
-
 }
 
 .body-container #main h1, .body-container #main h2 {
@@ -610,4 +612,9 @@ body#blog_search article.post {
 body#blog_search .post-metadata {
   font-size: 16px;
   margin-bottom: 8px;
+}
+
+a {
+  color:black;
+  text-decoration: none;
 }

@@ -12,7 +12,13 @@
 {% block body %}
     <div class="page-header">
         <h1>{{ 'title.homepage'|trans|raw }}</h1>
-            <p class="copyright">&copy; {{ 'now'|date('Y') }} {{'footer.author'|trans|raw}}</p>  
+            <p class="copyright">
+                    <i class="far fa-copyright"></i> 
+                    {{ 'now'|date('Y') }}
+                <a class="mail_ink" href="mailto:pburger@hotmail.com">
+                    {{'footer.author'|trans|raw}}
+                </a>
+            </p>  
     </div>
 
     <div class="row">
