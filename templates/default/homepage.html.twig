@@ -21,13 +21,14 @@
             </p>  
     </div>
 
+<div class="container">
     <div class="row">
         <div class="col-sm-6">
             <div class="portal_jumbotron">
-                <p>
+                <p class="jumbotron_title">
                     {{ 'help.browse_app'|trans|raw }}
                 </p>
-                <p>
+                <p class="jumbotron_link">
                     <a class="btn btn-primary btn-lg" href="{{ path('portal_index') }}">
                         <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_app'|trans }}
                     </a>
@@ -37,10 +38,10 @@
 
         <div class="col-sm-6">
             <div class="portal_jumbotron">
-                <p>
+                <p class="jumbotron_title">
                     {{ 'help.browse_admin'|trans|raw }}
                 </p>
-                <p>
+                <p class="jumbotron_link">
                     <a class="btn btn-primary btn-lg" href="{{ path('admin_index') }}">
                         <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_admin'|trans }}
                     </a>
@@ -48,5 +49,6 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 

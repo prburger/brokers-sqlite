@@ -25,6 +25,7 @@ html{
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color:black;  
   overflow:hidden;
+  margin:auto;
 } 
 
 p, ul, ol {
@@ -92,12 +93,21 @@ padding:0;
   display: block; */
 }
 
+.jumbotron_title{
+  padding-top:20px;
+}
+
+.jumbotron_link{
+  margin:auto;
+}
+
 .portal_jumbotron{
   padding:0;
   margin:20px 0 0 0;
   background-color:aliceblue;
   border:black solid 2pt;
   height:200px;
+  box-shadow: 2px 2px 5px;
 }
 
 .jumbotron{
@@ -273,6 +283,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 120vh;
+  margin:auto;
 }
 
 header {
@@ -323,6 +334,10 @@ header .locales a:hover small {
   color:black;
 }
 
+.container{
+  margin:auto;
+}
+
 .body-container {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   flex: 1;
@@ -334,7 +349,7 @@ header .locales a:hover small {
 }
 
 .body-container #main h1, .body-container #main h2 {
-  margin: 0;
+  margin: auto;
   padding:0;
 }
 
@@ -476,7 +491,8 @@ body#requirements_checker .panel li {
 /* Page: 'Homepage'
    ------------------------------------------------------------------------- */
 body#homepage {
-  text-align: center
+  text-align: center;
+  margin:auto;
 }
 
 /* Page: 'Login'
