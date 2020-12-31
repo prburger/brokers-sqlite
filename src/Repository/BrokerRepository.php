@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Broker;
+use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @method Broker|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,26 @@ class BrokerRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Broker::class);
+    }
+
+    /**
+     * Our findLatest() method
+     *
+     * 1. Create & pass query to paginate method
+     * 2. Paginate will return a `\Doctrine\ORM\Tools\Pagination\Paginator` object
+     * 3. Return that object to the controller
+     *
+     * @param integer $currentPage The current page (passed from controller)
+     *
+     * @return \Doctrine\ORM\Tools\Pagination\Paginator
+     */
+    public function findLatest(int $currentPage = 1): Paginator
+    {
+        $qb = $this->createQueryBuilder('p')
+           ->orderBy('p.id', 'DESC')
+        ;      
+
+        return (new Paginator($qb))->paginate($currentPage);
     }
 
     // /**
