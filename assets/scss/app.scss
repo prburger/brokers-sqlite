@@ -24,6 +24,7 @@ $lato-font-path: '~lato-font/fonts';
 html{ 
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color:black;  
+  overflow:hidden;
 } 
 
 p, ul, ol {
@@ -50,6 +51,11 @@ i {
   margin-right: 0.25em
 }
 
+.dashboard{
+margin:0;
+padding:0;
+}
+
 .dashboard_icon{
   border:none;
   color:black;
@@ -73,27 +79,34 @@ i {
   font-size:14pt;
   font-weight: bold;
   color:black;
-  top:-100px;
+  padding:0;
+  margin:10px 0 10px 0;
+}
+
+.dashboard_jumbotron{
   padding:10px;
-  margin:0;
+  margin:0 0 20px 0;
+  min-height:220px;
+  background-color:white;
+  border:solid black 1px;
+  /* overflow-y: scroll;
+  display: block; */
 }
 
 .portal_jumbotron{
-  padding:20px;
-  margin:0;
+  padding:0;
+  margin:20px 0 0 0;
   background-color:aliceblue;
   border:black solid 2pt;
   height:200px;
-  margin-top:20px;
 }
 
 .jumbotron{
   border:solid black 1px;
   padding:0;
-  margin:0;
+  margin:20px 0 0 0;
   background-color:white;
   height:200px;
-  margin-top:20px;
 }
 
 .index_page_table{
@@ -105,6 +118,8 @@ i {
   min-height: 450px;
   width:100%;
   color:black;  
+  display:block;
+  overflow-y: scroll;
 }
 
 .page_title{
@@ -149,6 +164,19 @@ i {
   font-size:12px;
   font-weight: bold;
 }
+.index_table{
+  color:black;
+  border-spacing: 0;
+  width:100%;
+  padding:0;
+  margin:0;
+  font-size: 10pt;
+  background-color: white;
+  overflow-y: scroll;
+  height:450px;
+  min-height: min-content;
+  max-height:max-content;
+}
 
 .dashboard_table{
   color:black;
@@ -158,6 +186,10 @@ i {
   margin:0;
   font-size: 10pt;
   background-color: white;
+  overflow-y: scroll;
+  height:150px;
+  min-height: min-content;
+  max-height:max-content;
 }
 
 .dashboard_table > thead > tr > th{
@@ -167,12 +199,24 @@ i {
   text-align: left;
 }
 
+
 .table{
   width:100%;
   padding:10px;
   margin-bottom:10px;
   background-color: white;
   border-spacing: 0;
+  overflow-y: scroll;
+  max-height:150px;
+  min-height: min-content;
+  max-height:max-content;
+}
+
+.table > tbody{
+  overflow-y: scroll;
+  height:150px;
+  min-height: min-content;
+  max-height:max-content;
 }
 
 .table > thead > tr > th{
@@ -199,9 +243,9 @@ i {
 tbody,
 tr,
 td{
-padding: 0;
-margin:0;
-}
+  margin:0;
+  padding:0;
+} 
 
 .doclink {
     color: inherit
@@ -273,10 +317,14 @@ header .locales a:hover small {
   /* needed to prevent pages with a very small height and browsers not supporting flex */
   min-height: 450px;
   max-height: 525px;
+  margin:0 auto;
+  padding:0;
+
 }
 
 .body-container #main h1, .body-container #main h2 {
-  margin-top: 0
+  margin: 0;
+  padding:0;
 }
 
 #sidebar .section {
@@ -299,26 +347,28 @@ footer {
   position: fixed;
   bottom: 0;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  background: #ecf0f1;
-  margin-top: .2em;
-  padding-top: .2em;
-  padding-bottom: .2em
+  // background: #ecf0f1;
+  border-top:solid black 1px;
+  margin:0;
+  padding:10px 0 10px 0;
+  color:black;
 }
 
 footer p {
-  color: #7b8a8b;
+  color:black;
   font-size: 13px;
-  margin-bottom: 0.25em
 }
 
 footer #footer-resources {
+  color:black;
   text-align: right
 }
 
 footer #footer-resources i {
-  color: #7b8a8b;
-  font-size: 28.5px;
-  margin-left: 0.5em
+  font-size: 18px;
+  margin-left: 0.5em;
+  color:black;
+
 }
 
 #sourceCodeModal h3 {

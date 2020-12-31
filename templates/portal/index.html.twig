@@ -8,31 +8,30 @@
     .example-wrapper code { background-color: #F5F5F5; padding: 2px 6px; }
 </style>
 
-    {# <h1>{{'portal.dashboard.title'|trans|raw}}</h1> #}
     <div class="page_form_heading">{{'portal.dashboard.title'|trans|raw}}</div>
 
     <div class="row">
-        <div class="col-sm-6">
-            <div class="jumbotron">              
+        <div class="col-sm-6" >
+            <div class="dashboard_jumbotron">              
                 {% include 'dashboard/broker.html.twig' with brokers %}
             </div>
         </div>
 
         <div class="col-sm-6">
-            <div class="jumbotron">              
+            <div class="dashboard_jumbotron">              
                 {% include 'dashboard/customer.html.twig' with customers %}
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6">
-            <div class="jumbotron">               
+            <div class="dashboard_jumbotron">               
                 {% include 'dashboard/supplier.html.twig' with suppliers %}
             </div>
         </div>
 
         <div class="col-sm-6">
-            <div class="jumbotron">            
+            <div class="dashboard_jumbotron">            
                 {% include 'dashboard/product.html.twig' with products %}
             </div>
         </div>

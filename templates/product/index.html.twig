@@ -12,6 +12,8 @@
             <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
         </div>
     </div>
+
+    <div class="index_table">
     <table class="table">
         <thead>
             <tr>
@@ -27,9 +29,9 @@
                 <td>{{ product.name }}</td>
                 <td>{{ product.dateAdded ? product.dateAdded|date('Y-m-d') : '' }}</td>
                 <td>{{ product.dateEdited ? product.dateEdited|date('Y-m-d') : '' }}</td>
-                <td>
-                 <a href="{{ path('product_new') }}" title="{{'create_new_product'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
-                 <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+                 <td class="action_column">
+                    <a href="{{ path('product_show', {'id': product.id }) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
+                    <a href="{{ path('product_edit', {'id': product.id }) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +43,5 @@
         {% endfor %}
         </tbody>
     </table>
-
+</div>
 {% endblock %}
