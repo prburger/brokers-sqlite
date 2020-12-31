@@ -23,9 +23,11 @@ $lato-font-path: '~lato-font/fonts';
    ------------------------------------------------------------------------- */
 html{ 
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color:black;  
 } 
 
 p, ul, ol {
+  color:black;  
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 19px;
   margin-bottom: 1.5em
@@ -53,6 +55,7 @@ i {
   color:black;
   font-size:10pt;
 }
+
 .page_icon{
   border:none;
   color:black;
@@ -61,7 +64,9 @@ i {
 
 .copyright{
   font-size:14px;
+  font-weight: bold;
   font-style: italic;
+  color:black;  
 }
 
 .dashboard_title{
@@ -99,19 +104,31 @@ i {
   border:solid black 1px;
   min-height: 450px;
   width:100%;
+  color:black;  
+}
+
+.page_title{
+  display: inline;
+  color:black;  
 }
 
 .page_form_heading{
   font-size:18pt;
   font-weight: bold;
   vertical-align: middle;
+  border-bottom: solid gray 1px;
+  margin:0 0 20px 0;
+  padding:0;
+  color:black;  
 }
 
 .return_to_list_label{
+  display: inline;
   float:right;
   vertical-align: top;
   padding:0;
   margin:0;
+  color:black;  
 }
 
 .index_page_table_body{
@@ -120,11 +137,22 @@ i {
 
 .no_records_found{
   text-align: center;
-  padding:10px;
+  padding-top:120px;
+  font-weight: bold;
+  font-size:12pt;
+}
+
+.no_dashboard_records_found{
+  text-align: center;
+  padding:20px;
+  color:red;
+  font-size:12px;
   font-weight: bold;
 }
 
 .dashboard_table{
+  color:black;
+  border-spacing: 0;
   width:100%;
   padding:0;
   margin:0;
@@ -144,14 +172,35 @@ i {
   padding:10px;
   margin-bottom:10px;
   background-color: white;
+  border-spacing: 0;
 }
 
-th{
-  padding:20px;
+.table > thead > tr > th{
+  padding:0 0 10px 0;
+  margin:0;
+  align-content: flex-start;
+  text-align: left;
+  color:black;  
 }
+
+.table > tbody > tr > td{
+  padding:0 0 2px 0;
+  margin:0;
+  color:black;
+  align-content: flex-start;
+  text-align: left;
+}
+
 .table.table-middle-aligned th,
 .table.table-middle-aligned td {
   vertical-align: middle;
+}
+
+tbody,
+tr,
+td{
+padding: 0;
+margin:0;
 }
 
 .doclink {
@@ -209,6 +258,8 @@ header .locales a:hover small {
 
 .action_column{
   float:right;
+  padding: 0;
+  margin: 0;
 }
 
 .action_icon{

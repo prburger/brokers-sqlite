@@ -14,9 +14,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Date Added</th>
-                <th>Date Edited</th>
+                <th>{{'table.column.name'|trans|raw}}</th>
+                <th>{{'table.column.date.added'|trans|raw}}</th>
+                <th>{{'table.column.date.edited'|trans|raw}}</th>
                 <th></th>
             </tr>
         </thead>
@@ -27,13 +27,15 @@
                 <td>{{ broker.dateAdded ? broker.dateAdded|date('Y-m-d') : '' }}</td>
                 <td>{{ broker.dateEdited ? broker.dateEdited|date('Y-m-d') : '' }}</td>
                 <td class="action_column">
-                    <a href="{{ path('broker_show', {'id': broker.id }) }}" title="Show"><i class="fas fa-glasses action_icon"></i></a>
-                    <a href="{{ path('broker_edit', {'id': broker.id }) }}" title="Edit"><i class="far fa-edit action_icon"></i></a>
+                    <a href="{{ path('broker_show', {'id': broker.id }) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
+                    <a href="{{ path('broker_edit', {'id': broker.id }) }}" title="{{'action_show'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td class="no_records_found" colspan="4">{{'table.no_records_found'|trans|raw}}</td>
+                <td  colspan="4">
+                    <p class="no_records_found">{{'table.no_records_found'|trans|raw}}</p>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

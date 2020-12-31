@@ -4,20 +4,21 @@
 
 {% block body %}
     <div class="page_form_heading">
-    {{'product_index'|trans|raw}}
+        <div class="page_title">
+            {{'product_index'|trans|raw}}
+        </div>
         <div class="return_to_list_label">
             <a href="{{ path('product_new') }}" title="{{'create_new_product'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
             <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
         </div>
     </div>
-
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Date Added</th>
-                <th>Date Edited</th>
-                <th><i class="fab fa-bluetooth-b"></i></th>
+                <th>{{'table.column.name'|trans|raw}}</th>
+                <th>{{'table.column.date.added'|trans|raw}}</th>
+                <th>{{'table.column.date.edited'|trans|raw}}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +34,9 @@
             </tr>
         {% else %}
             <tr>
-                <td class="no_records_found" colspan="4">no records found</td>
+                <td colspan="4">
+                    <p class="no_records_found">{{'table.no_records_found'|trans|raw}}</p>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

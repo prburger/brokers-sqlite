@@ -492,6 +492,19 @@
                 <source>info.change_password</source>
                 <target>After changing your password, you will be logged out of the application.</target>
             </trans-unit>
+            <trans-unit id="table.column.name">
+                <source>table.column.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="table.column.date.added">
+                <source>table.column.date.added</source>
+                <target>Date Added</target>
+            </trans-unit>
+            <trans-unit id="table.column.date.edited">
+                <source>table.column.date.edited</source>
+                <target>Date Edited</target>
+            </trans-unit>
+           
             <trans-unit id="table.no_records_found">
                 <source>table.no_records_found</source>
                 <target>No records found</target>
@@ -597,7 +610,18 @@
                 <source>broker_new</source>
                 <target>Create Broker</target>
             </trans-unit>
-            
+            <trans-unit id="supplier_new">
+                <source>supplier_new</source>
+                <target>Create Supplier</target>
+            </trans-unit>
+            <trans-unit id="action_edit">
+                <source>action_edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="action_show">
+                <source>action_show</source>
+                <target>Show</target>
+            </trans-unit>            
             <trans-unit id="customer_new">
                 <source>customer_new</source>
                 <target>Create Customer</target>

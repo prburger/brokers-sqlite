@@ -6,7 +6,7 @@
    <div class="page_form_heading">{{'customer_show'|trans|raw}}</div>
      <div class="return_to_list_label">
    {{ include('customer/_delete_form.html.twig') }} 
-    <a href="{{ path('customer_edit', {'id': customer.id}) }}" title="Edit"><i class="fas fa-edit page_icon"></i></a>
+    <a href="{{ path('customer_edit', {'id': customer.id}) }}" title="{{'action_edit'|trans|raw}}"><i class="fas fa-edit page_icon"></i></a>
     <a href="{{ path('customer_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
     </div>
 
