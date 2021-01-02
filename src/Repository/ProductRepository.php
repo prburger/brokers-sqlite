@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,26 @@ class ProductRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Product::class);
+    }
+
+    /**
+     * Our findLatest() method
+     *
+     * 1. Create & pass query to paginate method
+     * 2. Paginate will return a `App\Pagination\Paginator` object
+     * 3. Return that object to the controller
+     *
+     * @param integer $page The current page (passed from controller)
+     *
+     * @return \App\Pagination\Paginator;
+     */
+    public function findLatest(int $page = 1): Paginator
+    {
+        $qb = $this->createQueryBuilder('p')
+           ->orderBy('p.id', 'DESC')
+        ;      
+
+        return (new Paginator($qb))->paginate($page);
     }
 
     // /**

@@ -2,7 +2,7 @@
 
 <div class="dashboard_title">
     {{'dashboard.title.brokers'|trans|raw}}  
-    <a class="return_to_list_label" href="{{ path('broker_index') }}" title="Details"><i class="fas fa-file-alt page_icon"></i></a>
+    <a class="return_to_list_label" href="{{ path('broker_index_paginated', {'page':1}) }}" title="Details"><i class="fas fa-file-alt page_icon"></i></a>
 </div>
 
     <div class="dashboard_table">

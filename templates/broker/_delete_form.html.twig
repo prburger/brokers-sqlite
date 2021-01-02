@@ -1,4 +1,4 @@
-<form style="border:white solid 0px;width:0;height:0;padding:0;margin:0 20px 0 50px;" method="post" action="{{ path('broker_delete', {'id': broker.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form class="delete_form" method="post" action="{{ path('broker_delete', {'id': broker.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ broker.id) }}">
     <button role="link" class="page_icon" style="background:none!important;border:none;padding:0!important;color:white;text-decoration:none;">

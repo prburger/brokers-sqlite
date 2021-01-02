@@ -496,6 +496,14 @@
                 <source>table.column.name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="help.register.user">
+                <source>help.register.user</source>
+                <target>New User</target>
+            </trans-unit>
+            <trans-unit id="action.register.user">
+                <source>action.register.user</source>
+                <target>Register</target>
+            </trans-unit>
             <trans-unit id="table.column.date.added">
                 <source>table.column.date.added</source>
                 <target>Date Added</target>

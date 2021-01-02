@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Supplier;
 use App\Form\SupplierType;
 use App\Repository\SupplierRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SupplierController extends AbstractController
 {
-    /**
-     * @Route("/", name="supplier_index", methods={"GET"})
-     */
-    public function index(SupplierRepository $supplierRepository): Response
-    {
-        return $this->render('supplier/index.html.twig', [
-            'suppliers' => $supplierRepository->findAll(),
+   /**
+     * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="supplier_index")
+     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="supplier_rss")
+     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="supplier_index_paginated")
+     * @Cache(smaxage="10")    
+    */
+    public function index(Request $_request, int $page = 1, string $_format="html", SupplierRepository $repository): Response
+    {        
+        $pageData = $repository->findLatest($page);
+
+        return $this->render('supplier/index.'.$_format.'.twig', [            
+            'paginator'=>$pageData,
         ]);
     }
 
