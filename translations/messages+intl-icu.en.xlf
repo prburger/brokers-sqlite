@@ -498,7 +498,7 @@
             </trans-unit>
             <trans-unit id="help.register.user">
                 <source>help.register.user</source>
-                <target>New User</target>
+                <target><![CDATA[<strong>New Users</strong>]]></target>
             </trans-unit>
             <trans-unit id="action.register.user">
                 <source>action.register.user</source>

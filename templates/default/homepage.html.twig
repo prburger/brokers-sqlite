@@ -23,18 +23,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-4" >
-            <div class="portal_jumbotron">
-                <p class="jumbotron_title">
-                    {{ 'help.register.user'|trans|raw }}
-                </p>
-                <p class="jumbotron_link">
-                    <a class="btn btn-primary btn-lg" href="{{ path('app_register') }}">
-                        <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.register.user'|trans }}
-                    </a>
-                </p>
-            </div>
-        </div>        
+                
 
         <div class="col-sm-4">
             <div class="portal_jumbotron">
@@ -44,6 +33,19 @@
                 <p class="jumbotron_link">
                     <a class="btn btn-primary btn-lg" href="{{ path('portal_index') }}">
                         <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_app'|trans }}
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="portal_jumbotron">
+                <p class="jumbotron_title">
+                    {{ 'help.register.user'|trans|raw }}
+                </p>
+                <p class="jumbotron_link">
+                    <a class="btn btn-primary btn-lg" href="{{ path('app_register') }}">
+                        <i class="fas fa-user-plus"></i> {{ 'action.register.user'|trans }}
                     </a>
                 </p>
             </div>
