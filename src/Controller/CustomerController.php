@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Customer;
 use App\Form\CustomerType;
 use App\Repository\CustomerRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomerController extends AbstractController
 {
     /**
-     * @Route("/", name="customer_index", methods={"GET"})
-     */
-    public function index(CustomerRepository $customerRepository): Response
-    {
-        return $this->render('customer/index.html.twig', [
-            'customers' => $customerRepository->findAll(),
+     * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="customer_index")
+     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="customer_rss")
+     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="customer_index_paginated")
+     * @Cache(smaxage="10")    
+    */
+    public function index(Request $_request, int $page = 1, string $_format="html", CustomerRepository $repository): Response
+    {        
+        $pageData = $repository->findLatest($page);
+
+        return $this->render('customer/index.'.$_format.'.twig', [            
+            'paginator'=>$pageData,
         ]);
     }
 

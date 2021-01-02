@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Broker;
 use App\Form\BrokerType;
 use App\Repository\BrokerRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,17 +17,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class BrokerController extends AbstractController
 {
     /**
-     * @Route("/", name="broker_index", methods={"GET"})
+     * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="broker_index")
+     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="broker_rss")
      * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="broker_index_paginated")
+     * @Cache(smaxage="10")    
     */
+    
     public function index(Request $_request, int $page = 1, string $_format="html", BrokerRepository $repository): Response
-    {
-        $brokers = $repository->findLatest($page);
+    {        
         $pageData = $repository->findLatest($page);
 
         return $this->render('broker/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
-            'brokers'=>$brokers
         ]);
     }
 

@@ -7,7 +7,6 @@ use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-
 /**
  * @method Broker|null find($id, $lockMode = null, $lockVersion = null)
  * @method Broker|null findOneBy(array $criteria, array $orderBy = null)
@@ -25,20 +24,20 @@ class BrokerRepository extends ServiceEntityRepository
      * Our findLatest() method
      *
      * 1. Create & pass query to paginate method
-     * 2. Paginate will return a `\Doctrine\ORM\Tools\Pagination\Paginator` object
+     * 2. Paginate will return a `App\Pagination\Paginator` object
      * 3. Return that object to the controller
      *
-     * @param integer $currentPage The current page (passed from controller)
+     * @param integer $page The current page (passed from controller)
      *
-     * @return \Doctrine\ORM\Tools\Pagination\Paginator
+     * @return \App\Pagination\Paginator;
      */
-    public function findLatest(int $currentPage = 1): Paginator
+    public function findLatest(int $page = 1): Paginator
     {
         $qb = $this->createQueryBuilder('p')
            ->orderBy('p.id', 'DESC')
         ;      
 
-        return (new Paginator($qb))->paginate($currentPage);
+        return (new Paginator($qb))->paginate($page);
     }
 
     // /**

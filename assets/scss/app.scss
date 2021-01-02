@@ -89,8 +89,8 @@ padding:0;
   min-height:220px;
   background-color:white;
   border:solid black 1px;
-  /* overflow-y: scroll;
-  display: block; */
+  overflow-y: scroll;
+  display: block; 
 }
 
 .jumbotron_title{
@@ -128,7 +128,7 @@ padding:0;
   width:100%;
   color:black;  
   display:block;
-  overflow-y: scroll;
+  overflow-y: scroll; 
 }
 
 .page_title{
@@ -182,10 +182,10 @@ padding:0;
   margin:0;
   font-size: 10pt;
   background-color: white;
-  // overflow-y: scroll;
+  overflow-y: scroll;
   height:450px;
   min-height: min-content;
-  max-height:max-content;
+  max-height:max-content; 
 }
 
 .delete_form{
@@ -227,18 +227,18 @@ padding:0;
   margin-bottom:10px;
   background-color: white;
   border-spacing: 0;
-  // overflow-y: scroll;
+  overflow-y: scroll;
   max-height:150px;
-/*   min-height: min-content;
-  max-height:max-content; */
+  min-height: min-content;
+  max-height:max-content;  
 }
 
-.table > tbody{
+ .table > tbody{
   overflow-y: scroll;
   height:150px;
   min-height: min-content;
   max-height:max-content;
-}
+} 
 
 .table > thead > tr > th{
   padding:0 0 10px 0;
@@ -276,6 +276,10 @@ td{
    ------------------------------------------------------------------------- */
 .m-b-0 { margin-bottom: 0 }
 
+.paginator_row{
+  vertical-align: bottom;
+  height: 200px;
+}
 /* Page elements
    ------------------------------------------------------------------------- */
 body {
