@@ -128,11 +128,6 @@ padding:0;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background-color: white;
   border:solid black 1px;
-/*   min-height: 450px;
-  width:100%;
-  color:black;  
-  display:block;
-  overflow-y: scroll;  */
 }
 
 .page_title{
@@ -143,7 +138,7 @@ padding:0;
 .page_form_heading{
   font-size:18pt;
   font-weight: bold;
-  margin:0;
+  margin:0 0 20px 0;
   padding:0;
 }
 
@@ -161,10 +156,10 @@ padding:0;
   //color:black;  
 }
 
-.index_page_table_body{
+/* .index_page_table_body{
   padding:20px;
 }
-
+ */
 .no_records_found{
   text-align: center;
   padding-top:120px;
@@ -180,15 +175,18 @@ padding:0;
   font-weight: bold;
 }
 
-.index_table{
-  border-spacing: 0;
+/* .index_table{
+  border-spacing: 10px;
   width:100%;
-  padding:0;
-  margin:0;
-  font-size: 10pt;
+  padding:20px;
+  margin:20px;
+  font-size: 12pt;
   background-color: white;
+} */
 
-}
+/* .index_table > thead >tr > th{
+  margin-bottom:20px;
+} */
 
 .delete_form{
   border:white solid 0px;
@@ -211,13 +209,6 @@ padding:0;
   max-height:max-content;
 }
 
-.dashboard_table > thead > tr > th{
-  padding:0;
-  margin:0;
-  align-content: flex-start;
-  text-align: left;
-}
-
 .mail_link{
   color:darkgreen;
 }
@@ -225,9 +216,10 @@ padding:0;
 .table{
   width:100%;
   padding:10px;
-  margin-bottom:10px;
-  background-color: white;
-  border-spacing: 0;
+  // margin-bottom:10px;
+  // background-color: aliceblue;
+  //border: darkgreen solid 1px;
+  
 }
  
 .table > thead > tr > th{
@@ -237,12 +229,18 @@ padding:0;
   text-align: left;
 }
 
+ .table > tbody > tr:nth-child(even){
+  background:lightgreen;
+} 
+
 .table > tbody > tr > td{
-  padding:0 0 2px 0;
+  padding:0 0 5px 0;
+  //  0 2px 0;
   margin:0;
   color:black;
   align-content: flex-start;
   text-align: left;
+  vertical-align: middle;
 }
 
 .table.table-middle-aligned th,
