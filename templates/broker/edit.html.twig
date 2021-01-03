@@ -3,14 +3,24 @@
 {% block title %}{{'broker_edit'|trans|raw}}{% endblock %}
 
 {% block body %}
- <div class="page_form_heading">{{'broker_edit'|trans|raw}}</div>
-    <div class="return_to_list_label">
-    {{ include('broker/_delete_form.html.twig') }}
-    <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'broker_edit'|trans|raw}}
+        <div class="return_to_list_label">
+            {{ include('broker/_delete_form.html.twig') }}
+            <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+        </div>
     </div>
-    
-    {{ include('broker/_form.html.twig', {'button_label': 'Update'}) }}
+</div>
 
-    
-
+<div class="row">
+    <div class="col-sm-6">
+        {{ include('broker/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+    <div class="col-sm-6">
+        <div style="overflow:scroll;height:300px;">
+            {{ form(contactForm) }}
+        </div>
+    </div>
+</div>
 {% endblock %}

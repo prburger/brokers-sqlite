@@ -83,6 +83,9 @@ class BrokerController extends AbstractController
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
+        $contact = new Contact();
+        $contactForm = $this->createForm(ContactFormType::class, $contact);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -92,6 +95,7 @@ class BrokerController extends AbstractController
         return $this->render('broker/edit.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
+            'contactForm' => $contactForm->createView(),
         ]);
     }
 
