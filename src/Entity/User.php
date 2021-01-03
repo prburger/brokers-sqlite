@@ -80,11 +80,6 @@ class User implements UserInterface, \Serializable
      */
     private $roles = [];
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -191,17 +186,5 @@ class User implements UserInterface, \Serializable
     {
         // add $this->salt too if you don't use Bcrypt or Argon2i
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
     }
 }

@@ -512,7 +512,38 @@
                 <source>table.column.date.edited</source>
                 <target>Date Edited</target>
             </trans-unit>
-           
+            <trans-unit id="City">
+                <source>City</source>
+                <target>City</target>
+            </trans-unit>
+            <trans-unit id="Country">
+                <source>Country</source>
+                <target>Country</target>
+            </trans-unit>
+            <trans-unit id="Phone">
+                <source>Phone</source>
+                <target>Phone</target>
+            </trans-unit>
+            <trans-unit id="Mobile">
+                <source>Mobile</source>
+                <target>Mobile</target>
+            </trans-unit>
+            <trans-unit id="Whatsapp">
+                <source>Whatsapp</source>
+                <target>Whatsapp</target>
+            </trans-unit>
+            <trans-unit id="Wechat">
+                <source>Wechat</source>
+                <target>Wechat</target>
+            </trans-unit>            
+            <trans-unit id="Skype">
+                <source>Skype</source>
+                <target>Skype</target>
+            </trans-unit>            
+            <trans-unit id="Email">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
             <trans-unit id="table.no_records_found">
                 <source>table.no_records_found</source>
                 <target>No records found</target>
