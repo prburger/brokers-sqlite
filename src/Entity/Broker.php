@@ -24,11 +24,13 @@ class Broker
 
     /**
      * @ORM\Column(type="date")
+     * @ORM\GeneratedValue
      */
     private $dateAdded;
 
     /**
      * @ORM\Column(type="date")
+     * @ORM\GeneratedValue
      */
     private $dateEdited;
 

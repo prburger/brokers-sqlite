@@ -124,10 +124,10 @@ padding:0;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background-color: white;
   border:solid black 1px;
-  min-height: 450px;
+/*   min-height: 450px;
   width:100%;
   color:black;  
- /*  display:block;
+  display:block;
   overflow-y: scroll;  */
 }
 
@@ -139,17 +139,19 @@ padding:0;
 .page_form_heading{
   font-size:18pt;
   font-weight: bold;
-  vertical-align: middle;
-  border-bottom: solid gray 1px;
-  margin:0 0 20px 0;
+  margin:0;
   padding:0;
-  //color:black;  
 }
 
-.return_to_list_label{
+.page_form_header{
+  padding:0;
+  margin:0 0 20px 0;
+  border-bottom: solid gray 1px;
+}
+
+.return_to_list_label{ 
   display: inline;
   float:right;
-  vertical-align: top;
   padding:0;
   margin:0;
   //color:black;  
@@ -227,18 +229,18 @@ padding:0;
   margin-bottom:10px;
   background-color: white;
   border-spacing: 0;
-  overflow-y: scroll;
+/*   overflow-y: scroll;
   max-height:150px;
   min-height: min-content;
-  max-height:max-content;  
+  max-height:max-content;   */
 }
 
- .table > tbody{
+ /*.table > tbody{
   overflow-y: scroll;
-  height:150px;
+   height:150px;
   min-height: min-content;
-  max-height:max-content;
-} 
+  max-height:max-content; 
+}*/ 
 
 .table > thead > tr > th{
   padding:0 0 10px 0;
@@ -254,6 +256,7 @@ padding:0;
   color:black;
   align-content: flex-start;
   text-align: left;
+ // overflow: scroll;
 }
 
 .table.table-middle-aligned th,
@@ -286,9 +289,16 @@ body {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 120vh;
+  //min-height: 120vh;
   margin:auto;
   color:darkgreen;
+}
+
+.show_contact_form{
+  width:300px;
+  height:300px;
+  // display: block;
+  font-size:10px;
 }
 
 header {
@@ -340,8 +350,9 @@ header .locales a:hover small {
 }
 
 .container{
-  margin:auto;
+  margin:auto
 }
+
 .navbar-default {
   background-color:darkgreen;
   border-bottom:solid 1px black;
@@ -351,8 +362,8 @@ header .locales a:hover small {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   flex: 1;
   /* needed to prevent pages with a very small height and browsers not supporting flex */
-  min-height: 450px;
-  max-height: 525px;
+  //min-height: 450px;
+  //max-height: 525px;
   margin:0 auto;
   padding:0;
 }
@@ -577,6 +588,7 @@ body#blog_post_show .post-tags .label-default {
   margin-right: 10px;
   padding: .4em 1em .5em;
 }
+
 body#blog_post_show .post-tags .label-default i {
   color: #95A6A7;
 }

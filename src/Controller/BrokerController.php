@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Broker;
+use\App\Entity\Contact;
 use App\Form\BrokerType;
+use\App\Form\ContactFormType;
 use App\Repository\BrokerRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,8 +40,12 @@ class BrokerController extends AbstractController
     public function new(Request $request): Response
     {
         $broker = new Broker();
+        $contact = new Contact();        
+        
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
+
+        $contactForm = $this->createForm(ContactFormType::class, $contact);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -52,6 +58,7 @@ class BrokerController extends AbstractController
         return $this->render('broker/new.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
+            'contact'=>$contactForm->createView(),
         ]);
     }
 
@@ -60,8 +67,11 @@ class BrokerController extends AbstractController
      */
     public function show(Broker $broker): Response
     {
+        $contact = new Contact();
+        $contactForm = $this->createForm(ContactFormType::class, $contact);
         return $this->render('broker/show.html.twig', [
             'broker' => $broker,
+            'contact'=> $contactForm->createView(),
         ]);
     }
 
