@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210103051054 extends AbstractMigration
+final class Version20210104034858 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,6 +20,14 @@ final class Version20210103051054 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE contact (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, city VARCHAR(120) DEFAULT NULL, country VARCHAR(120) DEFAULT NULL, phone VARCHAR(60) DEFAULT NULL, mobile VARCHAR(60) DEFAULT NULL, email VARCHAR(120) DEFAULT NULL, whatsapp VARCHAR(120) DEFAULT NULL, wechat VARCHAR(120) DEFAULT NULL, skype VARCHAR(120) DEFAULT NULL, date_added DATE NOT NULL, date_edited DATE NOT NULL)');
+        $this->addSql('DROP INDEX UNIQ_F6AAF03BE7A1254A');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__broker AS SELECT id, contact_id, name, date_added, date_edited FROM broker');
+        $this->addSql('DROP TABLE broker');
+        $this->addSql('CREATE TABLE broker (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER NOT NULL, name VARCHAR(120) NOT NULL COLLATE BINARY, date_added DATE NOT NULL, date_edited DATE NOT NULL, CONSTRAINT FK_F6AAF03BE7A1254A FOREIGN KEY (contact_id) REFERENCES contact (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO broker (id, contact_id, name, date_added, date_edited) SELECT id, contact_id, name, date_added, date_edited FROM __temp__broker');
+        $this->addSql('DROP TABLE __temp__broker');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_F6AAF03BE7A1254A ON broker (contact_id)');
         $this->addSql('DROP INDEX IDX_53AD8F83F675F31B');
         $this->addSql('DROP INDEX IDX_53AD8F834B89032C');
         $this->addSql('CREATE TEMPORARY TABLE __temp__symfony_demo_comment AS SELECT id, post_id, author_id, content, published_at FROM symfony_demo_comment');
@@ -50,6 +58,7 @@ final class Version20210103051054 extends AbstractMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('DROP TABLE contact');
         $this->addSql('DROP INDEX IDX_53AD8F834B89032C');
         $this->addSql('DROP INDEX IDX_53AD8F83F675F31B');
         $this->addSql('CREATE TEMPORARY TABLE __temp__symfony_demo_comment AS SELECT id, post_id, author_id, content, published_at FROM symfony_demo_comment');

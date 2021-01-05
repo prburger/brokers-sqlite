@@ -2,26 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Broker;
+use App\Entity\Notes;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BrokerType extends AbstractType
+class NoteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            /* ->add('dateAdded')
-            ->add('dateEdited') */ 
+            ->add('details')
+            ->add('dateAdded')
+            ->add('dateEdited')
+            ->add('getNotes')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Broker::class,
+            'data_class' => Notes::class,
         ]);
     }
 }
