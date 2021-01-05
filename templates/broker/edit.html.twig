@@ -14,13 +14,15 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
-        {{ include('broker/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="col-sm-12">
+        {{ include('broker/_form.html.twig', {'button_label': 'Update'}) }} 
     </div>
-    <div class="col-sm-6">
+ </div>
+
+{#     <div class="col-sm-6">
         <div style="overflow:scroll;height:300px;">
-            {{ form(contactForm) }}
+              {{ form(contactForm) }}  
         </div>
     </div>
-</div>
+ #}
 {% endblock %}

@@ -18,7 +18,7 @@ class Contact
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=1220, nullable=true)
+     * @ORM\Column(type="string", length=120, nullable=true)
      */
     private $city;
 
@@ -79,7 +79,7 @@ class Contact
         return $this->city;
     }
 
-    public function setCity(?string $city): self
+    public function setCity(?string $city=""): self
     {
         $this->city = $city;
 
@@ -91,7 +91,7 @@ class Contact
         return $this->country;
     }
 
-    public function setCountry(?string $country): self
+    public function setCountry(?string $country=""): self
     {
         $this->country = $country;
 
@@ -103,7 +103,7 @@ class Contact
         return $this->phone;
     }
 
-    public function setPhone(?string $phone): self
+    public function setPhone(?string $phone=""): self
     {
         $this->phone = $phone;
 
@@ -115,7 +115,7 @@ class Contact
         return $this->mobile;
     }
 
-    public function setMobile(?string $mobile): self
+    public function setMobile(?string $mobile=""): self
     {
         $this->mobile = $mobile;
 
@@ -127,7 +127,7 @@ class Contact
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(?string $email=""): self
     {
         $this->email = $email;
 
@@ -139,7 +139,7 @@ class Contact
         return $this->whatsapp;
     }
 
-    public function setWhatsapp(?string $whatsapp): self
+    public function setWhatsapp(?string $whatsapp=""): self
     {
         $this->whatsapp = $whatsapp;
 
@@ -151,7 +151,7 @@ class Contact
         return $this->wechat;
     }
 
-    public function setWechat(?string $wechat): self
+    public function setWechat(?string $wechat=""): self
     {
         $this->wechat = $wechat;
 
@@ -163,7 +163,7 @@ class Contact
         return $this->skype;
     }
 
-    public function setSkype(?string $skype): self
+    public function setSkype(?string $skype=""): self
     {
         $this->skype = $skype;
 

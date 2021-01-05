@@ -21,7 +21,7 @@ class ContactFormType extends AbstractType
             ->add('wechat')
             ->add('skype')
 /*             ->add('dateAdded')
-            ->add('dateEdited') */
+            ->add('dateEdited')  */
         ;
     }
 
