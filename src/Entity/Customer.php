@@ -34,19 +34,9 @@ class Customer
      */
     private $dateEdited;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="sentToCustomers")
-     */
-    private $getMessages;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="customers")
-     */
-    private $getBroker;
-
     public function __construct()
     {
-        $this->getMessages = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -86,45 +76,6 @@ class Customer
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Message[]
-     */
-    public function getGetMessages(): Collection
-    {
-        return $this->getMessages;
-    }
-
-    public function addGetMessage(Message $getMessage): self
-    {
-        if (!$this->getMessages->contains($getMessage)) {
-            $this->getMessages[] = $getMessage;
-            $getMessage->addSentToCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGetMessage(Message $getMessage): self
-    {
-        if ($this->getMessages->removeElement($getMessage)) {
-            $getMessage->removeSentToCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function getGetBroker(): ?Broker
-    {
-        return $this->getBroker;
-    }
-
-    public function setGetBroker(?Broker $getBroker): self
-    {
-        $this->getBroker = $getBroker;
 
         return $this;
     }

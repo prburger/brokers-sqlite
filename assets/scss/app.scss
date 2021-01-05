@@ -24,8 +24,10 @@ $lato-font-path: '~lato-font/fonts';
 html{ 
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color:darkgreen;  
-  overflow:hidden;
+  //overflow:scroll;
   margin:auto;
+  height: auto;
+  // min-height:650px;
 } 
 
 p, ul, ol {
@@ -215,7 +217,8 @@ padding:0;
 
 .table{
   width:100%;
-  padding:10px;
+  padding:0;
+  margin:0;
   // margin-bottom:10px;
   // background-color: aliceblue;
   //border: darkgreen solid 1px;
@@ -276,6 +279,10 @@ body {
   flex-direction: column;
   margin:auto;
   color:darkgreen;
+  min-height: 650px;
+  min-height: auto;
+  height: auto; 
+
 }
 
 .show_contact_form{
@@ -341,11 +348,33 @@ header .locales a:hover small {
   border-bottom:solid 1px black;
 }
 
+.form_div{
+  margin:0;
+  padding:0;
+  overflow-y: scroll;
+  height:350px;
+}
+
+.form_component{
+  display:block;
+  min-height:300px; 
+  padding:10px 0 0 20px; 
+  border:1px solid darkgreen;
+  margin:5px 20px 0 20px;
+}
+
+
+.form_button{
+  margin-top:20px;
+}
+
 .body-container {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   flex: 1;
   /* needed to prevent pages with a very small height and browsers not supporting flex */
   min-height: 450px;
+  max-height: 450px;
+  height: auto;
   margin:0 auto;
   padding:0;
 }
@@ -372,8 +401,9 @@ header .locales a:hover small {
 }
 
 footer {
-  position: fixed;
-  bottom: 0;
+  position: fixed; 
+  bottom: 0;  
+  width:auto;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   border-top:solid black 1px;
   margin:0;

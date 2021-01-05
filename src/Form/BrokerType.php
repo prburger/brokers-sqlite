@@ -13,7 +13,13 @@ class BrokerType extends AbstractType
     {
         $builder
             ->add('name')
-            /* ->add('dateAdded')
+            /* 
+            ->add('messages')
+            ->add('notes')
+            ->add('suppliers')
+            ->add('customers')
+            
+            ->add('dateAdded')
             ->add('dateEdited') */ 
         ;
     }
