@@ -20,7 +20,7 @@ use App\Repository\BrokerRepository;
 use App\Repository\ContactRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
-use App\Repository\NoteRepository;
+use App\Repository\NotesRepository;
 use App\Repository\SupplierRepository
 ;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -99,36 +99,38 @@ class BrokerController extends AbstractController
     /**
      * @Route("/{id}", name="broker_show", methods={"GET"})
      */
-    public function show(Broker $broker, ContactRepository $contactRepo, MessageRepository $messageRepo): Response
+    public function show(Broker $broker, 
+    MessageRepository $messageRepo,
+    NotesRepository $noteRepo,
+    SupplierRepository $supplierRepo,
+    CustomerRepository $customerRepo): Response
     {
-        $contact = $contactRepo->find($broker->getContact()->getId());
-        /*$messages = $messageRepo->findAll($broker->getId());
-        $messageForm = $this->createForm(MessageType::class, $messages);
-        $noteForm = $this->createForm(NoteType::class, null);
-        $supplierForm = $this->createForm(SupplierType::class, null);
-        $customerForm = $this->createForm(CustomerType::class, null); */
-        $contactForm = $this->createForm(ContactFormType::class, $contact);
+        // $contact = $contactRepo->find($broker->getContact()->getId());
+        $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
+        
+        $form = $this->createForm(BrokerType::class, $broker);
+        
         return $this->render('broker/show.html.twig', [
             'broker' => $broker,
+            'form' => $form->createView(),
             'contact'=> $contactForm->createView(),
-/*             'messages'=>$messageForm->createView(),
-            'notes'=>$noteForm->createView(),
-            'suppliers'=>$supplierForm->createView(),
-            'customers'=>$customerForm->createView(), */
+            'messages' => $messageRepo->findAll($broker->getId()),
+            'notes' => $noteRepo->findAll($broker->getId()),            
+            'suppliers' => $supplierRepo->findAll($broker->getId()),
+            'customers' => $customerRepo->findAll($broker->getId()),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="broker_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Broker $broker): Response
+    public function edit(Request $request, Broker $broker, 
+    MessageRepository $messageRepo,
+    NotesRepository $noteRepo,
+    SupplierRepository $supplierRepo,
+    CustomerRepository $customerRepo): Response
     {
-  /*       $messageForm = $this->createForm(MessageType::class, null);
-        $noteForm = $this->createForm(NoteType::class, null);
-        $supplierForm = $this->createForm(SupplierType::class, null);
-        $customerForm = $this->createForm(CustomerType::class, null);
-   */      
-  
+   
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
         $contactForm->handleRequest($request);
 
@@ -147,10 +149,10 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact' => $contactForm->createView(),
-        /*     'messages' => $messageForm->createView(),
-            'notes' => $noteForm->createView(),
-            'suppliers' => $supplierForm->createView(),
-            'customers' => $customerForm->createView(), */
+            'messages' => $messageRepo->findAll($broker->getId()),
+            'notes' => $noteRepo->findAll($broker->getId()),            
+            'suppliers' => $supplierRepo->findAll($broker->getId()),
+            'customers' => $customerRepo->findAll($broker->getId()),
         ]);
     }
 

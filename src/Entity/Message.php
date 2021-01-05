@@ -34,32 +34,8 @@ class Message
      */
     private $dateEdited;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="getMessages")
-     */
-    private $sentToBrokers;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="getMessages")
-     */
-    private $sentToSuppliers;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="getMessages")
-     */
-    private $sentToCustomers;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="messages")
-     */
-    private $getMessages;
-
     public function __construct()
     {
-        $this->sentToBrokers = new ArrayCollection();
-        $this->sentToSuppliers = new ArrayCollection();
-        $this->sentToCustomers = new ArrayCollection();
-        $this->getMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,105 +75,6 @@ class Message
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Broker[]
-     */
-    public function getSentToBrokers(): Collection
-    {
-        return $this->sentToBrokers;
-    }
-
-    public function addSentToBrokers(Broker $sentTo): self
-    {
-        if (!$this->sentToBrokers->contains($sentTo)) {
-            $this->sentToBrokers[] = $sentTo;
-        }
-
-        return $this;
-    }
-
-    public function removeSentToBrokers(Broker $sentTo): self
-    {
-        $this->sentToBrokers->removeElement($sentTo);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Supplier[]
-     */
-    public function getSentToSuppliers(): Collection
-    {
-        return $this->sentToSuppliers;
-    }
-
-    public function addSentToSupplier(Supplier $sentToSupplier): self
-    {
-        if (!$this->sentToSuppliers->contains($sentToSupplier)) {
-            $this->sentToSuppliers[] = $sentToSupplier;
-        }
-
-        return $this;
-    }
-
-    public function removeSentToSupplier(Supplier $sentToSupplier): self
-    {
-        $this->sentToSuppliers->removeElement($sentToSupplier);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Customer[]
-     */
-    public function getSentToCustomers(): Collection
-    {
-        return $this->sentToCustomers;
-    }
-
-    public function addSentToCustomer(Customer $sentToCustomer): self
-    {
-        if (!$this->sentToCustomers->contains($sentToCustomer)) {
-            $this->sentToCustomers[] = $sentToCustomer;
-        }
-
-        return $this;
-    }
-
-    public function removeSentToCustomer(Customer $sentToCustomer): self
-    {
-        $this->sentToCustomers->removeElement($sentToCustomer);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Broker[]
-     */
-    public function getGetMessages(): Collection
-    {
-        return $this->getMessages;
-    }
-
-    public function addGetMessage(Broker $getMessage): self
-    {
-        if (!$this->getMessages->contains($getMessage)) {
-            $this->getMessages[] = $getMessage;
-            $getMessage->addMessage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGetMessage(Broker $getMessage): self
-    {
-        if ($this->getMessages->removeElement($getMessage)) {
-            $getMessage->removeMessage($this);
-        }
 
         return $this;
     }

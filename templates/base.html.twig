@@ -105,13 +105,13 @@
         <div class="container body-container">
             {% block body %}
                 <div class="row">
-                    <div id="main" class="col-sm-9">
+                    <div id="main" class="col-sm-6">
                         {{ include('default/_flash_messages.html.twig') }}
 
                         {% block main %}{% endblock %}
                     </div>
 
-                    <div id="sidebar" class="col-sm-3">
+                    <div id="sidebar" class="col-sm-6">
                         {% block sidebar %}
                             {{ render_esi(controller('Symfony\\Bundle\\FrameworkBundle\\Controller\\TemplateController::templateAction', {
                                 'template': 'blog/about.html.twig',
@@ -124,7 +124,7 @@
             {% endblock %}
 
         {% block footer %}
-            <footer class="footer">
+             <footer class="footer">  
                 <div class="container">
                     <div class="row">
                         <div id="footer-copyright" class="col-md-6">
@@ -145,8 +145,8 @@
                             </p>
                         </div>
                     </div>
-                </div>
-            </footer>
+                 </div> 
+             </footer> 
         {% endblock %}
 
         {% block javascripts %}

@@ -34,11 +34,6 @@ class Notes
      */
     private $dateEdited;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="notes")
-     */
-    private $getNotes;
-
     public function __construct()
     {
         $this->getNotes = new ArrayCollection();
@@ -81,33 +76,6 @@ class Notes
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Broker[]
-     */
-    public function getGetNotes(): Collection
-    {
-        return $this->getNotes;
-    }
-
-    public function addGetNote(Broker $getNote): self
-    {
-        if (!$this->getNotes->contains($getNote)) {
-            $this->getNotes[] = $getNote;
-            $getNote->addNote($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGetNote(Broker $getNote): self
-    {
-        if ($this->getNotes->removeElement($getNote)) {
-            $getNote->removeNote($this);
-        }
 
         return $this;
     }

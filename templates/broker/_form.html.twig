@@ -1,19 +1,23 @@
-{{ form_start(form) }}
-<div class="row">
-    <div class="col-sm-6">
-        {{ form_widget(form) }}
-    </div>
-    <div class="col-sm-6" style="overflow:scroll;height:300px;">
-      {{ form_widget(contact) }}
-    </div>
-{#         <div class="col-sm-3">
-        {{ form_widget(messages) }}
-    </div> #}
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-    </div>
-</div>
-{{ form_end(form) }}
+<div class="form_div">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_widget(form) }}
+                {% include 'broker/messages.html.twig' %}
+                {% include 'broker/notes.html.twig' %}
+                {% include 'broker/suppliers.html.twig' %}
+                {% include 'broker/customers.html.twig' %} 
+        </div>
 
+        <div class="col-sm-6">
+        {{ form_widget(contact) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 form_button">
+            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>

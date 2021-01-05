@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="form_component">
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>Suppliers</h4>
+            </div>
+            <div class="col-sm-6">
+                <div class="btn btn-outline">New supplier</div>
+            </div>
+        </div>
+
+    {% if suppliers %}        
+    <ul>
+        {% for supplier in suppliers %}
+            <li>{{supplier.name}}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No suppliers found</p>
+    {% endif %}
+</div>        
+</div>           
