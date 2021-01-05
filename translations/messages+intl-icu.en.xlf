@@ -597,8 +597,42 @@
                 <source>paginator.current</source>
                 <target>(current)</target>
             </trans-unit>
-
-            
+            <trans-unit id="form_component_newMessage">
+                <source>form_component_newMessage</source>
+                <target>New Message</target>
+            </trans-unit>
+            <trans-unit id="form_component_newNote">
+                <source>form_component_newNote</source>
+                <target>New Note</target>
+            </trans-unit>
+            <trans-unit id="form_component_newSupplier">
+                <source>form_component_newSupplier</source>
+                <target>New Supplier</target>
+            </trans-unit>
+            <trans-unit id="form_component_newCustomer">
+                <source>form_component_newCustomer</source>
+                <target>New Customer</target>
+            </trans-unit>
+            <trans-unit id="form_component_messages_title">
+                <source>form_component_messages_title</source>
+                <target>Messages</target>
+            </trans-unit>            
+            <trans-unit id="form_component_notes_title">
+                <source>form_component_notes_title</source>
+                <target>Notes</target>
+            </trans-unit>            
+            <trans-unit id="form_component_suppliers_title">
+                <source>form_component_suppliers_title</source>
+                <target>Suppliers</target>
+            </trans-unit>            
+            <trans-unit id="form_component_customers_title">
+                <source>form_component_customers_title</source>
+                <target>Customers</target>
+            </trans-unit>            
+            <trans-unit id="form_component_no_records">
+                <source>form_component_no_records</source>
+                <target>No Records Found</target>
+            </trans-unit>
             <trans-unit id="Name">
                 <source>Name</source>
                 <target>Name</target>
