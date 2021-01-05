@@ -136,6 +136,7 @@ class BrokerController extends AbstractController
         $form->handleRequest($request);
                 
         if ($form->isSubmitted() && $form->isValid()) {
+            $broker->setDateEdited(new \DateTime());
             $this->getDoctrine()->getManager()->persist($broker->getContact());            
             $this->getDoctrine()->getManager()->persist($broker);
             $this->getDoctrine()->getManager()->flush();
