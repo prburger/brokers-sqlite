@@ -2,10 +2,12 @@
     <div class="col form_component">        
         <div class="row">
             <div class="col-sm-6">
-                <h4>Messages</h4>
+                <div class="form_component_title">{{'form_component_messages_title'|trans|raw}}</div>
             </div>
             <div class="col-sm-6">
-                <div class="btn btn-outline">New message</div>
+                <a class="form_component_link" href="broker_newMessage" title="{{'form_component_newMessage'|trans|raw}}">
+                <i class="fas fa-plus page_icon"></i>
+                </a>
             </div>
         </div>
 
@@ -16,7 +18,7 @@
         {% endfor %}
     </ul>
     {% else %}
-        <p>No messages found</p>
+        <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
     {% endif %}
 </div>
 </div>
