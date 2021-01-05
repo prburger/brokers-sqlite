@@ -102,17 +102,21 @@ class BrokerController extends AbstractController
     {
         // $contact = $contactRepo->find($broker->getContact()->getId());
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
-        
+        $messages = $messageRepo->findAll($broker->getId());
+        $notes = $noteRepo->findAll($broker->getId());
+        $suppliers = $supplierRepo->findAll($broker->getId());
+        $customers = $customerRepo->findAll($broker->getId());
+
         $form = $this->createForm(BrokerType::class, $broker);
         
         return $this->render('broker/show.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
             'contact'=> $contactForm->createView(),
-            'messages' => $messageRepo->findAll($broker->getId()),
-            'notes' => $noteRepo->findAll($broker->getId()),            
-            'suppliers' => $supplierRepo->findAll($broker->getId()),
-            'customers' => $customerRepo->findAll($broker->getId()),
+            'messages' => $messages ? $messages :null,
+            'notes' => $notes ? $notes : null,            
+            'suppliers' => $suppliers ? $suppliers : null,
+            'customers' => $customers ? $customers : null,
         ]);
     }
 
@@ -131,10 +135,16 @@ class BrokerController extends AbstractController
 
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
+
+        $messages = $messageRepo->findAll($broker->getId());
+        $notes = $noteRepo->findAll($broker->getId());
+        $suppliers = $supplierRepo->findAll($broker->getId());
+        $customers = $customerRepo->findAll($broker->getId());
                 
         if ($form->isSubmitted() && $form->isValid()) {
-            $broker->setDateEdited(new \DateTime());
-            $this->getDoctrine()->getManager()->persist($broker->getContact());            
+            $broker->setDateEdited(new \DateTime());          
+            $this->getDoctrine()->getManager()->persist($contactForm->getData());            
+        
             $this->getDoctrine()->getManager()->persist($broker);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('broker_index');
@@ -144,10 +154,10 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact' => $contactForm->createView(),
-            'messages' => $messageRepo->findAll($broker->getId()),
-            'notes' => $noteRepo->findAll($broker->getId()),            
-            'suppliers' => $supplierRepo->findAll($broker->getId()),
-            'customers' => $customerRepo->findAll($broker->getId()),
+            'messages' => $messages ? $messages :null,
+            'notes' => $notes ? $notes : null,            
+            'suppliers' => $suppliers ? $suppliers : null,
+            'customers' => $customers ? $customers : null,
         ]);
     }
 
