@@ -5,7 +5,7 @@
                 <div class="form_component_title">{{'form_component_messages_title'|trans|raw}}</div>
             </div>
             <div class="col-sm-6">
-                <a class="form_component_link" href="broker_newMessage" title="{{'form_component_newMessage'|trans|raw}}">
+                <a class="form_component_link" href="{{ path('message_new',{'broker_id': broker.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
                 <i class="fas fa-plus page_icon"></i>
                 </a>
             </div>
@@ -14,7 +14,7 @@
     {% if messages %}        
     <ul>
         {% for message in messages %}
-            <li>{{message.details}}</li>
+            <li>{{message.text}}</li>
         {% endfor %}
     </ul>
     {% else %}

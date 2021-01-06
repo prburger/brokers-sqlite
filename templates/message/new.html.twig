@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'new_message_title'|trans|raw}}{% endblock %}
+
+{% block body %}
+
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'new_message_title'|trans|raw}}
+        <div class="return_to_list_label">
+           <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+        </div>
+        </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        {{ include('message/_form.html.twig') }}
+    </div>
+</div>
+
+{% endblock %}

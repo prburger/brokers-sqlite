@@ -516,6 +516,10 @@
                 <source>City</source>
                 <target>City</target>
             </trans-unit>
+            <trans-unit id="Text">
+                <source>Text</source>
+                <target>Text</target>
+            </trans-unit>
             <trans-unit id="Country">
                 <source>Country</source>
                 <target>Country</target>
@@ -632,6 +636,14 @@
             <trans-unit id="form_component_no_records">
                 <source>form_component_no_records</source>
                 <target>No Records Found</target>
+            </trans-unit>            
+            <trans-unit id="new_message_title">
+                <source>new_message_title</source>
+                <target>New Message</target>
+            </trans-unit>
+            <trans-unit id="message_text_label">
+                <source>message_text_label</source>
+                <target>Message text</target>
             </trans-unit>
             <trans-unit id="Name">
                 <source>Name</source>
