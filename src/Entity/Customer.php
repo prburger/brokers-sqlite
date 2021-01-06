@@ -34,6 +34,11 @@ class Customer
      */
     private $dateEdited;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="customers")
+     */
+    private $message;
+
     public function __construct()
     {
         
@@ -76,6 +81,18 @@ class Customer
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
+
+        return $this;
+    }
+
+    public function getMessage(): ?Message
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?Message $message): self
+    {
+        $this->message = $message;
 
         return $this;
     }

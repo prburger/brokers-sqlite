@@ -13,15 +13,13 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('sentBy')
+/*             ->add('brokers')
+            ->add('customers')
+            ->add('suppliers') */
             ->add('text')
             ->add('dateAdded')
             ->add('dateEdited') 
-
-/*             ->add('sentToBrokers')
-            ->add('sentToSuppliers')
-            ->add('sentToCustomers')
-            ->add('getMessages')
- */        ;
+      ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

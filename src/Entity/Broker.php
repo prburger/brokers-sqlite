@@ -61,6 +61,11 @@ class Broker
      * @ORM\ManyToMany(targetEntity=Supplier::class)
      */
     private $suppliers;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="brokers")
+     */
+    private $message;
     
 
     public function __construct()
@@ -216,6 +221,18 @@ class Broker
     public function removeSupplier(Supplier $supplier): self
     {
         $this->suppliers->removeElement($supplier);
+
+        return $this;
+    }
+
+    public function getMessage(): ?Message
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?Message $message): self
+    {
+        $this->message = $message;
 
         return $this;
     }

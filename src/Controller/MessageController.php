@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Broker;
 use App\Entity\Message;
 use App\Form\MessageType;
 use App\Repository\BrokerRepository;
+use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
+use App\Repository\SupplierRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,12 +37,18 @@ class MessageController extends AbstractController
     public function new(
         Request $request, 
         ?int $broker_id,
-        BrokerRepository $brokerRepo
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo
     ): Response
     {
         $message = new Message();
         $broker = $brokerRepo->find($broker_id);
         $message->setSentBy($broker->getName());
+
+        $brokers = $brokerRepo->findAll();
+        $customers = $customerRepo->findAll();
+        $suppliers = $supplierRepo->findAll();
 
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
@@ -49,14 +58,25 @@ class MessageController extends AbstractController
             $entityManager->persist($message);
             $entityManager->flush();
 
-            //return $this->redirectToRoute('message_index');
             return $this->redirectToRoute('broker_edit', array('id'=>$broker_id));
         }
 
         return $this->render('message/new.html.twig' , [
             'message' => $message,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'brokers'=> $brokers ? $brokers : null,
+            'suppliers'=> $suppliers ? $suppliers : null,
+            'customers'=> $customers ? $customers : null,
         ]);
+    }
+  
+    /**
+     * @Route("/{id}/addBroker", name="message_addBroker", methods={"GET","POST"})
+    */
+    public function addBroker(Request $request, BrokerRepository $repo, Message $message, string $id): Response
+    {
+        $message->addBroker($repo->find($id));
+        return $this->redirectToRoute('message_index');
     }
 
     /**
@@ -72,10 +92,19 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}/edit", name="message_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Message $message): Response
+    public function edit(
+        Request $request, 
+        Message $message,  
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo): Response
     {
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
+
+        $brokers = $brokerRepo->findAll();
+        $customers = $customerRepo->findAll();
+        $suppliers = $supplierRepo->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -86,6 +115,9 @@ class MessageController extends AbstractController
         return $this->render('message/edit.html.twig', [
             'message' => $message,
             'form' => $form->createView(),
+            'brokers'=> $brokers ? $brokers : null,
+            'suppliers'=> $suppliers ? $suppliers : null,
+            'customers'=> $customers ? $customers : null,
         ]);
     }
 

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %}
 
 {% block title %}Edit Message{% endblock %}
 
@@ -10,4 +10,27 @@
     <a href="{{ path('message_index') }}">back to list</a>
 
     {{ include('message/_delete_form.html.twig') }}
+{% endblock %}
+ #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'message_edit'|trans|raw}}{% endblock %}
+
+{% block body %}
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'message_edit'|trans|raw}}
+        <div class="return_to_list_label">
+            {{ include('message/_delete_form.html.twig') }}
+            <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        {{ include('message/_form.html.twig', {'button_label': 'Update'}) }} 
+    </div>
+ </div>
+
 {% endblock %}

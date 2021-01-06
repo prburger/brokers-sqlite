@@ -3,12 +3,12 @@
 {% block title %}{{'customer_index'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <div class="page_form_heading">{{'customer_index'|trans|raw}}
-<div class="return_to_list_label">
-<a href="{{ path('customer_new') }}" title="{{'create_new_customer'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
+<div class="page_form_heading">{{'customer_index'|trans|raw}}
+    <div class="return_to_list_label">
+        <a href="{{ path('customer_new') }}" title="{{'create_new_customer'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
         <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
     </div>
-    </div>
+</div>
     
     <div class="index_table">
     <table class="table">

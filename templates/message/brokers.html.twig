@@ -1,0 +1,14 @@
+<div class="caption">Brokers</div>
+    <table width="100%" border="0">
+            <tbody>
+                {% for broker in brokers %}
+                    <tr>
+                        <td>{{ broker.name }}</td>
+                        <td>
+                            <a href="{{ path('message_addBroker', {'id':broker.id}) }}" title="{{'message_add_broker'|trans|raw}}"><i class="fas fa-plus page_icon"></i></a>    
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </table> 
+     
