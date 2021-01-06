@@ -2,32 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\Message;
+use App\Entity\Note;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MessageType extends AbstractType
+class Note1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sentBy')
-            ->add('text')
-            ->add('dateAdded')
-            ->add('dateEdited') 
-
-/*             ->add('sentToBrokers')
-            ->add('sentToSuppliers')
-            ->add('sentToCustomers')
-            ->add('getMessages')
- */        ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Message::class,
+            'data_class' => Note::class,
         ]);
     }
 }

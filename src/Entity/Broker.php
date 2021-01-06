@@ -41,10 +41,34 @@ class Broker
      * @ORM\JoinColumn(nullable=false)
      */
     private $contact;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Message::class)
+     */
+    private $messages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Note::class)
+     */
+    private $notes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Customer::class)
+     */
+    private $customers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Supplier::class)
+     */
+    private $suppliers;
     
 
     public function __construct()
     {
+        $this->messages = new ArrayCollection();
+        $this->notes = new ArrayCollection();
+        $this->customers = new ArrayCollection();
+        $this->suppliers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +120,102 @@ class Broker
     public function setContact(Contact $contact): self
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        $this->messages->removeElement($message);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        $this->notes->removeElement($note);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Customer[]
+     */
+    public function getCustomers(): Collection
+    {
+        return $this->customers;
+    }
+
+    public function addCustomer(Customer $customer): self
+    {
+        if (!$this->customers->contains($customer)) {
+            $this->customers[] = $customer;
+        }
+
+        return $this;
+    }
+
+    public function removeCustomer(Customer $customer): self
+    {
+        $this->customers->removeElement($customer);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supplier[]
+     */
+    public function getSuppliers(): Collection
+    {
+        return $this->suppliers;
+    }
+
+    public function addSupplier(Supplier $supplier): self
+    {
+        if (!$this->suppliers->contains($supplier)) {
+            $this->suppliers[] = $supplier;
+        }
+
+        return $this;
+    }
+
+    public function removeSupplier(Supplier $supplier): self
+    {
+        $this->suppliers->removeElement($supplier);
 
         return $this;
     }

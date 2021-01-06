@@ -34,8 +34,15 @@ class Message
      */
     private $dateEdited;
 
+    /**
+     * @ORM\Column(type="string", length=120, nullable=true)
+     */
+    private $sentBy;
+
     public function __construct()
     {
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
     }
 
     public function getId(): ?int
@@ -75,6 +82,18 @@ class Message
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
+
+        return $this;
+    }
+
+    public function getSentBy(): ?string
+    {
+        return $this->sentBy;
+    }
+
+    public function setSentBy(?string $sentBy): self
+    {
+        $this->sentBy = $sentBy;
 
         return $this;
     }

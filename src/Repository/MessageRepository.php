@@ -22,6 +22,19 @@ class MessageRepository extends ServiceEntityRepository
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */
+    public function findByName(string $name)
+    {
+        return $this->createQueryBuilder('m')
+        ->andWhere('m.sentBy=:name')
+        ->setParameter('name', $name)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    // /**
+    //  * @return Message[] Returns an array of Message objects
+    //  */
     /*
     public function findByExampleField($value)
     {

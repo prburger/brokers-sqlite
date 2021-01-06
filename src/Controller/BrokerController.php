@@ -136,7 +136,7 @@ class BrokerController extends AbstractController
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
-        $messages = $messageRepo->findAll($broker->getId());
+        $messages = $messageRepo->findByName($broker->getName());
         $notes = $noteRepo->findAll($broker->getId());
         $suppliers = $supplierRepo->findAll($broker->getId());
         $customers = $customerRepo->findAll($broker->getId());
