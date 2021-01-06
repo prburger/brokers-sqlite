@@ -141,6 +141,10 @@
                 <source>action.edit</source>
                 <target>Edit</target>
             </trans-unit>
+            <trans-unit id="action.delete">
+                <source>action.delete</source>
+                <target>Delete</target>
+            </trans-unit>
             <trans-unit id="action.edit_post">
                 <source>action.edit_post</source>
                 <target>Edit post</target>
@@ -645,6 +649,11 @@
                 <source>message_text_label</source>
                 <target>Message text</target>
             </trans-unit>
+            
+            <trans-unit id="Sent by">
+                <source>Sent by</source>
+                <target>Sent By</target>
+            </trans-unit>
             <trans-unit id="Name">
                 <source>Name</source>
                 <target>Name</target>
@@ -682,10 +691,25 @@
                 <source>Notes</source>
                 <target>Notes</target>
             </trans-unit>
-            
+            <trans-unit id="message_add_broker">
+                <source>message_add_broker</source>
+                <target>Add broker</target>
+            </trans-unit>
+            <trans-unit id="message_add_customer">
+                <source>message_add_customer</source>
+                <target>Add customer</target>
+            </trans-unit>
+            <trans-unit id="message_add_supplier">
+                <source>message_add_supplier</source>
+                <target>Add supplier</target>
+            </trans-unit>
             <trans-unit id="Messages">
                 <source>Messages</source>
                 <target>Messages</target>
+            </trans-unit>
+            <trans-unit id="message_edit">
+                <source>message_edit</source>
+                <target>Edit message</target>
             </trans-unit>
             <trans-unit id="broker_show">
                 <source>broker_show</source>

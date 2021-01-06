@@ -1,0 +1,12 @@
+<div class="caption">Customers</div>
+    <table width="100%" border="0">
+            <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.name }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </table> 
+

@@ -1,24 +1,40 @@
-<div class="row">
-    <div class="col form_component">        
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form_component_title">{{'form_component_messages_title'|trans|raw}}</div>
+    <div class="row">
+        <div class="col form_component">        
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form_component_title">{{'form_component_messages_title'|trans|raw}}</div>
+                </div>
+                <div class="col-sm-6">
+                    <a class="form_component_link" href="{{ path('message_new',{'broker_id': broker.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
+                    <i class="fas fa-plus page_icon"></i>
+                    </a>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <a class="form_component_link" href="{{ path('message_new',{'broker_id': broker.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
-                <i class="fas fa-plus page_icon"></i>
-                </a>
-            </div>
-        </div>
 
-    {% if messages %}        
-    <ul>
-        {% for message in messages %}
-            <li>{{message.text}}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
-    {% endif %}
-</div>
+            {% if messages %}        
+            <div class="form_component_container">
+                <table class="form_component_table">
+                    <tbody>
+                        {% for message in messages %}
+                            <tr>
+                                <td>{{message.text}}</td>
+                                <td class="action_column">
+                                    {# {{ include('message/_delete_form.html.twig') }}  
+                                    <a class="form_component_link" href="{{ path('message_show',{'id': message.id}) }}" title="{{'action.show'|trans|raw}}">
+                                    <i class="fas fa-glasses page_icon"></i>
+                                    </a>
+                                    #}
+                                    <a class="form_component_link" href="{{ path('message_edit',{'id': message.id}) }}" title="{{'action.edit'|trans|raw}}">
+                                    <i class="fas fa-edit page_icon"></i>
+                                    </a>                                     
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
+            {% endif %}
+    </div>
 </div>

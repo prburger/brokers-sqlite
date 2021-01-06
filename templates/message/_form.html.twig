@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_widget(form) }}
+        </div>
+        <div class="col-sm-6">        
+            <div class="form_component">        
+                {% include 'message/brokers.html.twig' %}
+            </div>
+            <div class="form_component">                
+                {% include 'message/suppliers.html.twig' %}
+            </div>
+            <div class="form_component">        
+                {% include 'message/customers.html.twig' %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn">{{ button_label|default('Save') }}</button>
+        </div>
+    </div>
 {{ form_end(form) }}
