@@ -1,25 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'broker_edit'|trans|raw}}{% endblock %}
+{% block title %}{{'broker_show'|trans|raw}}{% endblock %}
 
 {% block body %}
+{# 
 <div class="page_form_header">
     <div class="page_form_heading">
         {{'broker_show'|trans|raw}}
         <div class="return_to_list_label">
             {{ include('broker/_delete_form.html.twig') }}
             <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
-            <a href="{{ path('broker_edit',{'id':broker.id}) }}" title="{{'action_edit'|trans|raw}}"><i class="fas fa-edit page_icon"></i></a>    
         </div>
     </div>
 </div>
 
-{# 
 <div class="row">
     <div class="col">
-        {{ include('broker/_form.html.twig', {'button_label': 'Update'}) }} 
+        {{ include('broker/_form.html.twig', {'button_label': 'Cancel'}) }} 
     </div>
- </div> 
+ </div>
+
+{% endblock %}
  #}
+
+ <div class="form_div">
+    
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_widget(form) }}
+            {% include 'broker/messages.html.twig' %}
+            {% include 'broker/notes.html.twig' %}
+            {% include 'broker/suppliers.html.twig' %}
+            {% include 'broker/customers.html.twig' %} 
+        </div>
+
+        <div class="col-sm-6">
+        {{ form_widget(contact) }}
+        </div>
+    </div>
+ {#    <div class="row">
+        <div class="col-sm-12 form_button">
+            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+        </div>
+    </div> #}
+
+    {{ form_end(form) }}
+</div>
 
 {% endblock %}

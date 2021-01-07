@@ -63,6 +63,11 @@ class Message
         $this->suppliers = new ArrayCollection();
     }
 
+    public function setId(string $id)
+    {
+        $this->id = $id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

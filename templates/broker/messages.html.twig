@@ -19,11 +19,6 @@
                             <tr>
                                 <td>{{message.text}}</td>
                                 <td class="action_column">
-                                    {# {{ include('message/_delete_form.html.twig') }}  
-                                    <a class="form_component_link" href="{{ path('message_show',{'id': message.id}) }}" title="{{'action.show'|trans|raw}}">
-                                    <i class="fas fa-glasses page_icon"></i>
-                                    </a>
-                                    #}
                                     <a class="form_component_link" href="{{ path('message_edit',{'id': message.id}) }}" title="{{'action.edit'|trans|raw}}">
                                     <i class="fas fa-edit page_icon"></i>
                                     </a>                                     
