@@ -43,6 +43,7 @@ class MessageController extends AbstractController
     ): Response
     {
         $message = new Message();
+        $message->setId("1");
         $broker = $brokerRepo->find($broker_id);
         $message->setSentBy($broker->getName());
 
@@ -71,11 +72,56 @@ class MessageController extends AbstractController
     }
   
     /**
-     * @Route("/{id}/addBroker", name="message_addBroker", methods={"GET","POST"})
+     * @Route("/insert/{message}", name="message_insertBroker", methods={"GET","POST"})
     */
-    public function addBroker(Request $request, BrokerRepository $repo, Message $message, string $id): Response
+    public function insertBroker($message): Response
     {
-        $message->addBroker($repo->find($id));
+      //  $message->addBroker($repo->find($id));
+        return $this->redirectToRoute('message_index');
+    }
+
+    /**
+     * @Route("/remove/{message}/{broker}", name="message_removeBroker", methods={"GET","POST"})
+    */
+    public function removeBroker($message, $broker): Response
+    {
+        //$message->removeBroker($broker);
+        return $this->redirectToRoute('message_index');
+    }
+
+    /**
+     * @Route("/insert/{message}", name="message_insertCustomer", methods={"GET","POST"})
+    */
+    public function insertCustomer($message): Response
+    {
+      //  $message->addBroker($repo->find($id));
+        return $this->redirectToRoute('message_index');
+    }
+
+    /**
+     * @Route("/remove/{message}/{customer}", name="message_removeCustomer", methods={"GET","POST"})
+    */
+    public function removeCustomer($message, $customer): Response
+    {
+        //$message->removeBroker($broker);
+        return $this->redirectToRoute('message_index');
+    }
+
+    /**
+     * @Route("/insert/{message}", name="message_insertSupplier", methods={"GET","POST"})
+    */
+    public function insertSupplier($message): Response
+    {
+      //  $message->addBroker($repo->find($id));
+        return $this->redirectToRoute('message_index');
+    }
+
+    /**
+     * @Route("/remove/{message}/{supplier}", name="message_removeSupplier", methods={"GET","POST"})
+    */
+    public function removeSupplier($message, $supplier): Response
+    {
+        //$message->removeBroker($broker);
         return $this->redirectToRoute('message_index');
     }
 

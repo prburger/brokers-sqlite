@@ -54,19 +54,23 @@ class BrokerController extends AbstractController
      * @Route("/new", name="broker_new", methods={"GET","POST"})
      */
     public function new(Request $request, 
-    SupplierRepository $suppliers, 
-    CustomerRepository $customers, 
-    MessageRepository $messages, 
-    NoteRepository $notes): Response
+    SupplierRepository $supplierRepo, 
+    CustomerRepository $customerRepo, 
+    MessageRepository $messageRepo, 
+    NoteRepository $noteRepo): Response
     {
         $broker = new Broker();
+        $broker->setId(0);
         $broker->setDateAdded(new \DateTime());
         $broker->setDateEdited(new \DateTime());       
           
         $broker->setContact(new Contact());  
         $broker->getContact()->setDateAdded(new \DateTime());
         $broker->getContact()->setDateEdited(new \DateTime());       
-        
+        $messages = $messageRepo->findAll($broker->getId());
+        $notes = $noteRepo->findAll($broker->getId());
+        $suppliers = $supplierRepo->findAll($broker->getId());
+        $customers = $customerRepo->findAll($broker->getId());
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
@@ -83,11 +87,11 @@ class BrokerController extends AbstractController
         return $this->render('broker/new.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
-            'contact'=>$contactForm->createView(),
-            'messages'=>null,
-            'notes'=>null,
-            'customers'=>null,
-            'suppliers'=>null
+            'contact'=>$contactForm->createView(),          
+            'messages' => $messages ? $messages :null,
+            'notes' => $notes ? $notes : null,            
+            'suppliers' => $suppliers ? $suppliers : null,
+            'customers' => $customers ? $customers : null,
         ]);
     }
 

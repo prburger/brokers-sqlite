@@ -691,17 +691,41 @@
                 <source>Notes</source>
                 <target>Notes</target>
             </trans-unit>
-            <trans-unit id="message_add_broker">
-                <source>message_add_broker</source>
-                <target>Add broker</target>
+            <trans-unit id="message_insert_broker">
+                <source>message_insert_broker</source>
+                <target>Insert broker</target>
             </trans-unit>
-            <trans-unit id="message_add_customer">
-                <source>message_add_customer</source>
-                <target>Add customer</target>
+            <trans-unit id="message_insert_customer">
+                <source>message_insert_customer</source>
+                <target>Insert customer</target>
             </trans-unit>
-            <trans-unit id="message_add_supplier">
-                <source>message_add_supplier</source>
-                <target>Add supplier</target>
+            <trans-unit id="message_component_supplier_title">
+                <source>message_component_supplier_title</source>
+                <target>Suppliers</target>
+            </trans-unit>
+            <trans-unit id="message_component_broker_title">
+                <source>message_component_broker_title</source>
+                <target>Brokers</target>
+            </trans-unit>
+            <trans-unit id="message_component_customer_title">
+                <source>message_component_customer_title</source>
+                <target>Customers</target>
+            </trans-unit>
+            <trans-unit id="message_insert_supplier">
+                <source>message_insert_supplier</source>
+                <target>Insert supplier</target>
+            </trans-unit>
+            <trans-unit id="message_remove_broker">
+                <source>message_remove_broker</source>
+                <target>Remove broker</target>
+            </trans-unit>
+            <trans-unit id="message_remove_customer">
+                <source>message_remove_customer</source>
+                <target>Remove customer</target>
+            </trans-unit>
+            <trans-unit id="message_remove_supplier">
+                <source>message_remove_supplier</source>
+                <target>Remove supplier</target>
             </trans-unit>
             <trans-unit id="Messages">
                 <source>Messages</source>
@@ -717,11 +741,11 @@
             </trans-unit>
             <trans-unit id="broker_new">
                 <source>broker_new</source>
-                <target>Create Broker</target>
+                <target>New Broker</target>
             </trans-unit>
             <trans-unit id="supplier_new">
                 <source>supplier_new</source>
-                <target>Create Supplier</target>
+                <target>New Supplier</target>
             </trans-unit>
             <trans-unit id="action_edit">
                 <source>action_edit</source>
@@ -733,7 +757,7 @@
             </trans-unit>            
             <trans-unit id="customer_new">
                 <source>customer_new</source>
-                <target>Create Customer</target>
+                <target>New Customer</target>
             </trans-unit>
             <trans-unit id="customer_show">
                 <source>customer_show</source>
