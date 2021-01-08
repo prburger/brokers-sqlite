@@ -55,6 +55,7 @@ class BrokerController extends AbstractController
     public function new(Request $request): Response
     {
         $broker = new Broker();
+<<<<<<< HEAD
         $broker->setDateAdded(new \DateTime());
         $broker->setDateEdited(new \DateTime());
        // $broker->setId(0);
@@ -65,6 +66,10 @@ class BrokerController extends AbstractController
 
 //        $broker->setContact(new Contact());
         
+=======
+        //$broker->setId(0);
+       
+>>>>>>> parent of f3133de... 500 error on heroku
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
