@@ -87,10 +87,10 @@ class CustomerController extends AbstractController
         CustomerRepository $customerRepo): Response
     {
         $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
-        $messages = $messageRepo->findByName($customer->getName());
-        $notes = $noteRepo->findAll($customer->getId());
-        $suppliers = $supplierRepo->findAll($customer->getId());
-        $customers = $customerRepo->findAll($customer->getId());
+        //$messages = $messageRepo->findByName($customer->getName());
+        //$notes = $noteRepo->findAll($customer->getId());
+        //$suppliers = $supplierRepo->findAll($customer->getId());
+        //$customers = $customerRepo->findAll($customer->getId());
 
         $form = $this->createForm(CustomerType::class, $customer);
         
@@ -99,9 +99,10 @@ class CustomerController extends AbstractController
             'form' => $form->createView(),
             'contact'=> $contactForm->createView(),
             'messages' => $customer->getMessages(),
-            'notes' => $customer->getNotes(),            
-            'suppliers' => $customer->getSuppliers(),
-            'brokers' => $customer->getBrokers(),
+            'notes' => $customer->getNotes(),   
+            'products'=>$customer->getProducts()         
+            // 'suppliers' => $customer->getSuppliers(),
+            // 'brokers' => $customer->getBrokers(),
         ]);
 
         return $this->render('customer/show.html.twig', [
@@ -117,7 +118,13 @@ class CustomerController extends AbstractController
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
+        $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
+        $contactForm->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+           // $customer->setContact($contactForm->getData());
+            $this->getDoctrine()->getManager()->persist($customer);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('customer_index');
@@ -126,6 +133,10 @@ class CustomerController extends AbstractController
         return $this->render('customer/edit.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
+            'messages'=>$customer->getMessages(),
+            'products'=>$customer->getProducts(),
+            'notes'=>$customer->getNotes(),
+            'contact'=>$contactForm->createView()
         ]);
     }
 

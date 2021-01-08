@@ -35,8 +35,7 @@ class Customer
     private $dateEdited;
 
     /**
-     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity=Contact::class, cascade={"persist", "remove"})
      */
     private $contact;
 
@@ -50,12 +49,18 @@ class Customer
      */
     private $products;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->notes = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function setId($id)
@@ -160,6 +165,36 @@ class Customer
     public function removeProduct(Product $product): self
     {
         $this->products->removeElement($product);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getCustomer() === $this) {
+                $message->setCustomer(null);
+            }
+        }
 
         return $this;
     }

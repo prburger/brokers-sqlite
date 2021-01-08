@@ -71,6 +71,7 @@ class Contact
 
     public function __construct()
     {
+        // $this->id = 0;
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
     }
@@ -199,4 +200,5 @@ class Contact
 
         return $this;
     }
+
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210108010956 extends AbstractMigration
+final class Version20210108054157 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -20,11 +20,11 @@ final class Version20210108010956 extends AbstractMigration
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_F6AAF03BE7A1254A');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__broker AS SELECT id, contact_id, name, date_added, date_edited FROM broker');
+        $this->addSql('DROP TABLE broker_contact');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__broker AS SELECT id, name, date_added, date_edited FROM broker');
         $this->addSql('DROP TABLE broker');
-        $this->addSql('CREATE TABLE broker (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER NOT NULL, name VARCHAR(120) NOT NULL COLLATE BINARY, date_added DATE NOT NULL, date_edited DATE NOT NULL, CONSTRAINT FK_F6AAF03BE7A1254A FOREIGN KEY (contact_id) REFERENCES contact (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('INSERT INTO broker (id, contact_id, name, date_added, date_edited) SELECT id, contact_id, name, date_added, date_edited FROM __temp__broker');
+        $this->addSql('CREATE TABLE broker (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER DEFAULT NULL, name VARCHAR(120) NOT NULL COLLATE BINARY, date_added DATE NOT NULL, date_edited DATE NOT NULL, CONSTRAINT FK_F6AAF03BE7A1254A FOREIGN KEY (contact_id) REFERENCES contact (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO broker (id, name, date_added, date_edited) SELECT id, name, date_added, date_edited FROM __temp__broker');
         $this->addSql('DROP TABLE __temp__broker');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_F6AAF03BE7A1254A ON broker (contact_id)');
         $this->addSql('DROP INDEX IDX_1DF33856CC064FC');
@@ -63,13 +63,15 @@ final class Version20210108010956 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__broker_supplier');
         $this->addSql('CREATE INDEX IDX_C6F5157F6CC064FC ON broker_supplier (broker_id)');
         $this->addSql('CREATE INDEX IDX_C6F5157F2ADD6D8C ON broker_supplier (supplier_id)');
-        $this->addSql('DROP INDEX UNIQ_81398E09E7A1254A');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__customer AS SELECT id, contact_id, name, date_added, date_edited FROM customer');
-        $this->addSql('DROP TABLE customer');
-        $this->addSql('CREATE TABLE customer (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER NOT NULL, name VARCHAR(120) NOT NULL COLLATE BINARY, date_added DATE NOT NULL, date_edited DATE NOT NULL, CONSTRAINT FK_81398E09E7A1254A FOREIGN KEY (contact_id) REFERENCES contact (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('INSERT INTO customer (id, contact_id, name, date_added, date_edited) SELECT id, contact_id, name, date_added, date_edited FROM __temp__customer');
-        $this->addSql('DROP TABLE __temp__customer');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_81398E09E7A1254A ON customer (contact_id)');
+        $this->addSql('DROP INDEX IDX_50BF4286E7A1254A');
+        $this->addSql('DROP INDEX IDX_50BF42869395C3F3');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__customer_contact AS SELECT customer_id, contact_id FROM customer_contact');
+        $this->addSql('DROP TABLE customer_contact');
+        $this->addSql('CREATE TABLE customer_contact (customer_id INTEGER NOT NULL, contact_id INTEGER NOT NULL, PRIMARY KEY(customer_id, contact_id), CONSTRAINT FK_50BF42869395C3F3 FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_50BF4286E7A1254A FOREIGN KEY (contact_id) REFERENCES contact (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO customer_contact (customer_id, contact_id) SELECT customer_id, contact_id FROM __temp__customer_contact');
+        $this->addSql('DROP TABLE __temp__customer_contact');
+        $this->addSql('CREATE INDEX IDX_50BF4286E7A1254A ON customer_contact (contact_id)');
+        $this->addSql('CREATE INDEX IDX_50BF42869395C3F3 ON customer_contact (customer_id)');
         $this->addSql('DROP INDEX IDX_9B2C5E6326ED0855');
         $this->addSql('DROP INDEX IDX_9B2C5E639395C3F3');
         $this->addSql('CREATE TEMPORARY TABLE __temp__customer_note AS SELECT customer_id, note_id FROM customer_note');
@@ -88,7 +90,29 @@ final class Version20210108010956 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__customer_product');
         $this->addSql('CREATE INDEX IDX_CF97A0134584665A ON customer_product (product_id)');
         $this->addSql('CREATE INDEX IDX_CF97A0139395C3F3 ON customer_product (customer_id)');
-        $this->addSql('ALTER TABLE message ADD COLUMN date_sent DATE DEFAULT NULL');
+        $this->addSql('DROP INDEX IDX_AA6094C1537A1329');
+        $this->addSql('DROP INDEX IDX_AA6094C19395C3F3');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__customer_message AS SELECT customer_id, message_id FROM customer_message');
+        $this->addSql('DROP TABLE customer_message');
+        $this->addSql('CREATE TABLE customer_message (customer_id INTEGER NOT NULL, message_id INTEGER NOT NULL, PRIMARY KEY(customer_id, message_id), CONSTRAINT FK_AA6094C19395C3F3 FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_AA6094C1537A1329 FOREIGN KEY (message_id) REFERENCES message (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO customer_message (customer_id, message_id) SELECT customer_id, message_id FROM __temp__customer_message');
+        $this->addSql('DROP TABLE __temp__customer_message');
+        $this->addSql('CREATE INDEX IDX_AA6094C1537A1329 ON customer_message (message_id)');
+        $this->addSql('CREATE INDEX IDX_AA6094C19395C3F3 ON customer_message (customer_id)');
+        $this->addSql('DROP INDEX IDX_B6BD307F9395C3F3');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__message AS SELECT id, customer_id, text, date_added, date_edited, date_sent FROM message');
+        $this->addSql('DROP TABLE message');
+        $this->addSql('CREATE TABLE message (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, customer_id INTEGER DEFAULT NULL, text CLOB NOT NULL COLLATE BINARY, date_added DATE NOT NULL, date_edited DATE NOT NULL, date_sent DATE DEFAULT NULL, CONSTRAINT FK_B6BD307F9395C3F3 FOREIGN KEY (customer_id) REFERENCES customer (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO message (id, customer_id, text, date_added, date_edited, date_sent) SELECT id, customer_id, text, date_added, date_edited, date_sent FROM __temp__message');
+        $this->addSql('DROP TABLE __temp__message');
+        $this->addSql('CREATE INDEX IDX_B6BD307F9395C3F3 ON message (customer_id)');
+        $this->addSql('DROP INDEX UNIQ_9B2A6C7EE7A1254A');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__supplier AS SELECT id, contact_id, name, date_added, date_edited FROM supplier');
+        $this->addSql('DROP TABLE supplier');
+        $this->addSql('CREATE TABLE supplier (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER NOT NULL, name VARCHAR(120) NOT NULL COLLATE BINARY, date_added DATE NOT NULL, date_edited DATE NOT NULL, CONSTRAINT FK_9B2A6C7EE7A1254A FOREIGN KEY (contact_id) REFERENCES contact (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO supplier (id, contact_id, name, date_added, date_edited) SELECT id, contact_id, name, date_added, date_edited FROM __temp__supplier');
+        $this->addSql('DROP TABLE __temp__supplier');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_9B2A6C7EE7A1254A ON supplier (contact_id)');
         $this->addSql('DROP INDEX IDX_37D84460537A1329');
         $this->addSql('DROP INDEX IDX_37D844602ADD6D8C');
         $this->addSql('CREATE TEMPORARY TABLE __temp__supplier_message AS SELECT supplier_id, message_id FROM supplier_message');
@@ -137,13 +161,15 @@ final class Version20210108010956 extends AbstractMigration
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE broker_contact (broker_id INTEGER NOT NULL, contact_id INTEGER NOT NULL, PRIMARY KEY(broker_id, contact_id))');
+        $this->addSql('CREATE INDEX IDX_FB00E5C2E7A1254A ON broker_contact (contact_id)');
+        $this->addSql('CREATE INDEX IDX_FB00E5C26CC064FC ON broker_contact (broker_id)');
         $this->addSql('DROP INDEX UNIQ_F6AAF03BE7A1254A');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__broker AS SELECT id, contact_id, name, date_added, date_edited FROM broker');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__broker AS SELECT id, name, date_added, date_edited FROM broker');
         $this->addSql('DROP TABLE broker');
-        $this->addSql('CREATE TABLE broker (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER NOT NULL, name VARCHAR(120) NOT NULL, date_added DATE NOT NULL, date_edited DATE NOT NULL)');
-        $this->addSql('INSERT INTO broker (id, contact_id, name, date_added, date_edited) SELECT id, contact_id, name, date_added, date_edited FROM __temp__broker');
+        $this->addSql('CREATE TABLE broker (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR(120) NOT NULL, date_added DATE NOT NULL, date_edited DATE NOT NULL)');
+        $this->addSql('INSERT INTO broker (id, name, date_added, date_edited) SELECT id, name, date_added, date_edited FROM __temp__broker');
         $this->addSql('DROP TABLE __temp__broker');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_F6AAF03BE7A1254A ON broker (contact_id)');
         $this->addSql('DROP INDEX IDX_DCE6F7086CC064FC');
         $this->addSql('DROP INDEX IDX_DCE6F7089395C3F3');
         $this->addSql('CREATE TEMPORARY TABLE __temp__broker_customer AS SELECT broker_id, customer_id FROM broker_customer');
@@ -180,13 +206,24 @@ final class Version20210108010956 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__broker_supplier');
         $this->addSql('CREATE INDEX IDX_C6F5157F6CC064FC ON broker_supplier (broker_id)');
         $this->addSql('CREATE INDEX IDX_C6F5157F2ADD6D8C ON broker_supplier (supplier_id)');
-        $this->addSql('DROP INDEX UNIQ_81398E09E7A1254A');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__customer AS SELECT id, contact_id, name, date_added, date_edited FROM customer');
-        $this->addSql('DROP TABLE customer');
-        $this->addSql('CREATE TABLE customer (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER NOT NULL, name VARCHAR(120) NOT NULL, date_added DATE NOT NULL, date_edited DATE NOT NULL)');
-        $this->addSql('INSERT INTO customer (id, contact_id, name, date_added, date_edited) SELECT id, contact_id, name, date_added, date_edited FROM __temp__customer');
-        $this->addSql('DROP TABLE __temp__customer');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_81398E09E7A1254A ON customer (contact_id)');
+        $this->addSql('DROP INDEX IDX_50BF42869395C3F3');
+        $this->addSql('DROP INDEX IDX_50BF4286E7A1254A');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__customer_contact AS SELECT customer_id, contact_id FROM customer_contact');
+        $this->addSql('DROP TABLE customer_contact');
+        $this->addSql('CREATE TABLE customer_contact (customer_id INTEGER NOT NULL, contact_id INTEGER NOT NULL, PRIMARY KEY(customer_id, contact_id))');
+        $this->addSql('INSERT INTO customer_contact (customer_id, contact_id) SELECT customer_id, contact_id FROM __temp__customer_contact');
+        $this->addSql('DROP TABLE __temp__customer_contact');
+        $this->addSql('CREATE INDEX IDX_50BF42869395C3F3 ON customer_contact (customer_id)');
+        $this->addSql('CREATE INDEX IDX_50BF4286E7A1254A ON customer_contact (contact_id)');
+        $this->addSql('DROP INDEX IDX_AA6094C19395C3F3');
+        $this->addSql('DROP INDEX IDX_AA6094C1537A1329');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__customer_message AS SELECT customer_id, message_id FROM customer_message');
+        $this->addSql('DROP TABLE customer_message');
+        $this->addSql('CREATE TABLE customer_message (customer_id INTEGER NOT NULL, message_id INTEGER NOT NULL, PRIMARY KEY(customer_id, message_id))');
+        $this->addSql('INSERT INTO customer_message (customer_id, message_id) SELECT customer_id, message_id FROM __temp__customer_message');
+        $this->addSql('DROP TABLE __temp__customer_message');
+        $this->addSql('CREATE INDEX IDX_AA6094C19395C3F3 ON customer_message (customer_id)');
+        $this->addSql('CREATE INDEX IDX_AA6094C1537A1329 ON customer_message (message_id)');
         $this->addSql('DROP INDEX IDX_9B2C5E639395C3F3');
         $this->addSql('DROP INDEX IDX_9B2C5E6326ED0855');
         $this->addSql('CREATE TEMPORARY TABLE __temp__customer_note AS SELECT customer_id, note_id FROM customer_note');
@@ -205,11 +242,20 @@ final class Version20210108010956 extends AbstractMigration
         $this->addSql('DROP TABLE __temp__customer_product');
         $this->addSql('CREATE INDEX IDX_CF97A0139395C3F3 ON customer_product (customer_id)');
         $this->addSql('CREATE INDEX IDX_CF97A0134584665A ON customer_product (product_id)');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__message AS SELECT id, text, date_added, date_edited FROM message');
+        $this->addSql('DROP INDEX IDX_B6BD307F9395C3F3');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__message AS SELECT id, customer_id, text, date_added, date_edited, date_sent FROM message');
         $this->addSql('DROP TABLE message');
-        $this->addSql('CREATE TABLE message (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, text CLOB NOT NULL, date_added DATE NOT NULL, date_edited DATE NOT NULL)');
-        $this->addSql('INSERT INTO message (id, text, date_added, date_edited) SELECT id, text, date_added, date_edited FROM __temp__message');
+        $this->addSql('CREATE TABLE message (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, customer_id INTEGER DEFAULT NULL, text CLOB NOT NULL, date_added DATE NOT NULL, date_edited DATE NOT NULL, date_sent DATE DEFAULT NULL)');
+        $this->addSql('INSERT INTO message (id, customer_id, text, date_added, date_edited, date_sent) SELECT id, customer_id, text, date_added, date_edited, date_sent FROM __temp__message');
         $this->addSql('DROP TABLE __temp__message');
+        $this->addSql('CREATE INDEX IDX_B6BD307F9395C3F3 ON message (customer_id)');
+        $this->addSql('DROP INDEX UNIQ_9B2A6C7EE7A1254A');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__supplier AS SELECT id, contact_id, name, date_added, date_edited FROM supplier');
+        $this->addSql('DROP TABLE supplier');
+        $this->addSql('CREATE TABLE supplier (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contact_id INTEGER NOT NULL, name VARCHAR(120) NOT NULL, date_added DATE NOT NULL, date_edited DATE NOT NULL)');
+        $this->addSql('INSERT INTO supplier (id, contact_id, name, date_added, date_edited) SELECT id, contact_id, name, date_added, date_edited FROM __temp__supplier');
+        $this->addSql('DROP TABLE __temp__supplier');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_9B2A6C7EE7A1254A ON supplier (contact_id)');
         $this->addSql('DROP INDEX IDX_37D844602ADD6D8C');
         $this->addSql('DROP INDEX IDX_37D84460537A1329');
         $this->addSql('CREATE TEMPORARY TABLE __temp__supplier_message AS SELECT supplier_id, message_id FROM supplier_message');

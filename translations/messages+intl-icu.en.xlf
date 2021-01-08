@@ -576,9 +576,13 @@
                 <source>create_new_customer</source>
                 <target>New customer</target>
             </trans-unit>
-            <trans-unit id="create_new_produuct">
+            <trans-unit id="create_new_product">
                 <source>create_new_product</source>
                 <target>New product</target>
+            </trans-unit>
+            <trans-unit id="supplier_show">
+                <source>supplier_show</source>
+                <target>Supplier Details</target>
             </trans-unit>
             <trans-unit id="Date sent">
                 <source>Date sent</source>
@@ -628,6 +632,10 @@
             <trans-unit id="form_component_messages_title">
                 <source>form_component_messages_title</source>
                 <target>Messages</target>
+            </trans-unit> 
+            <trans-unit id="form_component_products_title">
+                <source>form_component_products_title</source>
+                <target>Products</target>
             </trans-unit>            
             <trans-unit id="form_component_notes_title">
                 <source>form_component_notes_title</source>
