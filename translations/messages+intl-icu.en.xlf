@@ -580,9 +580,25 @@
                 <source>create_new_product</source>
                 <target>New product</target>
             </trans-unit>
+            <trans-unit id="form_component_specifications_title">
+                <source>form_component_specifications_title</source>
+                <target>Specifications</target>
+            </trans-unit>
             <trans-unit id="supplier_show">
                 <source>supplier_show</source>
                 <target>Supplier Details</target>
+            </trans-unit>
+             <trans-unit id="product_show">
+                <source>product_show</source>
+                <target>Product Details</target>
+            </trans-unit>
+            <trans-unit id="product_specifications_title">
+                <source>product_specifications_title</source>
+                <target>Specifications</target>
+            </trans-unit>            
+            <trans-unit id="product_notes_title">
+                <source>product_notes_title</source>
+                <target>Notes</target>
             </trans-unit>
             <trans-unit id="Date sent">
                 <source>Date sent</source>

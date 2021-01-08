@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,10 +35,23 @@ class Product
     private $dateEdited;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="products")
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $notes;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Specification::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $customer;
+    private $specifications;
+
+    public function __construct()
+    {
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
+        $this->notes = new ArrayCollection();
+        $this->specifications = new Specification();
+    }
 
     public function getId(): ?int
     {
@@ -79,14 +94,44 @@ class Product
         return $this;
     }
 
-    public function getCustomer(): ?Customer
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
     {
-        return $this->customer;
+        return $this->notes;
     }
 
-    public function setCustomer(?Customer $customer): self
+    public function addNote(Note $note): self
     {
-        $this->customer = $customer;
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getProduct() === $this) {
+                $note->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSpecifications(): ?Specification
+    {
+        return $this->specifications;
+    }
+
+    public function setSpecifications(Specification $specifications): self
+    {
+        $this->specifications = $specifications;
 
         return $this;
     }

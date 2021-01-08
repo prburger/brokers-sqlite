@@ -60,7 +60,8 @@ class SupplierController extends AbstractController
             'form' => $form->createView(),
             'contact' => $contactForm->createView(),
             'messages'=>$supplier->getMessages(),
-            'notes'=>$supplier->getNotes()
+            'notes'=>$supplier->getNotes(),
+            'products'=>$supplier->getProducts()
         ]);
     }
 

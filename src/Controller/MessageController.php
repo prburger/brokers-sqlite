@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Broker;
 use App\Entity\Message;
 use App\Entity\Supplier;
+use App\Entity\Product;
 
 use App\Form\MessageType;
 
@@ -12,6 +13,7 @@ use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
 use App\Repository\SupplierRepository;
+use App\Repository\ProductRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -154,6 +156,45 @@ class MessageController extends AbstractController
             'brokers'=> $brokers ? $brokers : null,
             // 'suppliers'=> $suppliers ? $suppliers : null,
             'customers'=> $customers ? $customers : null,
+        ]);
+    }
+
+       /**
+     * @Route("/{product_id}/new", name="message_newProduct", methods={"GET","POST"})
+     */
+     public function newProduct(
+        Request $request, 
+        ?int $product_id,
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo
+    ): Response
+    {
+        $message = new Message();
+        $message->setId("1");
+        $product = $productRepo->find($product_id);
+        /* $message->setSentBy($supplier->getName());
+        $brokers = $brokerRepo->findAll();
+        $customers = $customerRepo->findAll();
+        $suppliers = $supplierRepo->findAll(); */
+
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_edit', array('id'=>$product_id));
+        }
+
+        return $this->render('message/new.html.twig' , [
+            'message' => $message,
+            'form' => $form->createView(),
+            // 'notes'=> $product->getNotes(),
+            // 'specifications'=> $product->getSpecifications(),
         ]);
     }
   

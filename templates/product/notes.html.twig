@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col form_component">        
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form_component_title">{{'form_component_notes_title'|trans|raw}}</div>
+            </div>
+            <div class="col-sm-6">
+                <a class="form_component_link" href="supplier_newNote" title="{{'form_component_newNote'|trans|raw}}">
+                <i class="fas fa-plus page_icon"></i>
+                </a>
+            </div>
+        </div>
+
+    {% if notes %}        
+    <ul>
+        {% for note in notes %}
+            <li>{{note.details}}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
+    {% endif %}
+</div>
+</div>
