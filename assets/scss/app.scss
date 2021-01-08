@@ -138,7 +138,8 @@ padding:0;
 
 .page_title{
   display: inline;
-  //color:black;  
+  font-size:18px;
+  font-weight:bold;  
 }
 
 .page_form_heading{
@@ -349,7 +350,13 @@ header .locales a:hover small {
   margin:0;
   padding:0;
   overflow-y: scroll;
-  height:350px;
+  height:450px;
+}
+
+.form_div_no_scroll{
+  margin:0;
+  padding:0;
+  height:450px;
 }
 
 .form_component{
@@ -369,6 +376,7 @@ header .locales a:hover small {
   color:darkgreen;
   width:100%;
 }
+
 .form_component_container{
   overflow-y:scroll; 
   overflow-x:hidden;
@@ -379,12 +387,46 @@ header .locales a:hover small {
   margin-top:20px;
 }
 
+.product_form{
+  width:auto;
+  height:450px;
+  overflow:hidden;
+}
+
+.product_page_title{
+  border-bottom:black 1px solid;
+  font-size:18px;
+  font-weight:bold;
+  margin:auto;
+}
+
+.product_title{
+  margin:10px 0 0 0;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.product_specifications_title{
+  margin:10px 0 10px 0;
+  align:center;
+  width:100%;
+  font-weight:bold;
+}
+
+.product_specifications{
+  border:1px solid black;
+  min-height:300px;
+  margin:0 20px 0 20px;
+  overflow-y:scroll;
+  padding:20px;
+}
+
 .body-container {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   flex: 1;
   /* needed to prevent pages with a very small height and browsers not supporting flex */
-  min-height: 450px;
-  max-height: 450px;
+  min-height: 550px;
+  max-height: 550px;
   height: auto;
   margin:0 auto;
   padding:0;

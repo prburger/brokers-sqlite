@@ -13,8 +13,8 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('dateAdded')
-            ->add('dateEdited')
+      /*       ->add('dateAdded')
+            ->add('dateEdited') */
         ;
     }
 

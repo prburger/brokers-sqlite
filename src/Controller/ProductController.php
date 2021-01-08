@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Specification;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -38,11 +39,16 @@ class ProductController extends AbstractController
     public function new(Request $request): Response
     {
         $product = new Product();
+        $product->setSpecifications(new Specification());
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-
+        
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($product->getSpecifications());
+            // $entityManager->persist($product->getNotes());
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -52,6 +58,8 @@ class ProductController extends AbstractController
         return $this->render('product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'specifications'=>$product->getSpecifications(),
+            'notes'=>$product->getNotes() 
         ]);
     }
 
@@ -62,6 +70,8 @@ class ProductController extends AbstractController
     {
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'specifications'=>$product->getSpecifications(),
+            'notes'=>$product->getNotes()
         ]);
     }
 

@@ -61,12 +61,18 @@ class Supplier
      */
     private $notes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="supplier", orphanRemoval=true)
+     */
+    private $products;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function setID($id)
@@ -189,6 +195,36 @@ class Supplier
         if (!$this->notes->contains($note)) {
             $this->notes[] = $note;
             $note->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getSupplier() === $this) {
+                $product->setSupplier(null);
+            }
         }
 
         return $this;

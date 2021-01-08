@@ -35,6 +35,12 @@ class Note
      */
     private $supplier;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="notes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,6 +78,18 @@ class Note
     public function setSupplier(?Supplier $supplier): self
     {
         $this->supplier = $supplier;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
