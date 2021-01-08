@@ -70,10 +70,15 @@ class Broker
         $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
-        $this->contact = new Contact();
+       // $this->contact = new Contact();
     }
 
-     public function getContact(): Contact
+    public function setContact(Contact $contact)
+    {
+        $this->contact = $contact;
+    }
+
+    public function getContact(): Contact
     {
         return $this->contact;
     }
