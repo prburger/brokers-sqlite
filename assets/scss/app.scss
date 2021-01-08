@@ -134,7 +134,7 @@ overflow:hidden;
 .index_page_table{
   padding:0 20px 0 20px;
   margin:0;
-  height:450px;
+  height:550px;
   min-height: 450px;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background-color: white;
@@ -366,7 +366,10 @@ header .locales a:hover small {
 
 .form_component{
   display:block;
-  max-height:300px; 
+  max-height:200px;
+  min-height:200px; 
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding:10px 0 0 20px; 
   border:1px solid darkgreen;
   margin:5px 20px 0 20px;
@@ -477,6 +480,10 @@ footer #footer-resources i {
 
 /* Forms
    ------------------------------------------------------------------------- */
+.form_save_button{
+  margin-top:20px;
+}
+
 form{
   padding:20px;
 }

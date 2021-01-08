@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Broker;
 use App\Entity\Message;
+use App\Entity\Supplier;
+
 use App\Form\MessageType;
+
 use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
@@ -71,7 +74,7 @@ class MessageController extends AbstractController
         ]);
     }
 
-      /**
+    /**
      * @Route("/{customer_id}/new", name="message_newCustomer", methods={"GET","POST"})
      */
     public function newCustomer(
@@ -105,8 +108,49 @@ class MessageController extends AbstractController
         return $this->render('message/new.html.twig' , [
             'message' => $message,
             'form' => $form->createView(),
+            'messages'=>$customer->getMessages(),
             'brokers'=> $brokers ? $brokers : null,
             'suppliers'=> $suppliers ? $suppliers : null,
+            'customers'=> $customers ? $customers : null,
+        ]);
+    }
+
+    /**
+     * @Route("/{supplier_id}/new", name="message_newSupplier", methods={"GET","POST"})
+     */
+    public function newSupplier(
+        Request $request, 
+        ?int $supplier_id,
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo
+    ): Response
+    {
+        $message = new Message();
+        $message->setId("1");
+        // $supplier = $supplierRepo->find($supplier_id);
+        // $message->setSentBy($supplier->getName());
+
+        $brokers = $brokerRepo->findAll();
+        $customers = $customerRepo->findAll();
+        // $suppliers = $supplierRepo->findAll();
+
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('supplier_edit', array('id'=>$supplier_id));
+        }
+
+        return $this->render('message/new.html.twig' , [
+            'message' => $message,
+            'form' => $form->createView(),
+            'brokers'=> $brokers ? $brokers : null,
+            // 'suppliers'=> $suppliers ? $suppliers : null,
             'customers'=> $customers ? $customers : null,
         ]);
     }

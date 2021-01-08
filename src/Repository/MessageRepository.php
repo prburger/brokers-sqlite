@@ -22,7 +22,7 @@ class MessageRepository extends ServiceEntityRepository
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */
-    public function findByName(string $name)
+  /*   public function findByName(string $name)
     {
         return $this->createQueryBuilder('m')
         ->andWhere('m.sentBy=:name')
@@ -30,7 +30,7 @@ class MessageRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult()
         ;
-    }
+    } */
 
     // /**
     //  * @return Message[] Returns an array of Message objects

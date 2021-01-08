@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\Supplier;
 use App\Form\SupplierType;
+use\App\Form\ContactFormType;
 use App\Repository\SupplierRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,8 +39,13 @@ class SupplierController extends AbstractController
     public function new(Request $request): Response
     {
         $supplier = new Supplier();
+        $supplier->setId(0);
+        $supplier->setContact(new Contact());
+
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
+
+        $contactForm = $this->createForm(ContactFormType::class,$supplier->getContact());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -51,6 +58,7 @@ class SupplierController extends AbstractController
         return $this->render('supplier/new.html.twig', [
             'supplier' => $supplier,
             'form' => $form->createView(),
+            'contact' => $contactForm->createView()
         ]);
     }
 
@@ -59,9 +67,22 @@ class SupplierController extends AbstractController
      */
     public function show(Supplier $supplier): Response
     {
+        $contactForm = $this->createForm(ContactFormType::class, $supplier->getContact());
+
+        $form = $this->createForm(SupplierType::class, $supplier);
+        
         return $this->render('supplier/show.html.twig', [
             'supplier' => $supplier,
+            'form' => $form->createView(),
+            'contact'=> $contactForm->createView(),
+            'messages' => $supplier->getMessages(),
+            'notes' => $supplier->getNotes(),            
+            // 'suppliers' => $supplier->getSuppliers(),
+            //'customers' => $supplier->getCustomers(),
         ]);
+        /* return $this->render('supplier/show.html.twig', [
+            'supplier' => $supplier,
+        ]); */
     }
 
     /**

@@ -37,12 +37,6 @@ class Broker
     private $dateEdited;
 
     /**
-     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $contact;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
      */
     private $messages;
@@ -62,6 +56,11 @@ class Broker
      */
     private $suppliers;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist","remove"})
+     */
+    private $contact;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
@@ -71,8 +70,14 @@ class Broker
         $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
+        $this->contact = new Contact();
     }
 
+    public function getContact(): Contact
+    {
+        return $this->contact;
+    }
+    
     public function setId($id)
     {
         $this->id = $id;
@@ -115,18 +120,6 @@ class Broker
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
-
-        return $this;
-    }
-
-    public function getContact(): ?Contact
-    {
-        return $this->contact;
-    }
-
-    public function setContact(Contact $contact): self
-    {
-        $this->contact = $contact;
 
         return $this;
     }
@@ -223,6 +216,22 @@ class Broker
     public function removeSupplier(Supplier $supplier): self
     {
         $this->suppliers->removeElement($supplier);
+
+        return $this;
+    }
+
+    public function addContact(Contact $contact): self
+    {
+        if (!$this->contact->contains($contact)) {
+            $this->contact[] = $contact;
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): self
+    {
+        $this->contact->removeElement($contact);
 
         return $this;
     }

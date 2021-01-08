@@ -44,13 +44,27 @@ class Supplier
      */
     private $notes;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $contact;
+
     public function __construct()
     {
+
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
         $this->getNotes = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
     }
 
+    public function setID($id)
+    {
+        $this->id = $id;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +150,18 @@ class Supplier
     public function removeNote(Note $note): self
     {
         $this->notes->removeElement($note);
+
+        return $this;
+    }
+
+    public function getContact(): ?Contact
+    {
+        return $this->contact;
+    }
+
+    public function setContact(Contact $contact): self
+    {
+        $this->contact = $contact;
 
         return $this;
     }

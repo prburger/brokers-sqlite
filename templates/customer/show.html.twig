@@ -5,27 +5,28 @@
 {% block body %}
 
  <div class="form_div">
-    <div class="row page_title">{{'create_new_customer'|trans|raw}}</div>
+    <div class="row page_title">{{'customer_show'|trans|raw}}</div>
 
     {{ form_start(form) }}
     <div class="row">
         <div class="col-sm-6">
             {{ form_widget(form) }}
-            {% include 'customer/messages.html.twig' %}
-            {% include 'customer/notes.html.twig' %}
-            {% include 'customer/suppliers.html.twig' %}
-            {% include 'customer/brokers.html.twig' %} 
+            {# {% include 'customer/messages.html.twig' with messages %} #}
+            {# {% include 'customer/notes.html.twig' %} #}
+            {% include 'customer/products.html.twig' %}
+            {# {% include 'customer/suppliers.html.twig' %} #}
+            {# {% include 'customer/brokers.html.twig' %}  #}
+            {# <button class="btn btn-primary form_save_button">{{ button_label|default('Save') }}</button> #}
         </div>
 
         <div class="col-sm-6">
         {{ form_widget(contact) }}
         </div>
     </div>
- {#    <div class="row">
+     <div class="row">
         <div class="col-sm-12 form_button">
-            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
         </div>
-    </div> #}
+    </div> 
 
     {{ form_end(form) }}
 </div>
