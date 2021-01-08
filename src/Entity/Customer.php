@@ -35,13 +35,32 @@ class Customer
     private $dateEdited;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="customers")
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $message;
+    private $contact;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Note::class, cascade={"persist", "remove"})
+     */
+    private $notes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Product::class, cascade={"persist", "remove"})
+     */
+    private $products;
 
     public function __construct()
     {
-        
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
+        $this->notes = new ArrayCollection();
+        $this->products = new ArrayCollection();
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function getId(): ?int
@@ -85,14 +104,62 @@ class Customer
         return $this;
     }
 
-    public function getMessage(): ?Message
+    public function getContact(): ?Contact
     {
-        return $this->message;
+        return $this->contact;
     }
 
-    public function setMessage(?Message $message): self
+    public function setContact(Contact $contact): self
     {
-        $this->message = $message;
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        $this->notes->removeElement($note);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        $this->products->removeElement($product);
 
         return $this;
     }

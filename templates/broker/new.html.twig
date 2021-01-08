@@ -4,18 +4,16 @@
 
 {% block body %}
 
-<div class="page_form_header">
-    <div class="page_form_heading">
-        {{'broker_new'|trans|raw}}
-        <div class="return_to_list_label">
-            <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
-        </div>
-        </div>
+<div class="page_form_heading">
+    {{'broker_new'|trans|raw}}
+    <div class="return_to_list_label">
+        <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+    </div>
 </div>
 
 <div class="row">
     <div class="col">
-        {{ include('broker/_form.html.twig') }}
+        {{ include('_newForm.html.twig') }}
     </div>
 </div>
 

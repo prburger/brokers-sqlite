@@ -35,13 +35,20 @@ class Supplier
     private $dateEdited;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Message::class)
      */
-    private $message;
+    private $messages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Note::class)
+     */
+    private $notes;
 
     public function __construct()
     {
-        $this->getMessages = new ArrayCollection();
+        $this->getNotes = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,15 +92,52 @@ class Supplier
         return $this;
     }
 
-    public function getMessage(): ?Message
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
     {
-        return $this->message;
+        return $this->messages;
     }
 
-    public function setMessage(?Message $message): self
+    public function addMessage(Message $message): self
     {
-        $this->message = $message;
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+        }
 
         return $this;
     }
+
+    public function removeMessage(Message $message): self
+    {
+        $this->messages->removeElement($message);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        $this->notes->removeElement($note);
+
+        return $this;
+    }
+
 }

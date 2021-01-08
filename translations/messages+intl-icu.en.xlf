@@ -580,6 +580,10 @@
                 <source>create_new_product</source>
                 <target>New product</target>
             </trans-unit>
+            <trans-unit id="Date sent">
+                <source>Date sent</source>
+                <target>Date Sent</target>
+            </trans-unit>
             <trans-unit id="create_new_supplier">
                 <source>create_new_supplier</source>
                 <target>New supplier</target>
