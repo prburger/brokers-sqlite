@@ -55,21 +55,26 @@ class BrokerController extends AbstractController
     public function new(Request $request): Response
     {
         $broker = new Broker();
-        $broker->setId(0);
+        $broker->setDateAdded(new \DateTime());
+        $broker->setDateEdited(new \DateTime());
+       // $broker->setId(0);
        
-        $broker->setContact(new Contact());
+       $contact = new Contact();
+       $contact->setDateAdded(new \DateTime());
+       $contact->setDateEdited(new \DateTime());
+
+//        $broker->setContact(new Contact());
         
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
-        $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
+        $contactForm = $this->createForm(ContactFormType::class, $contact);
     
         
         if ($form->isSubmitted() && $form->isValid()) {
-            //$contact = $contactForm->getData();        
+            $contact = $contactForm->getData();        
             $entityManager = $this->getDoctrine()->getManager(); 
-            $entityManager->persist($broker->getContact());
-               
+            $entityManager->persist($contact);               
             $entityManager->persist($broker);
             $entityManager->flush();
 
