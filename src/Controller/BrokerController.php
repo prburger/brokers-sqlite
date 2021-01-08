@@ -55,8 +55,10 @@ class BrokerController extends AbstractController
     public function new(Request $request): Response
     {
         $broker = new Broker();
-        //$broker->setId(0);
+        $broker->setId(0);
        
+        $broker->setContact(new Contact());
+        
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
