@@ -220,19 +220,4 @@ class Broker
         return $this;
     }
 
-    public function addContact(Contact $contact): self
-    {
-        if (!$this->contact->contains($contact)) {
-            $this->contact[] = $contact;
-        }
-
-        return $this;
-    }
-
-    public function removeContact(Contact $contact): self
-    {
-        $this->contact->removeElement($contact);
-
-        return $this;
-    }
 }
