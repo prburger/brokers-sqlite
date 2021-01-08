@@ -32,6 +32,12 @@ class Product
      */
     private $dateEdited;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $customer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class Product
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): self
+    {
+        $this->customer = $customer;
 
         return $this;
     }

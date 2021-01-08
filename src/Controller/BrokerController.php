@@ -56,48 +56,13 @@ class BrokerController extends AbstractController
     public function new(Request $request): Response
     {
         $broker = new Broker();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 9352042... Revert "500 error on heroku"
+
         $broker->setDateAdded(new \DateTime());
         $broker->setDateEdited(new \DateTime());
-       // $broker->setId(0);
-=======
-        $broker->setId(0);
->>>>>>> parent of 4f640df... 500 error on heroku
-       
         $broker->setContact(new Contact());
         
-=======
-        //$broker->setId(0);
-       
->>>>>>> parent of f3133de... 500 error on heroku
-=======
-        //$broker->setId(0);
-       
->>>>>>> parent of f3133de... 500 error on heroku
-=======
-        //$broker->setId(0);
-       
->>>>>>> parent of f3133de... 500 error on heroku
-=======
-        $broker->setId(0);
-        $broker->setDateAdded(new \DateTime());
-        $broker->setDateEdited(new \DateTime());       
-          
-        $broker->setContact(new Contact());  
-        $broker->getContact()->setDateAdded(new \DateTime());
-        $broker->getContact()->setDateEdited(new \DateTime());       
-        $messages = $messageRepo->findAll($broker->getId());
-        $notes = $noteRepo->findAll($broker->getId());
-        $suppliers = $supplierRepo->findAll($broker->getId());
-        $customers = $customerRepo->findAll($broker->getId());
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+        $broker->setId(0);         
+               
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
@@ -118,29 +83,23 @@ class BrokerController extends AbstractController
         return $this->render('broker/new.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
-            'contact'=>$contactForm->createView(),          
-<<<<<<< HEAD
-=======
-            'messages' => $messages ? $messages :null,
-            'notes' => $notes ? $notes : null,            
-            'suppliers' => $suppliers ? $suppliers : null,
-            'customers' => $customers ? $customers : null,
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+            'contact'=>$contactForm->createView(),         
+            'messages' => $broker->getMessages(),
+            'notes' => $broker->getNotes(),            
+            'suppliers' => $broker->getSuppliers(),
+            'customers' => $broker->getCustomers(),
         ]);
     }
 
     /**
      * @Route("/{id}", name="broker_show", methods={"GET"})
      */
-<<<<<<< HEAD
-    public function show(Broker $broker): Response
-=======
+
     public function show(Broker $broker, 
     MessageRepository $messageRepo,
     NoteRepository $noteRepo,
     SupplierRepository $supplierRepo,
     CustomerRepository $customerRepo): Response
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     {
         // $contact = $contactRepo->find($broker->getContact()->getId());
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
@@ -165,15 +124,13 @@ class BrokerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="broker_edit", methods={"GET","POST"})
      */
-<<<<<<< HEAD
-    public function edit(Request $request, Broker $broker): Response
-=======
+
+
     public function edit(Request $request, Broker $broker, 
     MessageRepository $messageRepo,
     NoteRepository $noteRepo,
     SupplierRepository $supplierRepo,
     CustomerRepository $customerRepo): Response
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     {
    
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());

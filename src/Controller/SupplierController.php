@@ -58,7 +58,9 @@ class SupplierController extends AbstractController
         return $this->render('supplier/new.html.twig', [
             'supplier' => $supplier,
             'form' => $form->createView(),
-            'contact' => $contactForm->createView()
+            'contact' => $contactForm->createView(),
+            'messages'=>$supplier->getMessages(),
+            'notes'=>$supplier->getNotes()
         ]);
     }
 

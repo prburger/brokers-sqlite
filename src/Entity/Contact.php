@@ -69,7 +69,6 @@ class Contact
      */
     private $dateEdited;
 
-<<<<<<< HEAD
     public function __construct()
     {
         // $this->id = 0;
@@ -77,8 +76,6 @@ class Contact
         $this->setDateEdited(new \DateTime());
     }
 
-=======
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     public function getId(): ?int
     {
         return $this->id;

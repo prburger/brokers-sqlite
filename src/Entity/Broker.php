@@ -37,97 +37,42 @@ class Broker
     private $dateEdited;
 
     /**
-<<<<<<< HEAD
-     * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
-=======
-     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $contact;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Message::class)
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="broker", orphanRemoval=true)
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class)
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="broker", orphanRemoval=true)
      */
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class)
-     */
-    private $customers;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class)
+     * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="broker", orphanRemoval=true)
      */
     private $suppliers;
 
     /**
-<<<<<<< HEAD
-     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity=Customer::class, mappedBy="broker", orphanRemoval=true)
+     */
+    private $customers;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $contact;
-
+    
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime()); 
-        
-=======
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="brokers")
-     */
-    private $message;
-    
-
-    public function __construct()
-    {
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+       
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
-        $this->customers = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
-<<<<<<< HEAD
-        $this->contact = new Contact();
-    }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 9352042... Revert "500 error on heroku"
- 
-=======
-       // $this->contact = new Contact();
+        $this->customers = new ArrayCollection();
     }
 
->>>>>>> parent of 4f640df... 500 error on heroku
-    public function setContact(Contact $contact)
-    {
-        $this->contact = $contact;
-    }
-
-    public function getContact(): Contact
-=======
-
-     public function getContact(): Contact
->>>>>>> parent of f3133de... 500 error on heroku
-=======
-
-     public function getContact(): Contact
->>>>>>> parent of f3133de... 500 error on heroku
-=======
-
-     public function getContact(): Contact
->>>>>>> parent of f3133de... 500 error on heroku
-    {
-        return $this->contact;
-    }
-     
-    
     public function setId($id)
     {
         $this->id = $id;
@@ -186,6 +131,7 @@ class Broker
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
+            $message->setBroker($this);
         }
 
         return $this;
@@ -193,7 +139,12 @@ class Broker
 
     public function removeMessage(Message $message): self
     {
-        $this->messages->removeElement($message);
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getBroker() === $this) {
+                $message->setBroker(null);
+            }
+        }
 
         return $this;
     }
@@ -210,6 +161,7 @@ class Broker
     {
         if (!$this->notes->contains($note)) {
             $this->notes[] = $note;
+            $note->setBroker($this);
         }
 
         return $this;
@@ -217,31 +169,12 @@ class Broker
 
     public function removeNote(Note $note): self
     {
-        $this->notes->removeElement($note);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Customer[]
-     */
-    public function getCustomers(): Collection
-    {
-        return $this->customers;
-    }
-
-    public function addCustomer(Customer $customer): self
-    {
-        if (!$this->customers->contains($customer)) {
-            $this->customers[] = $customer;
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getBroker() === $this) {
+                $note->setBroker(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function removeCustomer(Customer $customer): self
-    {
-        $this->customers->removeElement($customer);
 
         return $this;
     }
@@ -258,6 +191,7 @@ class Broker
     {
         if (!$this->suppliers->contains($supplier)) {
             $this->suppliers[] = $supplier;
+            $supplier->setBroker($this);
         }
 
         return $this;
@@ -265,24 +199,56 @@ class Broker
 
     public function removeSupplier(Supplier $supplier): self
     {
-        $this->suppliers->removeElement($supplier);
+        if ($this->suppliers->removeElement($supplier)) {
+            // set the owning side to null (unless already changed)
+            if ($supplier->getBroker() === $this) {
+                $supplier->setBroker(null);
+            }
+        }
 
         return $this;
     }
 
-<<<<<<< HEAD
-=======
-    public function getMessage(): ?Message
+    /**
+     * @return Collection|Customer[]
+     */
+    public function getCustomers(): Collection
     {
-        return $this->message;
+        return $this->customers;
     }
 
-    public function setMessage(?Message $message): self
+    public function addCustomer(Customer $customer): self
     {
-        $this->message = $message;
+        if (!$this->customers->contains($customer)) {
+            $this->customers[] = $customer;
+            $customer->setBroker($this);
+        }
 
         return $this;
     }
 
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+    public function removeCustomer(Customer $customer): self
+    {
+        if ($this->customers->removeElement($customer)) {
+            // set the owning side to null (unless already changed)
+            if ($customer->getBroker() === $this) {
+                $customer->setBroker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getContact(): ?Contact
+    {
+        return $this->contact;
+    }
+
+    public function setContact(Contact $contact): self
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
 }

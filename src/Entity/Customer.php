@@ -35,35 +35,45 @@ class Customer
     private $dateEdited;
 
     /**
-<<<<<<< HEAD
-     * @ORM\ManyToMany(targetEntity=Contact::class, cascade={"persist", "remove"})
-=======
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="customers")
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
-     */
-    private $message;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
      */
     private $messages;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="customers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $broker;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $contact;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="customer", orphanRemoval=true)
+     */
+    private $notes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="customer", orphanRemoval=true)
+     */
+    private $products;
+
     public function __construct()
     {
-<<<<<<< HEAD
+        $this->id = 0;
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
-        $this->notes = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function setId($id)
     {
         $this->id = $id;
-=======
-        
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     }
 
     public function getId(): ?int
@@ -107,18 +117,6 @@ class Customer
         return $this;
     }
 
-    public function getMessage(): ?Message
-    {
-        return $this->message;
-    }
-
-    public function setMessage(?Message $message): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Message[]
      */
@@ -143,6 +141,90 @@ class Customer
             // set the owning side to null (unless already changed)
             if ($message->getCustomer() === $this) {
                 $message->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getBroker(): ?Broker
+    {
+        return $this->broker;
+    }
+
+    public function setBroker(?Broker $broker): self
+    {
+        $this->broker = $broker;
+
+        return $this;
+    }
+
+    public function getContact(): ?Contact
+    {
+        return $this->contact;
+    }
+
+    public function setContact(Contact $contact): self
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getCustomer() === $this) {
+                $note->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCustomer() === $this) {
+                $product->setCustomer(null);
             }
         }
 

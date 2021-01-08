@@ -1,15 +1,12 @@
-<<<<<<< HEAD
 <div class="form_div">
     {{ form_start(form) }}
 
     <div class="row">
             <div class="col-sm-6">
                 {{ form_widget(form) }}
-                {% include 'customer/messages.html.twig' %}
+                {% include 'customer/messages.html.twig' with messages %}
                 {% include 'customer/notes.html.twig' %}
                 {% include 'customer/products.html.twig' %}
-                {# {% include 'customer/suppliers.html.twig' %} #}
-                {# {% include 'customer/brokers.html.twig' %}  #}
             </div>
 
             <div class="col-sm-6">
@@ -23,9 +20,9 @@
         </div>
     {{ form_end(form) }}
 </div>
-=======
-{{ form_start(form) }}
+
+{# {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+ #}

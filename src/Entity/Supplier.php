@@ -45,18 +45,28 @@ class Supplier
      */
     private $contact;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="suppliers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $broker;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="supplier", orphanRemoval=true)
+     */
+    private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="supplier", orphanRemoval=true)
+     */
+    private $notes;
+
     public function __construct()
     {
-<<<<<<< HEAD
-
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
-        $this->getNotes = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
-=======
-        $this->getMessages = new ArrayCollection();
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     }
 
     public function setID($id)
@@ -105,19 +115,6 @@ class Supplier
         return $this;
     }
 
-    public function getMessage(): ?Message
-    {
-        return $this->message;
-    }
-
-    public function setMessage(?Message $message): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-<<<<<<< HEAD
-
     public function removeNote(Note $note): self
     {
         $this->notes->removeElement($note);
@@ -137,6 +134,64 @@ class Supplier
         return $this;
     }
 
-=======
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+    public function getBroker(): ?Broker
+    {
+        return $this->broker;
+    }
+
+    public function setBroker(?Broker $broker): self
+    {
+        $this->broker = $broker;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getSupplier() === $this) {
+                $message->setSupplier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setSupplier($this);
+        }
+
+        return $this;
+    }
+
 }
