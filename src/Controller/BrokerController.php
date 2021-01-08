@@ -62,11 +62,10 @@ class BrokerController extends AbstractController
         $form->handleRequest($request);
 
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
+    
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $contactForm->getData();        
-        }
-
-        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager(); 
             $entityManager->persist($contact);
                
