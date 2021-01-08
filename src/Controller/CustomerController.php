@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Form\CustomerType;
+use\App\Form\ContactFormType;
+
 use App\Repository\CustomerRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,8 +39,11 @@ class CustomerController extends AbstractController
     public function new(Request $request): Response
     {
         $customer = new Customer();
+        $customer->setId(0);
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
+
+        $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -51,6 +56,10 @@ class CustomerController extends AbstractController
         return $this->render('customer/new.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
+            'contact'=>$contactForm->createView(),
+            'messages'=>$customer->getMessages(),
+            'notes'=>$customer->getNotes(),
+            'products'=>$customer->getProducts()  
         ]);
     }
 
@@ -59,13 +68,7 @@ class CustomerController extends AbstractController
      */
     public function show(Customer $customer): Response
     {
-<<<<<<< HEAD
         $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
-        //$messages = $messageRepo->findByName($customer->getName());
-        //$notes = $noteRepo->findAll($customer->getId());
-        //$suppliers = $supplierRepo->findAll($customer->getId());
-        //$customers = $customerRepo->findAll($customer->getId());
-
         $form = $this->createForm(CustomerType::class, $customer);
         
         return $this->render('customer/show.html.twig', [
@@ -79,8 +82,7 @@ class CustomerController extends AbstractController
             // 'brokers' => $customer->getBrokers(),
         ]);
 
-=======
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
         ]);

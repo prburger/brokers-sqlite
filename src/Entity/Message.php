@@ -59,17 +59,23 @@ class Message
      */
     private $customer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $broker;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="messages")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $supplier;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
-<<<<<<< HEAD
         $this->setDateSent(new \DateTime());
-=======
-        $this->brokers = new ArrayCollection();
-        $this->customers = new ArrayCollection();
-        $this->suppliers = new ArrayCollection();
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     }
 
     public function setId(string $id)
@@ -193,7 +199,6 @@ class Message
         return $this;
     }
 
-<<<<<<< HEAD
     public function getCustomer(): ?Customer
     {
         return $this->customer;
@@ -202,50 +207,32 @@ class Message
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
-=======
-    public function removeCustomer(Customer $customer): self
-    {
-        if ($this->customers->removeElement($customer)) {
-            // set the owning side to null (unless already changed)
-            if ($customer->getMessage() === $this) {
-                $customer->setMessage(null);
-            }
-        }
 
         return $this;
     }
 
-    /**
-     * @return Collection|Supplier[]
-     */
-    public function getSuppliers(): Collection
+    public function getBroker(): ?Broker
     {
-        return $this->suppliers;
+        return $this->broker;
     }
 
-    public function addSupplier(Supplier $supplier): self
+    public function setBroker(?Broker $broker): self
     {
-        if (!$this->suppliers->contains($supplier)) {
-            $this->suppliers[] = $supplier;
-            $supplier->setMessage($this);
-        }
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+        $this->broker = $broker;
 
         return $this;
     }
 
-<<<<<<< HEAD
-=======
-    public function removeSupplier(Supplier $supplier): self
+    public function getSupplier(): ?Supplier
     {
-        if ($this->suppliers->removeElement($supplier)) {
-            // set the owning side to null (unless already changed)
-            if ($supplier->getMessage() === $this) {
-                $supplier->setMessage(null);
-            }
-        }
+        return $this->supplier;
+    }
+
+    public function setSupplier(?Supplier $supplier): self
+    {
+        $this->supplier = $supplier;
 
         return $this;
     }
->>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
+
 }
