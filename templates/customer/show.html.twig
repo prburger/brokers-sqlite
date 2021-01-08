@@ -3,6 +3,41 @@
 {% block title %}{{'customer_show'|trans|raw}}{% endblock %}
 
 {% block body %}
+
+ <div class="form_div">
+    <div class="row page_title">{{'create_new_customer'|trans|raw}}</div>
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_widget(form) }}
+            {% include 'customer/messages.html.twig' %}
+            {% include 'customer/notes.html.twig' %}
+            {% include 'customer/suppliers.html.twig' %}
+            {% include 'customer/brokers.html.twig' %} 
+        </div>
+
+        <div class="col-sm-6">
+        {{ form_widget(contact) }}
+        </div>
+    </div>
+ {#    <div class="row">
+        <div class="col-sm-12 form_button">
+            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+        </div>
+    </div> #}
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}
+{# 
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'customer_show'|trans|raw}}{% endblock %}
+
+{% block body %}
    <div class="page_form_heading">{{'customer_show'|trans|raw}}</div>
      <div class="return_to_list_label">
    {{ include('customer/_delete_form.html.twig') }} 
@@ -27,9 +62,10 @@
         </tbody>
     </table>
 
-{#     <a href="{{ path('customer_index') }}">back to list</a>
+     <a href="{{ path('customer_index') }}">back to list</a>
 
     <a href="{{ path('customer_edit', {'id': customer.id}) }}">edit</a>
 
-    {{ include('customer/_delete_form.html.twig') }} #}
+    {{ include('customer/_delete_form.html.twig') }} 
 {% endblock %}
+ #}

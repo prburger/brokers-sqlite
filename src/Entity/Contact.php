@@ -69,6 +69,12 @@ class Contact
      */
     private $dateEdited;
 
+    public function __construct()
+    {
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -43,33 +43,30 @@ class Broker
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Message::class)
+     * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class)
+     * @ORM\ManyToMany(targetEntity=Note::class, cascade={"persist"})
      */
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class)
+     * @ORM\ManyToMany(targetEntity=Customer::class, cascade={"persist"})
      */
     private $customers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class)
+     * @ORM\ManyToMany(targetEntity=Supplier::class, cascade={"persist"})
      */
     private $suppliers;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="brokers")
-     */
-    private $message;
-    
-
     public function __construct()
     {
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
+        
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
@@ -229,17 +226,4 @@ class Broker
 
         return $this;
     }
-
-    public function getMessage(): ?Message
-    {
-        return $this->message;
-    }
-
-    public function setMessage(?Message $message): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
 }

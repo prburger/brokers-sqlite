@@ -45,6 +45,46 @@ class MessageController extends AbstractController
         $message = new Message();
         $message->setId("1");
         $broker = $brokerRepo->find($broker_id);
+        // $message->setSentBy($broker->getName());
+
+        $brokers = $brokerRepo->findAll();
+        $customers = $customerRepo->findAll();
+        $suppliers = $supplierRepo->findAll();
+
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($message);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker_id));
+        }
+
+        return $this->render('message/new.html.twig' , [
+            'message' => $message,
+            'form' => $form->createView(),
+            'brokers'=> $brokers ? $brokers : null,
+            'suppliers'=> $suppliers ? $suppliers : null,
+            'customers'=> $customers ? $customers : null,
+        ]);
+    }
+
+      /**
+     * @Route("/{customer_id}/new", name="message_newCustomer", methods={"GET","POST"})
+     */
+    public function newCustomer(
+        Request $request, 
+        ?int $customer_id,
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo
+    ): Response
+    {
+        $message = new Message();
+        $message->setId("1");
+        $broker = $brokerRepo->find($broker_id);
         $message->setSentBy($broker->getName());
 
         $brokers = $brokerRepo->findAll();

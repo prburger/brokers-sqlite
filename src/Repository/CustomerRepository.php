@@ -40,6 +40,19 @@ class CustomerRepository extends ServiceEntityRepository
         return (new Paginator($qb))->paginate($page);
     }
 
+    /**
+     * @return Customer[] Returns an array of Customer objects
+    */ 
+    public function findById($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.ownerId = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
     // /**
     //  * @return Customer[] Returns an array of Customer objects
     //  */
