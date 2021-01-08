@@ -73,6 +73,7 @@ class Broker
         $this->contact = new Contact();
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
  
     public function setContact(Contact $contact)
     {
@@ -80,6 +81,10 @@ class Broker
     }
 
     public function getContact(): Contact
+=======
+
+     public function getContact(): Contact
+>>>>>>> parent of f3133de... 500 error on heroku
 =======
 
      public function getContact(): Contact
