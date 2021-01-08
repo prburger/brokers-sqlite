@@ -35,19 +35,13 @@ class Customer
     private $dateEdited;
 
     /**
+<<<<<<< HEAD
      * @ORM\ManyToMany(targetEntity=Contact::class, cascade={"persist", "remove"})
+=======
+     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="customers")
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
      */
-    private $contact;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Note::class, cascade={"persist", "remove"})
-     */
-    private $notes;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Product::class, cascade={"persist", "remove"})
-     */
-    private $products;
+    private $message;
 
     /**
      * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
@@ -56,6 +50,7 @@ class Customer
 
     public function __construct()
     {
+<<<<<<< HEAD
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->notes = new ArrayCollection();
@@ -66,6 +61,9 @@ class Customer
     public function setId($id)
     {
         $this->id = $id;
+=======
+        
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     }
 
     public function getId(): ?int
@@ -109,62 +107,14 @@ class Customer
         return $this;
     }
 
-    public function getContact(): ?Contact
+    public function getMessage(): ?Message
     {
-        return $this->contact;
+        return $this->message;
     }
 
-    public function setContact(Contact $contact): self
+    public function setMessage(?Message $message): self
     {
-        $this->contact = $contact;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Note[]
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): self
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes[] = $note;
-        }
-
-        return $this;
-    }
-
-    public function removeNote(Note $note): self
-    {
-        $this->notes->removeElement($note);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Product[]
-     */
-    public function getProducts(): Collection
-    {
-        return $this->products;
-    }
-
-    public function addProduct(Product $product): self
-    {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): self
-    {
-        $this->products->removeElement($product);
+        $this->message = $message;
 
         return $this;
     }

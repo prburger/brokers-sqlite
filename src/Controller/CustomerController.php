@@ -2,16 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Contact;
 use App\Entity\Customer;
-use App\Form\ContactFormType;
 use App\Form\CustomerType;
-use App\Repository\BrokerRepository;
-use App\Repository\ContactRepository;
 use App\Repository\CustomerRepository;
-use App\Repository\MessageRepository;
-use App\Repository\NoteRepository;
-use App\Repository\SupplierRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +18,8 @@ class CustomerController extends AbstractController
 {
     /**
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="customer_index")
-      * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="customer_index_paginated")
+     * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="customer_rss")
+     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="customer_index_paginated")
      * @Cache(smaxage="10")    
     */
     public function index(Request $_request, int $page = 1, string $_format="html", CustomerRepository $repository): Response
@@ -40,24 +34,11 @@ class CustomerController extends AbstractController
     /**
      * @Route("/new", name="customer_new", methods={"GET","POST"})
      */
-    public function new(
-        Request $request, 
-        SupplierRepository $supplierRepo, 
-        BrokerRepository $brokerRepo, 
-        MessageRepository $messageRepo, 
-        NoteRepository $noteRepo
-    ): Response
+    public function new(Request $request): Response
     {
-
         $customer = new Customer();
-        $customer->setId(0);          
-        $customer->setContact(new Contact());  
-        
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
-
-        $contactForm = $this->createForm(ContactFormType::class,$customer->getContact());
-        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -70,22 +51,15 @@ class CustomerController extends AbstractController
         return $this->render('customer/new.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
-            'contact'=>$contactForm->createView(),          
-            'messages' => $customer->getMessages(),
-            'notes' => $customer->getNotes(),        
         ]);
     }
 
     /**
      * @Route("/{id}", name="customer_show", methods={"GET"})
      */
-    public function show(
-        Customer $customer,
-        MessageRepository $messageRepo,
-        NoteRepository $noteRepo,
-        SupplierRepository $supplierRepo,
-        CustomerRepository $customerRepo): Response
+    public function show(Customer $customer): Response
     {
+<<<<<<< HEAD
         $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
         //$messages = $messageRepo->findByName($customer->getName());
         //$notes = $noteRepo->findAll($customer->getId());
@@ -105,6 +79,8 @@ class CustomerController extends AbstractController
             // 'brokers' => $customer->getBrokers(),
         ]);
 
+=======
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
         ]);

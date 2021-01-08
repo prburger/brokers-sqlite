@@ -48,6 +48,7 @@ class MessageController extends AbstractController
         $message = new Message();
         $message->setId("1");
         $broker = $brokerRepo->find($broker_id);
+<<<<<<< HEAD
         // $message->setSentBy($broker->getName());
 
         $brokers = $brokerRepo->findAll();
@@ -88,6 +89,8 @@ class MessageController extends AbstractController
         $message = new Message();
         $message->setId("1");
         $broker = $brokerRepo->find($broker_id);
+=======
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
         $message->setSentBy($broker->getName());
 
         $brokers = $brokerRepo->findAll();

@@ -37,26 +37,37 @@ class Broker
     private $dateEdited;
 
     /**
+<<<<<<< HEAD
      * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
+=======
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $contact;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Message::class)
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity=Note::class)
      */
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity=Customer::class)
      */
     private $customers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity=Supplier::class)
      */
     private $suppliers;
 
     /**
+<<<<<<< HEAD
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist","remove"})
      */
     private $contact;
@@ -66,6 +77,15 @@ class Broker
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime()); 
         
+=======
+     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="brokers")
+     */
+    private $message;
+    
+
+    public function __construct()
+    {
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
@@ -250,4 +270,19 @@ class Broker
         return $this;
     }
 
+<<<<<<< HEAD
+=======
+    public function getMessage(): ?Message
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?Message $message): self
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
 }

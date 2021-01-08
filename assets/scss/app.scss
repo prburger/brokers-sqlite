@@ -19,17 +19,15 @@ $lato-font-path: '~lato-font/fonts';
 @include lato-include-font('normal');
 @include lato-include-font('bold');
 
-::-webkit-scrollbar{width:6px;border:none;}
-::-webkit-scrollbar-thumb{background-color: darkgreen;}
-
 /* Basic styles
    ------------------------------------------------------------------------- */
 html{ 
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color:darkgreen;  
+  //overflow:scroll;
   margin:auto;
   height: auto;
-  overflow: hidden;
+  // min-height:650px;
 } 
 
 p, ul, ol {
@@ -56,10 +54,8 @@ i {
 }
 
 .dashboard{
-margin:-0 0 10px 0;
+margin:0;
 padding:0;
-// max-height: 450px;
-overflow:hidden;
 }
 
 .dashboard_icon{
@@ -82,18 +78,15 @@ overflow:hidden;
   font-size:14pt;
   font-weight: bold;
   padding:0;
-  margin:0;
+  margin:10px 0 10px 0;
 }
 
 .dashboard_jumbotron{
   padding:10px;
-  margin:0 5px 7px 0;
+  margin:0 0 20px 0;
   min-height:220px;
-  max-height:220px;
-  height:220px;
   background-color:white;
   border:solid black 1px;
-  box-shadow: 5px 5px darkgreen;
 }
 
 .jumbotron_title{
@@ -132,28 +125,29 @@ overflow:hidden;
 }
 
 .index_page_table{
+<<<<<<< HEAD
   padding:0 20px 0 20px;
   margin:0;
   height:550px;
   min-height: 450px;
+=======
+  padding:0;
+  margin-bottom:10px;
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   background-color: white;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  border:solid black 1px;
 }
 
 .page_title{
   display: inline;
-  font-weight: bold;
-  font-size:18px;
-  margin:0;
-  padding:0; 
+  //color:black;  
 }
 
 .page_form_heading{
   font-size:18pt;
   font-weight: bold;
-  margin:0 0 10px 0;
+  margin:0 0 20px 0;
   padding:0;
 }
 
@@ -201,7 +195,7 @@ overflow:hidden;
   font-size: 10pt;
   background-color: white;
   overflow-y: scroll;
-  height:175px;
+  height:150px;
   min-height: min-content;
   max-height:max-content;
 }
@@ -346,9 +340,7 @@ header .locales a:hover small {
 }
 
 .container{
-  overflow: hidden;
-  margin:auto;
-  padding:0;
+  margin:auto
 }
 
 .navbar-default {
@@ -360,8 +352,7 @@ header .locales a:hover small {
   margin:0;
   padding:0;
   overflow-y: scroll;
-  min-height:450px;
-  max-height: 450px;
+  height:350px;
 }
 
 .form_component{
@@ -381,7 +372,6 @@ header .locales a:hover small {
   color:darkgreen;
   width:100%;
 }
-
 .form_component_container{
   overflow-y:scroll; 
   overflow-x:hidden;
@@ -396,11 +386,11 @@ header .locales a:hover small {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   flex: 1;
   /* needed to prevent pages with a very small height and browsers not supporting flex */
-  min-height: 600px;
-  overflow: hidden;
-  margin:-10px auto;
+  min-height: 450px;
+  max-height: 450px;
+  height: auto;
+  margin:0 auto;
   padding:0;
-  // border:black 1px solid;
 }
 
 .body-container #main h1, .body-container #main h2 {
@@ -425,7 +415,7 @@ header .locales a:hover small {
 }
 
 footer {
-  position: sticky; 
+  position: fixed; 
   bottom: 0;  
   width:auto;
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;

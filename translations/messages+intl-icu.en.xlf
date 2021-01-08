@@ -580,6 +580,7 @@
                 <source>create_new_product</source>
                 <target>New product</target>
             </trans-unit>
+<<<<<<< HEAD
             <trans-unit id="supplier_show">
                 <source>supplier_show</source>
                 <target>Supplier Details</target>
@@ -588,6 +589,8 @@
                 <source>Date sent</source>
                 <target>Date Sent</target>
             </trans-unit>
+=======
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
             <trans-unit id="create_new_supplier">
                 <source>create_new_supplier</source>
                 <target>New supplier</target>
