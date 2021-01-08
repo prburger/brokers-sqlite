@@ -64,7 +64,7 @@ class Broker
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
-        $this->setDateEdited(new \DateTime());
+        $this->setDateEdited(new \DateTime()); 
         
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
@@ -73,10 +73,11 @@ class Broker
         $this->contact = new Contact();
     }
 
-    public function getContact(): Contact
+     public function getContact(): Contact
     {
         return $this->contact;
     }
+     
     
     public function setId($id)
     {
