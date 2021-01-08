@@ -70,9 +70,8 @@ class Broker
         $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
-        $this->contact = new Contact();
+       // $this->contact = new Contact();
     }
-<<<<<<< HEAD
  
     public function setContact(Contact $contact)
     {
@@ -80,10 +79,6 @@ class Broker
     }
 
     public function getContact(): Contact
-=======
-
-     public function getContact(): Contact
->>>>>>> parent of f3133de... 500 error on heroku
     {
         return $this->contact;
     }
