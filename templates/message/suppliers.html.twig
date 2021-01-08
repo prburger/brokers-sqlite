@@ -1,11 +1,23 @@
-<div class="caption">Suppliers</div>
+<div class="dashboard_table">
+    <div class="caption">{{'message_component_supplier_title'|trans|raw}}
+    <a class="return_to_list_label" 
+    href="{{ path('message_insertSupplier', {message: message.id}) }}" 
+    title="{{'message_insert_supplier'|trans|raw}}">
+    <i class="fas fa-plus page_icon"></i>
+    </a>    
+    </div>
     <table width="100%" border="0">
             <tbody>
                 {% for supplier in suppliers %}
                     <tr>
                         <td>{{ supplier.name }}</td>
-                        <td></td>
+                        <td>
+                            <a href="{{ path('message_removeSupplier', {message:message.id, supplier:supplier.id}) }}" 
+                            title="{{'message_remove_supplier'|trans|raw}}">
+                            <i class="fas fa-trash page_icon"></i></a>    
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
     </table> 
+</div>

@@ -37,45 +37,52 @@ class Broker
     private $dateEdited;
 
     /**
-     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $contact;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Message::class)
+     * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class)
+     * @ORM\ManyToMany(targetEntity=Note::class, cascade={"persist"})
      */
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class)
+     * @ORM\ManyToMany(targetEntity=Customer::class, cascade={"persist"})
      */
     private $customers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class)
+     * @ORM\ManyToMany(targetEntity=Supplier::class, cascade={"persist"})
      */
     private $suppliers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="brokers")
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist","remove"})
      */
-    private $message;
-    
+    private $contact;
 
     public function __construct()
     {
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
+        
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
+        $this->contact = new Contact();
     }
 
+    public function getContact(): Contact
+    {
+        return $this->contact;
+    }
+    
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -113,18 +120,6 @@ class Broker
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
-
-        return $this;
-    }
-
-    public function getContact(): ?Contact
-    {
-        return $this->contact;
-    }
-
-    public function setContact(Contact $contact): self
-    {
-        $this->contact = $contact;
 
         return $this;
     }
@@ -225,16 +220,19 @@ class Broker
         return $this;
     }
 
-    public function getMessage(): ?Message
+    public function addContact(Contact $contact): self
     {
-        return $this->message;
-    }
-
-    public function setMessage(?Message $message): self
-    {
-        $this->message = $message;
+        if (!$this->contact->contains($contact)) {
+            $this->contact[] = $contact;
+        }
 
         return $this;
     }
 
+    public function removeContact(Contact $contact): self
+    {
+        $this->contact->removeElement($contact);
+
+        return $this;
+    }
 }

@@ -21,8 +21,7 @@ use App\Repository\ContactRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
 use App\Repository\NoteRepository;
-use App\Repository\SupplierRepository
-;
+use App\Repository\SupplierRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,27 +52,24 @@ class BrokerController extends AbstractController
     /**
      * @Route("/new", name="broker_new", methods={"GET","POST"})
      */
-    public function new(Request $request, 
-    SupplierRepository $suppliers, 
-    CustomerRepository $customers, 
-    MessageRepository $messages, 
-    NoteRepository $notes): Response
+    public function new(Request $request): Response
     {
         $broker = new Broker();
-        $broker->setDateAdded(new \DateTime());
-        $broker->setDateEdited(new \DateTime());       
-          
-        $broker->setContact(new Contact());  
-        $broker->getContact()->setDateAdded(new \DateTime());
-        $broker->getContact()->setDateEdited(new \DateTime());       
-        
+        //$broker->setId(0);         
+        // $broker->setContact(new Contact());  
+
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
-        $contactForm = $this->createForm(ContactFormType::class,$broker->getContact());
+        $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contact = $contactForm->getData();        
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();            
+            $entityManager = $this->getDoctrine()->getManager(); 
+            $entityManager->persist($contact);
+               
             $entityManager->persist($broker);
             $entityManager->flush();
 
@@ -83,29 +79,47 @@ class BrokerController extends AbstractController
         return $this->render('broker/new.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
-            'contact'=>$contactForm->createView(),
-            'messages'=>null,
-            'notes'=>null,
-            'customers'=>null,
-            'suppliers'=>null
+            'contact'=>$contactForm->createView(),          
         ]);
     }
 
     /**
-     * @Route("/{id}", name="broker_show", methods={"GET"})
-     */
-    public function show(Broker $broker, 
-    MessageRepository $messageRepo,
-    NoteRepository $noteRepo,
-    SupplierRepository $supplierRepo,
-    CustomerRepository $customerRepo): Response
+     * @Route("/{id}", name="broker_newCustomer", methods={"GET", "POST"})
+    */
+    public function newCustomer(Request $request, Broker $broker)
     {
-        // $contact = $contactRepo->find($broker->getContact()->getId());
+        $customer = new Customer();
+        $customer->setDateAdded(new \DateTime());
+        $customer->setDateEdited(new \DateTime());
+        $customer->setContact(new Contact());
+        // $customer->setOwnerId($broker->getId());
+        $form = $this->createForm(CustomerType::class, $customer);
+        
+        $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $broker->addCustomer($customer);
+            $entityManager = $this->getDoctrine()->getManager();            
+            $entityManager->persist($broker);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('broker_index');
+        }
+
+        return $this->render('customer/new.html.twig', [
+            'customer' => $customer,
+            'form' => $form->createView(),
+            'contact'=>$contactForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/show", name="broker_show", methods={"GET", "POST"})
+     */
+    public function show(Broker $broker): Response
+    {
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
-        $messages = $messageRepo->findAll($broker->getId());
-        $notes = $noteRepo->findAll($broker->getId());
-        $suppliers = $supplierRepo->findAll($broker->getId());
-        $customers = $customerRepo->findAll($broker->getId());
 
         $form = $this->createForm(BrokerType::class, $broker);
         
@@ -113,21 +127,17 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact'=> $contactForm->createView(),
-            'messages' => $messages ? $messages :null,
-            'notes' => $notes ? $notes : null,            
-            'suppliers' => $suppliers ? $suppliers : null,
-            'customers' => $customers ? $customers : null,
+            'messages' => $broker->getMessages(),
+            'notes' => $broker->getNotes(),            
+            'suppliers' => $broker->getSuppliers(),
+            'customers' => $broker->getCustomers(),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="broker_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Broker $broker, 
-    MessageRepository $messageRepo,
-    NoteRepository $noteRepo,
-    SupplierRepository $supplierRepo,
-    CustomerRepository $customerRepo): Response
+    public function edit(Request $request, Broker $broker): Response
     {
    
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
@@ -135,16 +145,10 @@ class BrokerController extends AbstractController
 
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
-
-        $messages = $messageRepo->findByName($broker->getName());
-        $notes = $noteRepo->findAll($broker->getId());
-        $suppliers = $supplierRepo->findAll($broker->getId());
-        $customers = $customerRepo->findAll($broker->getId());
                 
         if ($form->isSubmitted() && $form->isValid()) {
             $broker->setDateEdited(new \DateTime());          
-            $this->getDoctrine()->getManager()->persist($contactForm->getData());            
-        
+            //$this->getDoctrine()->getManager()->persist($contactForm->getData());          
             $this->getDoctrine()->getManager()->persist($broker);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('broker_index');
@@ -154,10 +158,10 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact' => $contactForm->createView(),
-            'messages' => $messages ? $messages :null,
-            'notes' => $notes ? $notes : null,            
-            'suppliers' => $suppliers ? $suppliers : null,
-            'customers' => $customers ? $customers : null,
+            'messages' => $broker->getMessages(),
+            'notes' => $broker->getNotes(),            
+            'suppliers' => $broker->getSuppliers(),
+            'customers' => $broker->getCustomers(),
         ]);
     }
 

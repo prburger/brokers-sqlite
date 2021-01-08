@@ -69,6 +69,13 @@ class Contact
      */
     private $dateEdited;
 
+    public function __construct()
+    {
+        // $this->id = 0;
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime());
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -193,4 +200,5 @@ class Contact
 
         return $this;
     }
+
 }

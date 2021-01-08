@@ -1,4 +1,24 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form_div">
+    {{ form_start(form) }}
+
+    <div class="row">
+            <div class="col-sm-6">
+                {{ form_widget(form) }}
+                {% include 'customer/messages.html.twig' %}
+                {% include 'customer/notes.html.twig' %}
+                {% include 'customer/products.html.twig' %}
+                {# {% include 'customer/suppliers.html.twig' %} #}
+                {# {% include 'customer/brokers.html.twig' %}  #}
+            </div>
+
+            <div class="col-sm-6">
+            {{ form_widget(contact) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 form_button">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            </div>
+        </div>
+    {{ form_end(form) }}
+</div>

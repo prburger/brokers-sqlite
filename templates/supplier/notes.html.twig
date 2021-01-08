@@ -2,19 +2,19 @@
     <div class="col form_component">        
         <div class="row">
             <div class="col-sm-6">
-                <div class="form_component_title">{{'form_component_customers_title'|trans|raw}}</div>
+                <div class="form_component_title">{{'form_component_notes_title'|trans|raw}}</div>
             </div>
             <div class="col-sm-6">
-                <a class="form_component_link" href="{{ path('broker_newCustomer',{ id:broker.id })}}" title="{{'form_component_newCustomer'|trans|raw}}">
+                <a class="form_component_link" href="supplier_newNote" title="{{'form_component_newNote'|trans|raw}}">
                 <i class="fas fa-plus page_icon"></i>
                 </a>
             </div>
         </div>
 
-    {% if customers %}        
+    {% if notes %}        
     <ul>
-        {% for customer in customers %}
-            <li>{{customer.name}}</li>
+        {% for note in notes %}
+            <li>{{note.details}}</li>
         {% endfor %}
     </ul>
     {% else %}

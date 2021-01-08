@@ -4,12 +4,17 @@
 
 {% block body %}
 
-<div style="height:450px;">
-    <div class="page_form_heading">{{'supplier_new'|trans|raw}}
-    <a class="return_to_list_label" href="{{ path('supplier_index') }}" title="{{'back_to_list'|trans|raw}}">
-    <i class="fas fa-undo page_icon"></i></a>
+<div class="page_form_heading">
+    {{'supplier_new'|trans|raw}}
+    <div class="return_to_list_label">
+        <a href="{{ path('supplier_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
     </div>
-    {{ include('supplier/_form.html.twig') }}
 </div>
-    
+
+<div class="row">
+    <div class="col">
+        {{ include('_newForm.html.twig') }}
+    </div>
+</div>
+
 {% endblock %}
