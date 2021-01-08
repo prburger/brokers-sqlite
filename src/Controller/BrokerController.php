@@ -59,17 +59,17 @@ class BrokerController extends AbstractController
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 9352042... Revert "500 error on heroku"
         $broker->setDateAdded(new \DateTime());
         $broker->setDateEdited(new \DateTime());
        // $broker->setId(0);
+=======
+        $broker->setId(0);
+>>>>>>> parent of 4f640df... 500 error on heroku
        
-       $contact = new Contact();
-       $contact->setDateAdded(new \DateTime());
-       $contact->setDateEdited(new \DateTime());
-
-//        $broker->setContact(new Contact());
+        $broker->setContact(new Contact());
         
 =======
         //$broker->setId(0);
@@ -86,13 +86,14 @@ class BrokerController extends AbstractController
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
 
-        $contactForm = $this->createForm(ContactFormType::class, $contact);
+        $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
     
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $contact = $contactForm->getData();        
+            //$contact = $contactForm->getData();        
             $entityManager = $this->getDoctrine()->getManager(); 
-            $entityManager->persist($contact);               
+            $entityManager->persist($broker->getContact());
+               
             $entityManager->persist($broker);
             $entityManager->flush();
 

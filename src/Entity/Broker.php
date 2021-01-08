@@ -61,15 +61,16 @@ class Broker
      */
     private $contact;
 
-     public function __construct()
+    public function __construct()
     {
-        // $this->setDateAdded(new \DateTime());
-        // $this->setDateEdited(new \DateTime()); 
+        $this->setDateAdded(new \DateTime());
+        $this->setDateEdited(new \DateTime()); 
         
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
+<<<<<<< HEAD
         $this->contact = new Contact();
     }
 <<<<<<< HEAD
@@ -79,6 +80,11 @@ class Broker
 =======
 >>>>>>> parent of 9352042... Revert "500 error on heroku"
  
+=======
+       // $this->contact = new Contact();
+    }
+
+>>>>>>> parent of 4f640df... 500 error on heroku
     public function setContact(Contact $contact)
     {
         $this->contact = $contact;
