@@ -57,6 +57,7 @@ class BrokerController extends AbstractController
         $broker = new Broker();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $broker->setDateAdded(new \DateTime());
         $broker->setDateEdited(new \DateTime());
        // $broker->setId(0);
@@ -67,6 +68,10 @@ class BrokerController extends AbstractController
 
 //        $broker->setContact(new Contact());
         
+=======
+        //$broker->setId(0);
+       
+>>>>>>> parent of f3133de... 500 error on heroku
 =======
         //$broker->setId(0);
        
