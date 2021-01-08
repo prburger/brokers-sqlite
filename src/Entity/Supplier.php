@@ -35,14 +35,9 @@ class Supplier
     private $dateEdited;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Message::class)
+     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="suppliers")
      */
-    private $messages;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Note::class)
-     */
-    private $notes;
+    private $message;
 
     /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
@@ -52,12 +47,16 @@ class Supplier
 
     public function __construct()
     {
+<<<<<<< HEAD
 
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->getNotes = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
+=======
+        $this->getMessages = new ArrayCollection();
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
     }
 
     public function setID($id)
@@ -106,46 +105,18 @@ class Supplier
         return $this;
     }
 
-    /**
-     * @return Collection|Message[]
-     */
-    public function getMessages(): Collection
+    public function getMessage(): ?Message
     {
-        return $this->messages;
+        return $this->message;
     }
 
-    public function addMessage(Message $message): self
+    public function setMessage(?Message $message): self
     {
-        if (!$this->messages->contains($message)) {
-            $this->messages[] = $message;
-        }
+        $this->message = $message;
 
         return $this;
     }
-
-    public function removeMessage(Message $message): self
-    {
-        $this->messages->removeElement($message);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Note[]
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): self
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes[] = $note;
-        }
-
-        return $this;
-    }
+<<<<<<< HEAD
 
     public function removeNote(Note $note): self
     {
@@ -166,4 +137,6 @@ class Supplier
         return $this;
     }
 
+=======
+>>>>>>> parent of 22afb08 (fixed GUI, added customers, modified entities)
 }

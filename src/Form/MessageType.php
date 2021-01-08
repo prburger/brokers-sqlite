@@ -12,8 +12,11 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('sentBy')
+/*             ->add('brokers')
+            ->add('customers')
+            ->add('suppliers') */
             ->add('text')
-            ->add('dateSent')
             ->add('dateAdded')
             ->add('dateEdited') 
       ;
