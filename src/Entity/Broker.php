@@ -61,10 +61,10 @@ class Broker
      */
     private $contact;
 
-    public function __construct()
+     public function __construct()
     {
-        $this->setDateAdded(new \DateTime());
-        $this->setDateEdited(new \DateTime()); 
+        // $this->setDateAdded(new \DateTime());
+        // $this->setDateEdited(new \DateTime()); 
         
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
@@ -72,7 +72,7 @@ class Broker
         $this->suppliers = new ArrayCollection();
        // $this->contact = new Contact();
     }
-
+ 
     public function setContact(Contact $contact)
     {
         $this->contact = $contact;
