@@ -58,6 +58,9 @@ class BrokerController extends AbstractController
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 9352042... Revert "500 error on heroku"
         $broker->setDateAdded(new \DateTime());
         $broker->setDateEdited(new \DateTime());
        // $broker->setId(0);

@@ -75,6 +75,9 @@ class Broker
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 9352042... Revert "500 error on heroku"
  
     public function setContact(Contact $contact)
     {
