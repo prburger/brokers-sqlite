@@ -5,8 +5,11 @@
 {% block body %}
 
  <div class="form_div">
-    <div class="row page_title">{{'customer_show'|trans|raw}}</div>
-
+    <div class="row page_title">{{'customer_show'|trans|raw}}
+        <div class="return_to_list_label">
+            <a href="{{ path('customer_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+        </div>
+    </div>
     {{ form_start(form) }}
     <div class="row">
         <div class="col-sm-6">

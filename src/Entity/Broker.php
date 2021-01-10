@@ -66,7 +66,7 @@ class Broker
     {
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime()); 
-       
+        $this->setContact(new Contact());
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
