@@ -45,6 +45,11 @@ class Message
      */
     private $brokers;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="messages")
+     */
+    private $getCustomer;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
@@ -141,6 +146,18 @@ class Message
                 $broker->setMessage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGetCustomer(): ?Customer
+    {
+        return $this->getCustomer;
+    }
+
+    public function setGetCustomer(?Customer $getCustomer): self
+    {
+        $this->getCustomer = $getCustomer;
 
         return $this;
     }
