@@ -44,10 +44,11 @@ class CustomerController extends AbstractController
         $form->handleRequest($request);
 
         $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
+        $contactForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($customer->getContact());
+            $entityManager->persist($contactForm->getData());
             $entityManager->persist($customer);
             $entityManager->flush();
 
@@ -101,10 +102,11 @@ class CustomerController extends AbstractController
         $contactForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           // $customer->setContact($contactForm->getData());
-            $this->getDoctrine()->getManager()->persist($customer);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contactForm->getData());
+            $entityManager->persist($customer);
 
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('customer_index');
         }
