@@ -42,7 +42,7 @@ class Supplier
 
     /**
      * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="suppliers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $broker;
 
@@ -56,12 +56,20 @@ class Supplier
      */
     private $products;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="supplier")
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->notes = new ArrayCollection();
         $this->products = new ArrayCollection();
+        $this->setContact(new Contact());
+        $this->messages = new ArrayCollection();
+        $this->setID(0);
     }
 
     public function setID($id)
@@ -183,6 +191,36 @@ class Supplier
             // set the owning side to null (unless already changed)
             if ($product->getSupplier() === $this) {
                 $product->setSupplier(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getSupplier() === $this) {
+                $message->setSupplier(null);
             }
         }
 

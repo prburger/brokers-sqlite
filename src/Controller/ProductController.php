@@ -63,6 +63,35 @@ class ProductController extends AbstractController
         ]);
     }
 
+        /**
+     * @Route("/{product_id}/new/specifications", name="product_newSpecifications", methods={"GET","POST"})
+     */
+    public function newSpecifications(Request $request, Product $product): Response
+    {
+        //$product = new Product();
+        $product->setSpecifications(new Specification());
+
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($product->getSpecifications());
+            // $entityManager->persist($product->getNotes());
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_index');
+        }
+
+        return $this->render('product/newSpecifications.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+            'specifications'=>$product->getSpecifications(),
+            'notes'=>$product->getNotes() 
+        ]);
+    }
+
     /**
      * @Route("/{id}", name="product_show", methods={"GET"})
      */
@@ -92,6 +121,8 @@ class ProductController extends AbstractController
         return $this->render('product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
+            'specifications'=>$product->getSpecifications(),
+            'notes'=>$product->getNotes()
         ]);
     }
 

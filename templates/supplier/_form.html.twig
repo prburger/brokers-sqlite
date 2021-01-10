@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-6">
             {{ form_widget(form) }}
-            {% include 'supplier/messages.html.twig' %}
+            {% include 'supplier/messages.html.twig' with messages %}
             {% include 'supplier/notes.html.twig' %}
             {% include 'supplier/products.html.twig' %}
             {# {% include 'broker/customers.html.twig' %}  #}

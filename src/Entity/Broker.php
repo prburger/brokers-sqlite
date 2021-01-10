@@ -71,6 +71,7 @@ class Broker
         $this->notes = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
         $this->customers = new ArrayCollection();
+        $this->setId(0);
     }
 
     public function setId($id)

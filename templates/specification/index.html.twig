@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Specification index{% endblock %}
+
+{% block body %}
+    <h1>Specification index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Details</th>
+                <th>DateAdded</th>
+                <th>DateEdited</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for specification in specifications %}
+            <tr>
+                <td>{{ specification.id }}</td>
+                <td>{{ specification.details }}</td>
+                <td>{{ specification.dateAdded ? specification.dateAdded|date('Y-m-d') : '' }}</td>
+                <td>{{ specification.dateEdited ? specification.dateEdited|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('specification_show', {'id': specification.id}) }}">show</a>
+                    <a href="{{ path('specification_edit', {'id': specification.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('specification_new') }}">Create new</a>
+{% endblock %}
