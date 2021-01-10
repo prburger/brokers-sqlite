@@ -39,7 +39,7 @@ class CustomerController extends AbstractController
     public function new(Request $request): Response
     {
         $customer = new Customer();
-        $customer->setId(0);
+       // $customer->setId(0);
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
@@ -47,6 +47,7 @@ class CustomerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer->getContact());
             $entityManager->persist($customer);
             $entityManager->flush();
 

@@ -32,41 +32,4 @@
 </div>
 
 {% endblock %}
-{# 
 
-{% extends 'base.html.twig' %}
-
-{% block title %}{{'customer_show'|trans|raw}}{% endblock %}
-
-{% block body %}
-
-   <div class="page_form_heading">{{'customer_show'|trans|raw}}</div>
-     <div class="return_to_list_label">
-   {{ include('customer/_delete_form.html.twig') }} 
-    <a href="{{ path('customer_edit', {'id': customer.id}) }}" title="{{'action_edit'|trans|raw}}"><i class="fas fa-edit page_icon"></i></a>
-    <a href="{{ path('customer_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
-    </div>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ customer.name }}</td>
-            </tr>
-            <tr>
-                <th>Date Added</th>
-                <td>{{ customer.dateAdded ? customer.dateAdded|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date Edited</th>
-                <td>{{ customer.dateEdited ? customer.dateEdited|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-{#     <a href="{{ path('customer_index') }}">back to list</a>
-
-    <a href="{{ path('customer_edit', {'id': customer.id}) }}">edit</a>
-
-    {{ include('customer/_delete_form.html.twig') }} #}
-{% endblock %}
