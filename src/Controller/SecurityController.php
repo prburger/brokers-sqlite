@@ -37,7 +37,8 @@ class SecurityController extends AbstractController
     {
         // if user is already logged in, don't display the login page again
         if ($security->isGranted('ROLE_USER')) {
-            return $this->redirectToRoute('blog_index');
+            //return $this->redirectToRoute('blog_index');
+            return $this->redirectToRoute('portal_index');
         }
 
         // this statement solves an edge-case: if you change the locale in the login

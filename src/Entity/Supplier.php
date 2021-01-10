@@ -35,11 +35,6 @@ class Supplier
     private $dateEdited;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="suppliers")
-     */
-    private $message;
-
-    /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -52,17 +47,12 @@ class Supplier
     private $broker;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="supplier", orphanRemoval=true)
-     */
-    private $messages;
-
-    /**
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="supplier", orphanRemoval=true)
      */
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="supplier", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="supplier")
      */
     private $products;
 
@@ -70,7 +60,6 @@ class Supplier
     {
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
-        $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
@@ -148,36 +137,6 @@ class Supplier
     public function setBroker(?Broker $broker): self
     {
         $this->broker = $broker;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Message[]
-     */
-    public function getMessages(): Collection
-    {
-        return $this->messages;
-    }
-
-    public function addMessage(Message $message): self
-    {
-        if (!$this->messages->contains($message)) {
-            $this->messages[] = $message;
-            $message->setSupplier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): self
-    {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getSupplier() === $this) {
-                $message->setSupplier(null);
-            }
-        }
 
         return $this;
     }
