@@ -35,17 +35,6 @@ class Customer
     private $dateEdited;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Message::class, cascade={"persist"})
-     */
-    private $messages;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="customers")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $broker;
-
-    /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -57,9 +46,14 @@ class Customer
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="customer", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="customer")
      */
     private $products;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="customers")
+     */
+    private $broker;
 
     public function __construct()
     {
@@ -67,8 +61,8 @@ class Customer
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->products = new ArrayCollection();
-        $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function setId($id)
@@ -113,48 +107,6 @@ class Customer
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Message[]
-     */
-    public function getMessages(): Collection
-    {
-        return $this->messages;
-    }
-
-    public function addMessage(Message $message): self
-    {
-        if (!$this->messages->contains($message)) {
-            $this->messages[] = $message;
-            $message->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): self
-    {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getCustomer() === $this) {
-                $message->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getBroker(): ?Broker
-    {
-        return $this->broker;
-    }
-
-    public function setBroker(?Broker $broker): self
-    {
-        $this->broker = $broker;
 
         return $this;
     }
@@ -227,6 +179,18 @@ class Customer
                 $product->setCustomer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBroker(): ?Broker
+    {
+        return $this->broker;
+    }
+
+    public function setBroker(?Broker $broker): self
+    {
+        $this->broker = $broker;
 
         return $this;
     }

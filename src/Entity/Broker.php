@@ -37,30 +37,30 @@ class Broker
     private $dateEdited;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="broker", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="brokers")
      */
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="broker", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="broker")
      */
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="broker", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="broker")
      */
     private $suppliers;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Customer::class, mappedBy="broker", orphanRemoval=true)
-     */
-    private $customers;
 
     /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $contact;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Customer::class, mappedBy="broker")
+     */
+    private $customers;
     
     public function __construct()
     {
@@ -209,6 +209,18 @@ class Broker
         return $this;
     }
 
+    public function getContact(): ?Contact
+    {
+        return $this->contact;
+    }
+
+    public function setContact(Contact $contact): self
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Customer[]
      */
@@ -235,18 +247,6 @@ class Broker
                 $customer->setBroker(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getContact(): ?Contact
-    {
-        return $this->contact;
-    }
-
-    public function setContact(Contact $contact): self
-    {
-        $this->contact = $contact;
 
         return $this;
     }

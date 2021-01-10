@@ -40,36 +40,10 @@ class Message
     private $sentBy;
 
     /**
-     * @ORM\OneToMany(targetEntity=Broker::class, mappedBy="message")
-     */
-    private $brokers;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Customer::class, mappedBy="message")
-     */
-    private $customers;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="message")
-     */
-    private $suppliers;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="messages")
-     */
-    private $customer;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="messages")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $broker;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="messages")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $supplier;
+    private $brokers;
 
     public function __construct()
     {
@@ -141,16 +115,6 @@ class Message
         $this->brokers = $brokers;
     }
 
-    public function setCustomers(Array $customers )
-    {
-        $this->customers = $customers;
-    }
-
-    public function setSuppliers(Array $suppliers )
-    {
-        $this->suppliers = $suppliers;
-    }
-
     /**
      * @return Collection|Broker[]
      */
@@ -177,60 +141,6 @@ class Message
                 $broker->setMessage(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Customer[]
-     */
-    public function getCustomers(): Collection
-    {
-        return $this->customers;
-    }
-
-    public function addCustomer(Customer $customer): self
-    {
-        if (!$this->customers->contains($customer)) {
-            $this->customers[] = $customer;
-            $customer->setMessage($this);
-        }
-
-        return $this;
-    }
-
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): self
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    public function getBroker(): ?Broker
-    {
-        return $this->broker;
-    }
-
-    public function setBroker(?Broker $broker): self
-    {
-        $this->broker = $broker;
-
-        return $this;
-    }
-
-    public function getSupplier(): ?Supplier
-    {
-        return $this->supplier;
-    }
-
-    public function setSupplier(?Supplier $supplier): self
-    {
-        $this->supplier = $supplier;
 
         return $this;
     }
