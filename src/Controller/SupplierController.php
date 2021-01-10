@@ -39,16 +39,18 @@ class SupplierController extends AbstractController
     public function new(Request $request): Response
     {
         $supplier = new Supplier();
-        $supplier->setId(0);
-        $supplier->setContact(new Contact());
+       // $supplier->setId(0);
+        //$supplier->setContact(new Contact());
 
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
 
         $contactForm = $this->createForm(ContactFormType::class,$supplier->getContact());
-
+        $contactForm->handleRequest($request);
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contactForm->getData());
             $entityManager->persist($supplier);
             $entityManager->flush();
 

@@ -50,6 +50,16 @@ class Message
      */
     private $getCustomer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="messages")
+     */
+    private $supplier;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $DateSent;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
@@ -158,6 +168,30 @@ class Message
     public function setGetCustomer(?Customer $getCustomer): self
     {
         $this->getCustomer = $getCustomer;
+
+        return $this;
+    }
+
+    public function getSupplier(): ?Supplier
+    {
+        return $this->supplier;
+    }
+
+    public function setSupplier(?Supplier $supplier): self
+    {
+        $this->supplier = $supplier;
+
+        return $this;
+    }
+
+    public function getDateSent(): ?\DateTimeInterface
+    {
+        return $this->DateSent;
+    }
+
+    public function setDateSent(?\DateTimeInterface $DateSent): self
+    {
+        $this->DateSent = $DateSent;
 
         return $this;
     }

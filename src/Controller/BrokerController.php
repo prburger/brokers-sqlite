@@ -57,11 +57,12 @@ class BrokerController extends AbstractController
     {
         $broker = new Broker();
 
-        $broker->setDateAdded(new \DateTime());
+       /*  $broker->setDateAdded(new \DateTime());
         $broker->setDateEdited(new \DateTime());
         $broker->setContact(new Contact());
         
-        $broker->setId(0);         
+        $broker->setId(0);     
+        */     
                
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);

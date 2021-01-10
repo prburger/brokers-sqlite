@@ -8,7 +8,7 @@
 </div>
 <div class="row">
     <div class="col-sm-6">
-        {% include 'product/specifications.html.twig'  %} 
+        {% include 'product/specifications.html.twig' with [product] %} 
     </div>
     <div class="col-sm-6">
                 {% include 'product/notes.html.twig' with product.notes %}

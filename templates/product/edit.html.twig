@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Product{% endblock %}
+{% block title %}{{'product_edit'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <h1>Edit Product</h1>
-
-    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('product_index') }}">back to list</a>
-
+{# <div class="form_div"> #}
+<div class="page_form_heading">{{'product_edit'|trans|raw}}
+    <div class="return_to_list_label">
     {{ include('product/_delete_form.html.twig') }}
+    <a href="{{ path('product_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+    </div>
+  </div>
+    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+{# </div> #}
 {% endblock %}

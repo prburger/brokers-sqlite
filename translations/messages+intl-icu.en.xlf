@@ -791,6 +791,10 @@
                 <source>customer_show</source>
                 <target>Customer Details</target>
             </trans-unit>
+               <trans-unit id="new_specification">
+                <source>new_specification</source>
+                <target>New specification</target>
+            </trans-unit>
             <trans-unit id="broker_edit">
                 <source>broker_edit</source>
                 <target>Edit Broker</target>
@@ -798,6 +802,10 @@
             <trans-unit id="customer_edit">
                 <source>customer_edit</source>
                 <target>Customer Details</target>
+            </trans-unit>
+            <trans-unit id="product_edit">
+                <source>product_edit</source>
+                <target>Edit Product</target>
             </trans-unit>
             <trans-unit id="broker_index">
                 <source>broker_index</source>

@@ -36,6 +36,7 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity=Note::class, mappedBy="product", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $notes;
 
@@ -47,13 +48,13 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $customer;
 
     /**
      * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $supplier;
 

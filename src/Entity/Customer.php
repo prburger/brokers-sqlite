@@ -62,14 +62,13 @@ class Customer
 
     public function __construct()
     {
-        $this->id = 0;
+        $this->setId(0);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->products = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->setContact(new Contact());
-        // $this->setBroker(new Broker());
     }
 
     public function setId($id)
