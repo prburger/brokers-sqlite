@@ -67,12 +67,11 @@ class BrokerController extends AbstractController
         $form->handleRequest($request);
 
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
-    
+        $contactForm->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid()) {
-           // $contact = $contactForm->getData();        
-            $entityManager = $this->getDoctrine()->getManager(); 
-            $entityManager->persist($broker->getContact());               
+        if ($form->isSubmitted() && $form->isValid()) {                  
+            $entityManager = $this->getDoctrine()->getManager();             
+            $entityManager->persist($contactForm->getData());
             $entityManager->persist($broker);
             $entityManager->flush();
 
@@ -145,10 +144,10 @@ class BrokerController extends AbstractController
                 
         if ($form->isSubmitted() && $form->isValid()) {
             $broker->setDateEdited(new \DateTime());          
-            $this->getDoctrine()->getManager()->persist($contactForm->getData());            
+            $entityManager->persist($contactForm->getData());       
         
-            $this->getDoctrine()->getManager()->persist($broker);
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->persist($broker);
+            $entityManager->flush();
             return $this->redirectToRoute('broker_index');
         }
 
