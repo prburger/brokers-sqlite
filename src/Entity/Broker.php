@@ -37,17 +37,17 @@ class Broker
     private $dateEdited;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="brokers")
+     * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="brokers")
      */
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="broker")
+     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="broker")
      */
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="broker")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="broker")
      */
     private $suppliers;
 
@@ -58,7 +58,7 @@ class Broker
     private $contact;
 
     /**
-     * @ORM\OneToMany(targetEntity=Customer::class, mappedBy="broker")
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="broker")
      */
     private $customers;
     
@@ -74,7 +74,7 @@ class Broker
         $this->setId(0);
     }
 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }

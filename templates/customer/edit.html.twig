@@ -4,12 +4,20 @@
 
 {% block body %}
 
- <div class="page_form_heading">{{'customer_edit'|trans|raw}}</div>
-    <div class="return_to_list_label">
-    {{ include('customer/_delete_form.html.twig') }}
-    <a href="{{ path('customer_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'customer_edit'|trans|raw}}
+        <div class="return_to_list_label">
+            {{ include('customer/_delete_form.html.twig') }}
+            <a href="{{ path('customer_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+        </div>
     </div>
-    
-    {{ include('customer/_form.html.twig', {'button_label': 'Update'}) }}
-    
+</div>
+
+<div class="row">
+    <div class="col">
+        {{ include('customer/_form.html.twig', {'button_label': 'Update'}) }} 
+    </div>
+ </div>
+
 {% endblock %}

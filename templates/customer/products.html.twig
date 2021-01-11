@@ -5,17 +5,19 @@
                     <div class="form_component_title">{{'form_component_products_title'|trans|raw}}</div>
                 </div>
                 <div class="col-sm-6">
+                {% if new == false %}
                     <a class="form_component_link" href="{{ path('message_newCustomer',{'customer_id': customer.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>
+            {% endif %}
                 </div>
             </div>
 
-            {% if products %}        
+            {% if customer.products %}        
             <div class="form_component_container">
                 <table class="form_component_table">
                     <tbody>
-                        {% for product in products %}
+                        {% for product in customer.products %}
                             <tr>
                                 <td>{{product.name}}</td>
                                 <td class="action_column">

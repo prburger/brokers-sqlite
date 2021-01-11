@@ -801,7 +801,7 @@
             </trans-unit>
             <trans-unit id="customer_edit">
                 <source>customer_edit</source>
-                <target>Customer Details</target>
+                <target>Edit Customer</target>
             </trans-unit>
             <trans-unit id="product_edit">
                 <source>product_edit</source>
@@ -809,19 +809,19 @@
             </trans-unit>
             <trans-unit id="broker_index">
                 <source>broker_index</source>
-                <target>Broker Index</target>
+                <target>Broker List</target>
             </trans-unit>
                <trans-unit id="customer_index">
                 <source>customer_index</source>
-                <target>Customer Index</target>
+                <target>Customer List</target>
             </trans-unit>
                <trans-unit id="supplier_index">
                 <source>supplier_index</source>
-                <target>Supplier Index</target>
+                <target>Supplier List</target>
             </trans-unit>
                <trans-unit id="product_index">
                 <source>product_index</source>
-                <target>Product Index</target>
+                <target>Product List</target>
             </trans-unit>
             
         </body>

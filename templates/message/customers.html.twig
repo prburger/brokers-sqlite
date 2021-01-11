@@ -1,21 +1,20 @@
-<div class="dashboard_table">
-    <div class="caption">{{'message_component_customer_title'|trans|raw}}
-        <a class="return_to_list_label" href="{{ path('message_insertCustomer', {message: message.id}) }}"  
-        title="{{'message_insert_customer'|trans|raw}}">
-        <i class="fas fa-plus page_icon"></i></a>    
-    </div>
-    <table width="100%" border="0">
-            <tbody>
-                {% for customer in customers %}
-                    <tr>
-                        <td>{{ customer.name }}</td>
-                        <td>
-                            <a href="{{ path('message_removeCustomer', {message:message.id, customer:customer.id}) }}" 
-                            title="{{'message_remove_customer'|trans|raw}}">
-                            <i class="fas fa-trash page_icon"></i></a>    
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-    </table> 
+
+<div class="caption">{{'message_component_customer_title'|trans|raw}}
+    <a class="return_to_list_label" href="{{ path('message_insertCustomer', {message: message.id}) }}"  
+    title="{{'message_insert_customer'|trans|raw}}">
+    <i class="fas fa-plus page_icon"></i></a>    
 </div>
+<table class="table">
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td class="action_column">
+                        <a href="{{ path('message_removeCustomer', {message:message.id, customer:customer.id}) }}" 
+                        title="{{'message_remove_customer'|trans|raw}}">
+                        <i class="fas fa-trash page_icon"></i></a>    
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+</table> 

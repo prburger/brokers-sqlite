@@ -40,34 +40,37 @@ class Message
     private $sentBy;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="messages")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $brokers;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="messages")
-     */
-    private $getCustomer;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="messages")
-     */
-    private $supplier;
-
-    /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $DateSent;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="messages")
+     */
+    private $brokers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="messages")
+     */
+    private $suppliers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="messages")
+     */
+    private $customers;
+
     public function __construct()
     {
+        $this->setId(1);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->setDateSent(new \DateTime());
+        $this->brokers = new ArrayCollection();
+        $this->suppliers = new ArrayCollection();
+        $this->customers = new ArrayCollection();
     }
 
-    public function setId(string $id)
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -125,9 +128,16 @@ class Message
         return $this;
     }
 
-    public function setBrokers(Array $brokers )
+    public function getDateSent(): ?\DateTimeInterface
     {
-        $this->brokers = $brokers;
+        return $this->DateSent;
+    }
+
+    public function setDateSent(?\DateTimeInterface $DateSent): self
+    {
+        $this->DateSent = $DateSent;
+
+        return $this;
     }
 
     /**
@@ -142,7 +152,6 @@ class Message
     {
         if (!$this->brokers->contains($broker)) {
             $this->brokers[] = $broker;
-            $broker->setMessage($this);
         }
 
         return $this;
@@ -150,48 +159,55 @@ class Message
 
     public function removeBroker(Broker $broker): self
     {
-        if ($this->brokers->removeElement($broker)) {
-            // set the owning side to null (unless already changed)
-            if ($broker->getMessage() === $this) {
-                $broker->setMessage(null);
-            }
+        $this->brokers->removeElement($broker);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supplier[]
+     */
+    public function getSuppliers(): Collection
+    {
+        return $this->suppliers;
+    }
+
+    public function addSupplier(Supplier $supplier): self
+    {
+        if (!$this->suppliers->contains($supplier)) {
+            $this->suppliers[] = $supplier;
         }
 
         return $this;
     }
 
-    public function getGetCustomer(): ?Customer
+    public function removeSupplier(Supplier $supplier): self
     {
-        return $this->getCustomer;
-    }
-
-    public function setGetCustomer(?Customer $getCustomer): self
-    {
-        $this->getCustomer = $getCustomer;
+        $this->suppliers->removeElement($supplier);
 
         return $this;
     }
 
-    public function getSupplier(): ?Supplier
+    /**
+     * @return Collection|Customer[]
+     */
+    public function getCustomers(): Collection
     {
-        return $this->supplier;
+        return $this->customers;
     }
 
-    public function setSupplier(?Supplier $supplier): self
+    public function addCustomer(Customer $customer): self
     {
-        $this->supplier = $supplier;
+        if (!$this->customers->contains($customer)) {
+            $this->customers[] = $customer;
+        }
 
         return $this;
     }
 
-    public function getDateSent(): ?\DateTimeInterface
+    public function removeCustomer(Customer $customer): self
     {
-        return $this->DateSent;
-    }
-
-    public function setDateSent(?\DateTimeInterface $DateSent): self
-    {
-        $this->DateSent = $DateSent;
+        $this->customers->removeElement($customer);
 
         return $this;
     }

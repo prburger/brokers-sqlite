@@ -18,28 +18,28 @@ class Note
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="notes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $broker;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="notes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $customer;
+    private $customers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="notes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $supplier;
+    private $suppliers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="notes")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product;
+    private $products;
 
     public function getId(): ?int
     {

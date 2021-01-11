@@ -58,6 +58,7 @@ class CustomerController extends AbstractController
         return $this->render('customer/new.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
+            'new'=>true,
             'contact'=>$contactForm->createView(),
             'messages'=>$customer->getMessages(),
             'notes'=>$customer->getNotes(),
@@ -75,6 +76,7 @@ class CustomerController extends AbstractController
         
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
+            'new'=>true,
             'form' => $form->createView(),
             'contact'=> $contactForm->createView(),
             'messages' => $customer->getMessages(),
@@ -113,6 +115,7 @@ class CustomerController extends AbstractController
 
         return $this->render('customer/edit.html.twig', [
             'customer' => $customer,
+            'new'=>false,
             'form' => $form->createView(),
             'messages'=>$customer->getMessages(),
             'products'=>$customer->getProducts(),
