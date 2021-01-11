@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Form;
-
 use App\Entity\Message;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,12 +13,7 @@ class MessageType extends AbstractType
     {
         $builder
             ->add('sentBy')
-/*             ->add('brokers')
-            ->add('customers')
-            ->add('suppliers') */
-            ->add('text')
-/*             ->add('dateAdded')
-            ->add('dateEdited') */ 
+            ->add('text', TextareaType::class,['attr'=>['class'=>'tinymce','rows'=>10],])
       ;
     }
 

@@ -41,24 +41,27 @@ class Supplier
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="suppliers")
      * @ORM\JoinColumn(nullable=true)
      */
     private $broker;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="supplier", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="suppliers", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="supplier")
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="suppliers")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $products;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="supplier")
-     */
+     * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="suppliers")
+     * @ORM\JoinColumn(nullable=true)
+    */
     private $messages;
 
     public function __construct()

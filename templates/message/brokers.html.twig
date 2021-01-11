@@ -1,21 +1,25 @@
-<div class="dashboard_table">
-    <div class="caption">{{'message_component_broker_title'|trans|raw}}
-        <a class="return_to_list_label" 
-        href="{{ path('message_insertBroker', {message: message.id}) }}" 
-        title="{{'message_insert_broker'|trans|raw}}">
-        <i class="fas fa-plus page_icon"></i>
-        </a>    
-    </div>
-    <table width="100%" border="0">
-            <tbody>
-                {% for broker in brokers %}
-                    <tr>
-                        <td>{{ broker.name }}</td>
-                        <td>
-                            <a href="{{ path('message_removeBroker', {message:message.id, broker:broker.id}) }}" title="{{'message_remove_broker'|trans|raw}}"><i class="fas fa-trash page_icon"></i></a>    
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-    </table> 
-</div>     
+<div class="caption">{{'message_component_broker_title'|trans|raw}}
+    {# <a class="return_to_list_label" 
+    href="{{ path('message_insertBroker', {message: message.id}) }}" 
+    title="{{'message_insert_broker'|trans|raw}}">
+    <i class="fas fa-plus page_icon"></i>
+    </a>  #}   
+</div>
+<table class="table">
+        <tbody>
+            {% for broker in message.brokers %}
+                <tr>
+                    <td>{{ broker.name }}</td>
+                    <td class="action_column">
+                    <input type="checkbox" name="broker" value={{ broker.id }}>
+                 {#         <a href="{{ path('message_insertBroker', {message:message.id, broker:broker.id}) }}" 
+                        title="{{'message_insert_broker'|trans|raw}}">
+                        <i class="fas fa-check page_icon"></i></a>  
+                        <a href="{{ path('message_removeBroker', {message:message.id, broker:broker.id}) }}" 
+                        title="{{'message_remove_broker'|trans|raw}}">
+                        <i class="fas fa-trash page_icon"></i></a>     #}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+</table> 

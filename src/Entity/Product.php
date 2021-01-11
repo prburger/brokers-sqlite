@@ -35,7 +35,7 @@ class Product
     private $dateEdited;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="product", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="products", orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
      */
     private $notes;
@@ -47,16 +47,16 @@ class Product
     private $specifications;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="products")
+     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $customer;
+    private $customers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="products")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $supplier;
+    private $suppliers;
 
     /**
      * @ORM\Column(type="string", length=120, nullable=true)

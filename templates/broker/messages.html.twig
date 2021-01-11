@@ -1,3 +1,4 @@
+    
     <div class="row">
         <div class="col form_component">        
             <div class="row">
@@ -5,9 +6,11 @@
                     <div class="form_component_title">{{'form_component_messages_title'|trans|raw}}</div>
                 </div>
                 <div class="col-sm-6">
+                {% if new == false %}
                     <a class="form_component_link" href="{{ path('message_new',{'broker_id': broker.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>
+                {% endif %}
                 </div>
             </div>
 
@@ -19,9 +22,9 @@
                             <tr>
                                 <td>{{message.text}}</td>
                                 <td class="action_column">
-                                    <a class="form_component_link" href="{{ path('message_edit',{'id': message.id}) }}" title="{{'action.edit'|trans|raw}}">
+                                   {#  <a class="form_component_link" href="{{ path('message_edit',{'id': message.id}) }}" title="{{'action.edit'|trans|raw}}">
                                     <i class="fas fa-edit page_icon"></i>
-                                    </a>                                     
+                                    </a> #}                                     
                                 </td>
                             </tr>
                         {% endfor %}

@@ -41,23 +41,27 @@ class Customer
     private $contact;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="customer", orphanRemoval=true)
-     */
+     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="customers", orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=false)
+    */
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="customer")
-     */
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="customers")
+     * @ORM\JoinColumn(nullable=false)
+    */
     private $products;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="customers")
+     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="customers")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $broker;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="getCustomer")
-     */
+     * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="customers")
+     * @ORM\JoinColumn(nullable=false)
+    */
     private $messages;
 
     public function __construct()

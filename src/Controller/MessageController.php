@@ -4,17 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Broker;
 use App\Entity\Message;
-use App\Entity\Supplier;
 use App\Entity\Product;
+use App\Entity\Supplier;
 
 use App\Form\MessageType;
 
 use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
-use App\Repository\SupplierRepository;
 use App\Repository\ProductRepository;
+use App\Repository\SupplierRepository;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,18 +43,17 @@ class MessageController extends AbstractController
     public function new(
         Request $request, 
         ?int $broker_id,
-        BrokerRepository $brokerRepo,        
+        BrokerRepository $brokerRepo,
         SupplierRepository $supplierRepo,
-        CustomerRepository $customerRepo
+        CustomerRepository $customerRepo 
     ): Response
     {
-        $message = new Message();
-        $message->setId("1");
-        $broker = $brokerRepo->find($broker_id);
+        $message = new Message();        
+       // $broker = $brokerRepo->find($broker_id);
 
-        // $message->setSentBy($broker->getName());
+        $message->setSentBy($brokerRepo->find($broker_id)->getName());
 
-        $brokers = $brokerRepo->findAll();
+         $brokers = $brokerRepo->findAll();
         $customers = $customerRepo->findAll();
         $suppliers = $supplierRepo->findAll();
 
@@ -71,9 +71,9 @@ class MessageController extends AbstractController
         return $this->render('message/new.html.twig' , [
             'message' => $message,
             'form' => $form->createView(),
-            'brokers'=> $brokers ? $brokers : null,
-            'suppliers'=> $suppliers ? $suppliers : null,
-            'customers'=> $customers ? $customers : null,
+            'brokers'=> $message->getBrokers(),
+            'suppliers'=> $message->getSuppliers(),
+            'customers'=> $message->getCustomers(), 
         ]);
     }
 
@@ -173,10 +173,6 @@ class MessageController extends AbstractController
         $message = new Message();
         $message->setId("1");
         $product = $productRepo->find($product_id);
-        /* $message->setSentBy($supplier->getName());
-        $brokers = $brokerRepo->findAll();
-        $customers = $customerRepo->findAll();
-        $suppliers = $supplierRepo->findAll(); */
 
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
@@ -199,12 +195,18 @@ class MessageController extends AbstractController
     }
   
     /**
-     * @Route("/insert/{message}", name="message_insertBroker", methods={"GET","POST"})
+     * @Route("/{message}/{broker}/insert/", name="message_insertBroker", methods={"GET","POST"})
     */
-    public function insertBroker($message): Response
+    public function insertBroker(Message $message, Broker $broker): Response
     {
-      //  $message->addBroker($repo->find($id));
-        return $this->redirectToRoute('message_index');
+        $form = $this->createForm(MessageType::class, $message);
+        $form->handleRequest($request);
+        
+        $message->addBroker($broker);
+        return $this->redirectToRoute('message/edit.html.twig',[
+            'message' => $message,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

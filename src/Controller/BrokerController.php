@@ -55,14 +55,7 @@ class BrokerController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $broker = new Broker();
-
-       /*  $broker->setDateAdded(new \DateTime());
-        $broker->setDateEdited(new \DateTime());
-        $broker->setContact(new Contact());
-        
-        $broker->setId(0);     
-        */     
+        $broker = new Broker();     
                
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
@@ -83,29 +76,17 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact'=>$contactForm->createView(),         
-            'messages' => $broker->getMessages(),
-            'notes' => $broker->getNotes(),            
-            'suppliers' => $broker->getSuppliers(),
-            'customers' => $broker->getCustomers(),
+            'new'=>true
         ]);
     }
 
     /**
      * @Route("/{id}", name="broker_show", methods={"GET"})
      */
-
-    public function show(Broker $broker, 
-    MessageRepository $messageRepo,
-    NoteRepository $noteRepo,
-    SupplierRepository $supplierRepo,
-    CustomerRepository $customerRepo): Response
+    
+    public function show(Broker $broker): Response
     {
-        // $contact = $contactRepo->find($broker->getContact()->getId());
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
-        $messages = $messageRepo->findAll($broker->getId());
-        $notes = $noteRepo->findAll($broker->getId());
-        $suppliers = $supplierRepo->findAll($broker->getId());
-        $customers = $customerRepo->findAll($broker->getId());
 
         $form = $this->createForm(BrokerType::class, $broker);
         
@@ -113,10 +94,7 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact'=> $contactForm->createView(),
-            'messages' => $messages ? $messages :null,
-            'notes' => $notes ? $notes : null,            
-            'suppliers' => $suppliers ? $suppliers : null,
-            'customers' => $customers ? $customers : null,
+            'new'=>true
         ]);
     }
 
@@ -125,11 +103,7 @@ class BrokerController extends AbstractController
      */
 
 
-    public function edit(Request $request, Broker $broker, 
-    MessageRepository $messageRepo,
-    NoteRepository $noteRepo,
-    SupplierRepository $supplierRepo,
-    CustomerRepository $customerRepo): Response
+    public function edit(Request $request, Broker $broker): Response
     {
    
         $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
@@ -137,12 +111,7 @@ class BrokerController extends AbstractController
 
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
-
-        $messages = $messageRepo->findByName($broker->getName());
-        $notes = $noteRepo->findAll($broker->getId());
-        $suppliers = $supplierRepo->findAll($broker->getId());
-        $customers = $customerRepo->findAll($broker->getId());
-                
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $broker->setDateEdited(new \DateTime());          
             $entityManager->persist($contactForm->getData());       
@@ -156,10 +125,11 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact' => $contactForm->createView(),
-            'messages' => $messages ? $messages :null,
-            'notes' => $notes ? $notes : null,            
-            'suppliers' => $suppliers ? $suppliers : null,
-            'customers' => $customers ? $customers : null,
+            'new'=>false,
+            'messages'=>$broker->getMessages(),
+            'customers'=>$broker->getCustomers(),
+            'notes'=>$broker->getNotes(),
+            'suppliers'=>$broker->getSuppliers()
         ]);
     }
 

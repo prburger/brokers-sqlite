@@ -3,17 +3,15 @@
 {% block title %}{{'product_index'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <div class="page_form_heading">
-        <div class="page_title">
-            {{'product_index'|trans|raw}}
-        </div>
-        <div class="return_to_list_label">
-            <a href="{{ path('product_new') }}" title="{{'create_new_product'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
-            <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
-        </div>
-    </div>
 
-    <div class="index_table">
+<div class="page_form_heading">{{'product_index'|trans|raw}}
+    <div class="return_to_list_label">
+        <a href="{{ path('product_new') }}" title="{{'create_new_product'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
+        <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+    </div>
+</div>
+
+<div class="index_table">
     <table class="table">
         <thead>
             <tr>
@@ -36,17 +34,12 @@
             </tr>
         {% else %}
                 {%include 'no_records_found.php' %}
-            {# <tr>
-                <td colspan="4">
-                    <p class="no_records_found">{{'table.no_records_found'|trans|raw}}</p>
-                </td>
-            </tr> #}
         {% endfor %}
         </tbody>
     </table>
     
- {% if paginator.hasNextPage %} 
-         <div class="navigation text-center">
+    {% if paginator.hasNextPage %} 
+        <div class="navigation text-center">
             <ul class="pagination">
                 {% if paginator.hasPreviousPage %}
                     <li class="prev"><a href="{{ path('broker_index_paginated', {page: paginator.previousPage}) }}" rel="previous"><i class="fa fw fa-long-arrow-left"></i> {{ 'paginator.previous'|trans }}</a></li>
@@ -69,6 +62,6 @@
                 {% endif %}
             </ul>
         </div>
-     {% endif %} 
+    {% endif %} 
 </div>
 {% endblock %}
