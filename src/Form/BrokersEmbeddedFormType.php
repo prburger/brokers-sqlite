@@ -16,25 +16,10 @@ class BrokersEmbeddedFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          
-        ->add('name')
-        ->add('select', CheckboxType::class, [
-            'mapped' => false,
-            'constraints' => [
-                new IsTrue([
-                    'message' => 'I know, it\'s silly, but you must agree to our terms.'
-                ])
-            ]
+            ->add('name')
+            ->add('select', CheckboxType::class, [
+                'mapped' => false
         ]);
-
- /*    ->add('broker', EntityType::class, [
-            'class' => Broker::class,
-            'choice_label' => 'name',
-            'query_builder' => function(BrokerRepository $repo) {
-                return $repo->createQueryBuilder('b');
-            }
-        ]) 
-        ; */
     }
 
     public function configureOptions(OptionsResolver $resolver)

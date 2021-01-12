@@ -30,15 +30,15 @@ class MessageType extends AbstractType
                 'entry_type' => CustomersEmbeddedFormType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false,
-                'mapped' => false
+                'by_reference' => true,
+                'mapped' => true
             ])              
             ->add('suppliers', CollectionType::class, [
                 'entry_type' => SuppliersEmbeddedFormType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false,
-                'mapped' => false
+                'by_reference' => true,
+                'mapped' => true
             ]) 
       ;
     }

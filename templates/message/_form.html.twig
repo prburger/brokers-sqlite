@@ -1,9 +1,7 @@
 <div class="form_div">
     {{ form_start(form) }}
-
         <div class="row">
             <div class="col-sm-6">
-
                 {{ form_row(form.sentBy) }}
                 {{ form_row(form.text) }}
                 <div class="row">
@@ -13,47 +11,22 @@
                 </div>
             </div>
             <div class="col-sm-6">        
-                <div class="form_component">
-                {# {{ form_row(form.brokers) }} #}
-                                        
-                    <table class="table">
-                        {% for broker in message.brokers %}        
-                          <tr>
-                            <td>  
-                            {{ broker.name }}
-                            </td>
-                            <td><input type="checkbox" value={{ broker.id }}/></td>
-                            </tr>
-                        {% endfor %}
-                        </table>
+                <div class="row">
+                    <div class="form_component">
+                        {{ form_row(form.brokers)}}
+                    </div>
                 </div>
-                <div class="form_component">
-                    {# {{ form_row(form.suppliers) }} #}
-                    <table class="table">
-                        {% for supplier in message.suppliers %}        
-                          <tr>
-                            <td>  
-                            {{ supplier.name }}
-                            </td>
-                            <td><input type="checkbox" value={{ supplier.id }}/></td>
-                            </tr>
-                        {% endfor %}
-                        </table>
+                <div class="row">
+                    <div class="form_component">
+                        {{ form_row(form.customers) }} 
+                    </div>
                 </div>
-                <div class="form_component">
-                    {# {{ form_row(form.customers) }} #}
-                    <table class="table">
-                        {% for customer in message.customers %}        
-                          <tr>
-                            <td>  
-                            {{ customer.name }}
-                            </td>
-                            <td><input type="checkbox" value={{ customer.id }}/></td>
-                            </tr>
-                        {% endfor %}
-                        </table>
+                <div class="row">
+                    <div class="form_component">
+                        {{ form_row(form.suppliers) }}
+                    </div>
                 </div>
-            </div>
+            </div>             
         </div>
     {{ form_end(form) }}
 </div>

@@ -25,13 +25,13 @@ class CustomersEmbeddedFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('customer', EntityType::class, [
+/*             ->add('customer', EntityType::class, [
                 'class' => Customer::class,
                 'choice_label' => 'name',
                 'query_builder' => function(CustomerRepository $repo) {
                     return $repo->createQueryBuilder('b');
                 }
-            ])
+            ]) */
         ;
     }
 

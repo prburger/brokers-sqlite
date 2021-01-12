@@ -25,13 +25,13 @@ class SuppliersEmbeddedFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('supplier', EntityType::class, [
+/*             ->add('supplier', EntityType::class, [
                 'class' => Supplier::class,
                 'choice_label' => 'name',
                 'query_builder' => function(SupplierRepository $repo) {
                     return $repo->createQueryBuilder('b');
                 }
-            ])
+            ]) */
         ;
     }
 
