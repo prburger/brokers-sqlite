@@ -17,11 +17,8 @@ use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
 use App\Repository\ProductRepository;
-
 use App\Repository\SupplierRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,21 +60,20 @@ class MessageController extends AbstractController
             
             $form = $this->createForm(MessageType::class, $message);
             $form->handleRequest($request);
-
-            $brokers = $brokerRepo->findAll();       
-            $customers = $customerRepo->findAll();
-            $suppliers = $supplierRepo->findAll();
             
+            $brokers = $brokerRepo->findAll();       
             foreach($brokers as $broker)
             {
                 $message->getBrokers()->add($broker);
             }
             
+            $customers = $customerRepo->findAll();
             foreach($customers as $customer)
             {
                 $message->getCustomers()->add($customer);
             }
             
+            $suppliers = $supplierRepo->findAll();
             foreach($suppliers as $supplier)
             {
                 $message->getSuppliers()->add($supplier);
@@ -89,17 +85,15 @@ class MessageController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {            
                 
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($message);            
+                $message = $form->getViewData();
+                $entityManager->persist($message);             
                 $entityManager->flush();
                 
                 return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
             }
-            
-            dump($form);
 
             return $this->render('message/new.html.twig' , [
                 'form' => $form->createView(),
-                // 'message' => $message,
             ]);
     }
 
