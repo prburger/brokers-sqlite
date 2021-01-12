@@ -815,6 +815,38 @@
                 <source>customer_index</source>
                 <target>Customer List</target>
             </trans-unit>
+            <trans-unit id="Brokers">
+                <source>Brokers</source>
+                <target>Brokers</target>
+            </trans-unit>
+            <trans-unit id="Suppliers">
+                <source>Suppliers</source>
+                <target>Supplier</target>
+            </trans-unit>
+            <trans-unit id="Customers">
+                <source>Customers</source>
+                <target>Customers</target>
+            </trans-unit>
+            <trans-unit id="Select">
+                <source>Select</source>
+                <target>Select</target>
+            </trans-unit>
+            <trans-unit id="Supplier">
+                <source>Supplier</source>
+                <target>Supplier</target>
+            </trans-unit>
+            <trans-unit id="Customer">
+                <source>Customer</source>
+                <target>Customer</target>
+            </trans-unit>           
+            <trans-unit id="Broker">
+                <source>Broker</source>
+                <target>Broker</target>
+            </trans-unit>
+            <trans-unit id="__name__label__">
+                <source>__name__label__</source>
+                <target>Name</target>
+            </trans-unit>
                <trans-unit id="supplier_index">
                 <source>supplier_index</source>
                 <target>Supplier List</target>
