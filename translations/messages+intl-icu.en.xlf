@@ -572,6 +572,14 @@
                 <source>create_new_broker</source>
                 <target>New broker</target>
             </trans-unit>
+            <trans-unit id="create_new_message">
+                <source>create_new_message</source>
+                <target>New message</target>
+            </trans-unit>            
+            <trans-unit id="create_new_note">
+                <source>create_new_note</source>
+                <target>New note</target>
+            </trans-unit>
             <trans-unit id="create_new_customer">
                 <source>create_new_customer</source>
                 <target>New customer</target>
@@ -822,6 +830,26 @@
             <trans-unit id="Suppliers">
                 <source>Suppliers</source>
                 <target>Supplier</target>
+            </trans-unit>
+            <trans-unit id="message_added">
+                <source>message_added</source>
+                <target>Message Added</target>
+            </trans-unit>
+            <trans-unit id="message_index">
+                <source>message_index</source>
+                <target>Message List</target>
+            </trans-unit>
+            <trans-unit id="note_index">
+                <source>note_index</source>
+                <target>Note List</target>
+            </trans-unit>
+            <trans-unit id="menu.messages">
+                <source>menu.messages</source>
+                <target>Messages</target>
+            </trans-unit>
+            <trans-unit id="menu.notes">
+                <source>menu.notes</source>
+                <target>Notes</target>
             </trans-unit>
             <trans-unit id="Customers">
                 <source>Customers</source>

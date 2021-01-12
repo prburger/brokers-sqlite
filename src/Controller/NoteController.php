@@ -17,11 +17,14 @@ class NoteController extends AbstractController
 {
     /**
      * @Route("/", name="note_index", methods={"GET"})
+     * @Route("/page/{page<[1-9]\d*>}", defaults={"page":"1", "_format"="html"}, methods="GET", name="note_index_paginated")
      */
-    public function index(NoteRepository $noteRepository): Response
+    public function index(Request $_request, int $page = 1, string $_format="html", NoteRepository $repository): Response
     {
-        return $this->render('note/index.html.twig', [
-            'notes' => $noteRepository->findAll(),
+        $pageData = $repository->findLatest($page);
+
+        return $this->render('note/index.'.$_format.'.twig', [            
+            'paginator'=>$pageData,
         ]);
     }
 
