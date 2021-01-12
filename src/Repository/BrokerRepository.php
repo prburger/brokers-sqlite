@@ -20,6 +20,18 @@ class BrokerRepository extends ServiceEntityRepository
         parent::__construct($registry, Broker::class);
     }
 
+/*     public function createQueryBuilder()
+    {
+        return $this->createQueryBuilder('b')
+        // ->andWhere('b.exampleField = :val')
+        // ->setParameter('val', $value)
+        ->orderBy('b.id', 'ASC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+        ;
+    } */
+
     /**
      * Our findLatest() method
      *

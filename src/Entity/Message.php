@@ -143,6 +143,11 @@ class Message
     /**
      * @return Collection|Broker[]
      */
+    public function setBrokers(ArrayCollection $brokers)
+    {
+        $this->brokers = $brokers;
+    }
+
     public function getBrokers(): Collection
     {
         return $this->brokers;
