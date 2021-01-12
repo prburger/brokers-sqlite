@@ -18,12 +18,13 @@ class MessageType extends AbstractType
         $builder
             ->add('sentBy')
             ->add('text', TextareaType::class,['attr'=>['class'=>'tinymce','rows'=>10],])
-            ->add('brokers', CollectionType::class, [
+         
+             ->add('brokers', CollectionType::class, [
                 'entry_type' => BrokersEmbeddedFormType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => false,
-                'mapped' => false
+                'by_reference' => true,
+                'mapped' => true
             ])
             ->add('customers', CollectionType::class, [
                 'entry_type' => CustomersEmbeddedFormType::class,
@@ -38,7 +39,7 @@ class MessageType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'mapped' => false
-            ])
+            ]) 
       ;
     }
 

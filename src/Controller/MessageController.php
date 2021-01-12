@@ -6,20 +6,22 @@ use App\Entity\Broker;
 use App\Entity\Message;
 use App\Entity\Product;
 use App\Entity\Supplier;
-
 use App\Form\BrokerType;
+use App\Form\BrokersEmbeddedFormType;
 use App\Form\CustomerType;
+use App\Form\DataTransformer\BrokerArrayToStringTransformer;
 
 use App\Form\MessageType;
 use App\Form\SupplierType;
 use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
-
 use App\Repository\ProductRepository;
+
 use App\Repository\SupplierRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,11 +33,14 @@ class MessageController extends AbstractController
 {
     /**
      * @Route("/", name="message_index", methods={"GET"})
+     * @Route("/page/{page<[1-9]\d*>}", defaults={"page":"1", "_format"="html"}, methods="GET", name="message_index_paginated")
      */
-    public function index(MessageRepository $messageRepository): Response
+    public function index(Request $_request, int $page = 1, string $_format="html", MessageRepository $repository): Response
     {
-        return $this->render('message/index.html.twig', [
-            'messages' => $messageRepository->findAll(),
+        $pageData = $repository->findLatest($page);
+
+        return $this->render('message/index.'.$_format.'.twig', [            
+            'paginator'=>$pageData,
         ]);
     }
 
@@ -49,49 +54,48 @@ class MessageController extends AbstractController
         BrokerRepository $brokerRepo,
         CustomerRepository $customerRepo,        
         SupplierRepository $supplierRepo
-    ): Response
-    {
-        $message = new Message();        
-        $message->setSentBy($brokerRepo->find($broker_id)->getName());
+        ): Response
+        {
+            $message = new Message();        
+            $message->setSentBy($brokerRepo->find($broker_id)->getName());
+            
+            $form = $this->createForm(MessageType::class, $message);
+            $form->handleRequest($request);
 
-        $brokers = $brokerRepo->findAll();
-        
-        foreach($brokers as $broker)
-        {
-            $message->addBroker($broker);
-        }
-        
-        $customers = $customerRepo->findAll();
-        foreach($customers as &$customer)
-        {
-            $message->addCustomer($customer);
-        }
-        
-        $suppliers = $supplierRepo->findAll();
-        foreach($suppliers as &$supplier)
-        {
-            $message->addSupplier($supplier);
-        }
-        
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-       
-        if ($form->isSubmitted() && $form->isValid()) {
+            $brokers = $brokerRepo->findAll();        
+            foreach($brokers as $broker)
+            {
+                $message->addBroker($broker);
+            }
+            
+            $customers = $customerRepo->findAll();
+            foreach($customers as $customer)
+            {
+                $message->addCustomer($customer);
+            }
+            
+            $suppliers = $supplierRepo->findAll();
+            foreach($suppliers as $supplier)
+            {
+                $message->addSupplier($supplier);
+            }
+            
+            if ($form->isSubmitted() && $form->isValid()) {            
+                
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($message);            
+                $entityManager->flush();
+                
+                return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+            }
+            
             dump($form);
             dump($message);
-    
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($message);
-            dump($message);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
-        }
-
-        return $this->render('message/new.html.twig' , [
-            'message' => $message,
-            'form' => $form->createView(),
-        ]);
+            return $this->render('message/new.html.twig' , [
+                'message' => $message,
+                'form' => $form->createView(),
+            ]);
     }
 
     /**

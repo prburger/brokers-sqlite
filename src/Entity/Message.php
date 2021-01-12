@@ -47,17 +47,17 @@ class Message
     /**
      * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="messages")
      */
-    private $brokers;
+    protected $brokers;
 
     /**
      * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="messages")
      */
-    private $suppliers;
+    protected $suppliers;
 
     /**
      * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="messages")
      */
-    private $customers;
+    protected $customers;
 
     public function __construct()
     {
