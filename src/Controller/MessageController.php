@@ -57,28 +57,34 @@ class MessageController extends AbstractController
         ): Response
         {
             $message = new Message();        
-            $message->setSentBy($brokerRepo->find($broker_id)->getName());
+            if($broker_id){
+                $message->setSentBy($brokerRepo->find($broker_id)->getName());
+            }
             
             $form = $this->createForm(MessageType::class, $message);
             $form->handleRequest($request);
 
-            $brokers = $brokerRepo->findAll();        
+            $brokers = $brokerRepo->findAll();       
+            $customers = $customerRepo->findAll();
+            $suppliers = $supplierRepo->findAll();
+            
             foreach($brokers as $broker)
             {
-                $message->addBroker($broker);
+                $message->getBrokers()->add($broker);
             }
             
-            $customers = $customerRepo->findAll();
             foreach($customers as $customer)
             {
-                $message->addCustomer($customer);
+                $message->getCustomers()->add($customer);
             }
             
-            $suppliers = $supplierRepo->findAll();
             foreach($suppliers as $supplier)
             {
-                $message->addSupplier($supplier);
+                $message->getSuppliers()->add($supplier);
             }
+            
+            $form = $this->createForm(MessageType::class, $message);
+            $form->handleRequest($request);
             
             if ($form->isSubmitted() && $form->isValid()) {            
                 
@@ -90,11 +96,10 @@ class MessageController extends AbstractController
             }
             
             dump($form);
-            dump($message);
 
             return $this->render('message/new.html.twig' , [
-                'message' => $message,
                 'form' => $form->createView(),
+                // 'message' => $message,
             ]);
     }
 
