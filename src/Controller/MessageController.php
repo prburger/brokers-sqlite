@@ -61,7 +61,7 @@ class MessageController extends AbstractController
             $form = $this->createForm(MessageType::class, $message);
             $form->handleRequest($request);
             
-            $brokers = $brokerRepo->findAll();       
+          /*   $brokers = $brokerRepo->findAll();       
             foreach($brokers as $broker)
             {
                 $message->getBrokers()->add($broker);
@@ -78,10 +78,7 @@ class MessageController extends AbstractController
             {
                 $message->getSuppliers()->add($supplier);
             }
-            
-            $form = $this->createForm(MessageType::class, $message);
-            $form->handleRequest($request);
-            
+             */
             if ($form->isSubmitted() && $form->isValid()) {            
                 
                 $entityManager = $this->getDoctrine()->getManager();
@@ -93,6 +90,7 @@ class MessageController extends AbstractController
             }
 
             return $this->render('message/new.html.twig' , [
+                // 'message'=>$message,
                 'form' => $form->createView(),
             ]);
     }

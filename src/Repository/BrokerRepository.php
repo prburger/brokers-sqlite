@@ -46,7 +46,7 @@ class BrokerRepository extends ServiceEntityRepository
     public function findLatest(int $page = 1): Paginator
     {
         $qb = $this->createQueryBuilder('p')
-           ->orderBy('p.id', 'DESC')
+           ->orderBy('p.dateAdded', 'ASC')
         ;      
 
         return (new Paginator($qb))->paginate($page);

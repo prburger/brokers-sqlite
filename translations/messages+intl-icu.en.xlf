@@ -556,17 +556,37 @@
                 <source>table.no_records_found</source>
                 <target>No records found</target>
             </trans-unit>
-                 <trans-unit id="back_to_list">
+            <trans-unit id="select_recipients">
+                <source>select_recipients</source>
+                <target><![CDATA[<strong>Select Recipients</strong>]]></target>
+            </trans-unit>
+            <trans-unit id="back_to_list">
                 <source>back_to_list</source>
                 <target>Back to list</target>
             </trans-unit>
-                   <trans-unit id="back_to_portal">
+            <trans-unit id="Broker Selection">
+                <source>Broker Selection</source>
+                <target>Brokers</target>
+            </trans-unit>
+            <trans-unit id="Customer Selection">
+                <source>Customer Selection</source>
+                <target>Customers</target>
+            </trans-unit>            
+            <trans-unit id="Supplier Selection">
+                <source>Supplier Selection</source>
+                <target>Suppliers</target>
+            </trans-unit>
+            <trans-unit id="back_to_portal">
                 <source>back_to_portal</source>
                 <target>Back to portal</target>
             </trans-unit>
             <trans-unit id="action_delete">
                 <source>action_delete</source>
                 <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="Id">
+                <source>Id</source>
+                <target>Id</target>
             </trans-unit>
             <trans-unit id="create_new_broker">
                 <source>create_new_broker</source>
