@@ -17,8 +17,7 @@ class CustomersEmbeddedFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, ['mapped' => true])
-            ->add('select',  CheckboxType::class, ['mapped' => false, 'required'=>false])
+            ->add('name', TextType::class, ['mapped' => true, 'label'=>false])
         ;
     }
 

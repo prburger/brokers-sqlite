@@ -153,6 +153,10 @@ class Message
         return $this->brokers;
     }
 
+    public $brokerSelection;
+    public $customerSelection;
+    public $supplierSelection;
+    
     public function addBroker(Broker $broker): self
     {
         if (!$this->brokers->contains($broker)) {
