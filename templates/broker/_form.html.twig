@@ -2,6 +2,7 @@
     {{ form_start(form) }}
     <div class="row">
         <div class="col-sm-6">
+            {% do form.id.setRendered() %}
             {{ form_widget(form) }}
             {% include 'broker/messages.html.twig' %} 
             {% include 'broker/notes.html.twig' %}

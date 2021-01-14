@@ -23,7 +23,7 @@
         <tbody>
         {% for message in paginator.results %}
             <tr>
-                <td>{{ message.id }}</td>
+                {# <td>{{ message.id }}</td> #}
                 <td>{{ message.text }}</td>
                 <td>{{ message.dateAdded ? message.dateAdded|date('Y-m-d') : '' }}</td>
                 <td>{{ message.dateEdited ? message.dateEdited|date('Y-m-d') : '' }}</td>

@@ -568,6 +568,18 @@
                 <source>Broker Selection</source>
                 <target>Brokers</target>
             </trans-unit>
+            <trans-unit id="Sender">
+                <source>Sender</source>
+                <target>Sender</target>
+            </trans-unit>
+            <trans-unit id="form_component_header_recipients">
+                <source>form_component_header_recipients</source>
+                <target>Recipients</target>
+            </trans-unit>
+            <trans-unit id="form_component_header_senders">
+                <source>form_component_header_senders</source>
+                <target>Senders</target>
+            </trans-unit>
             <trans-unit id="Customer Selection">
                 <source>Customer Selection</source>
                 <target>Customers</target>
@@ -615,6 +627,10 @@
             <trans-unit id="supplier_show">
                 <source>supplier_show</source>
                 <target>Supplier Details</target>
+            </trans-unit>
+            <trans-unit id="message_show">
+                <source>message_show</source>
+                <target>Message Details</target>
             </trans-unit>
              <trans-unit id="product_show">
                 <source>product_show</source>

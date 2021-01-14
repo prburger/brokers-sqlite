@@ -1,11 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Note{% endblock %}
+{% block title %}{{'new_note_title'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <h1>Create new Note</h1>
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'new_note_title'|trans|raw}}
+        <div class="return_to_list_label">
+           <a href="{{ path('note_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+        </div>
+        </div>
+</div>
 
-    {{ include('note/_form.html.twig') }}
-
-    <a href="{{ path('note_index') }}">back to list</a>
+<div class="row">
+    <div class="col">
+        {{ include('note/_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}
