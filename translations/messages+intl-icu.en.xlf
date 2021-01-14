@@ -628,6 +628,10 @@
                 <source>supplier_show</source>
                 <target>Supplier Details</target>
             </trans-unit>
+            <trans-unit id="supplier_edit">
+                <source>supplier_edit</source>
+                <target>Edit Supplier</target>
+            </trans-unit>
             <trans-unit id="message_show">
                 <source>message_show</source>
                 <target>Message Details</target>

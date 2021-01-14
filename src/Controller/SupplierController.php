@@ -98,15 +98,27 @@ class SupplierController extends AbstractController
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $contactForm = $this->createForm(ContactFormType::class, $supplier->getContact());
+        $contactForm->handleRequest($request);
 
-            return $this->redirectToRoute('supplier_index');
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contactForm->getData());
+            $entityManager->persist($supplier);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('supplier_edit', array('id'=>$supplier->getId()));
         }
 
         return $this->render('supplier/edit.html.twig', [
             'supplier' => $supplier,
             'form' => $form->createView(),
+            'messages'=>$supplier->getMessages(),
+            'products'=>$supplier->getProducts(),
+            'notes'=>$supplier->getNotes(),
+            'contact'=>$contactForm->createView()
         ]);
     }
 
