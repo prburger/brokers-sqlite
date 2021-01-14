@@ -452,6 +452,10 @@ header .locales a:hover small {
 .sticky_footer{
   flex-shrink: none;
 }
+.paginator{
+  position: fixed;
+  bottom:0;
+}
 
 footer {
   position: fixed; 

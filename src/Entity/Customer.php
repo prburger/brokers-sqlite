@@ -36,31 +36,31 @@ class Customer
 
     /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $contact;
 
     /**
      * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="customers", orphanRemoval=true)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
     */
     private $notes;
 
     /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="customers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
     */
     private $products;
 
     /**
      * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="customers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $broker;
+    private $brokers;
 
     /**
      * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="customers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
     */
     private $messages;
 
@@ -72,6 +72,7 @@ class Customer
         $this->products = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->brokers = new ArrayCollection();        
         $this->setContact(new Contact());
     }
 
@@ -157,6 +158,36 @@ class Customer
             // set the owning side to null (unless already changed)
             if ($note->getCustomer() === $this) {
                 $note->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+      /**
+     * @return Collection|Broker[]
+     */
+    public function getBrokers(): Collection
+    {
+        return $this->brokers;
+    }
+
+    public function addBroker(Broker $broker): self
+    {
+        if (!$this->brokers->contains($broker)) {
+            $this->brokers[] = $broker;
+            $broker->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBroker(Broker $broker): self
+    {
+        if ($this->brokers->removeElement($broker)) {
+            // set the owning side to null (unless already changed)
+            if ($brokers->getCustomer() === $this) {
+                $brokers->setCustomer(null);
             }
         }
 

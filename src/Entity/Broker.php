@@ -38,17 +38,20 @@ class Broker
 
     /**
      * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="brokers")
-     */
+     * @ORM\JoinColumn(nullable=true)
+    */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="broker")
-     */
+     * @ORM\JoinColumn(nullable=true)
+    */
     private $notes;
 
     /**
      * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="broker")
-     */
+      * @ORM\JoinColumn(nullable=true)
+    */
     private $suppliers;
 
     /**
@@ -58,7 +61,8 @@ class Broker
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="broker")
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="brokers")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $customers;
     
