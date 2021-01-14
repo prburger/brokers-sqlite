@@ -1,17 +1,3 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Edit Message{% endblock %}
-
-{% block body %}
-    <h1>Edit Message</h1>
-
-    {{ include('message/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('message_index') }}">back to list</a>
-
-    {{ include('message/_delete_form.html.twig') }}
-{% endblock %}
- #}
 {% extends 'base.html.twig' %}
 
 {% block title %}{{'message_edit'|trans|raw}}{% endblock %}
@@ -22,7 +8,11 @@
         {{'message_edit'|trans|raw}}
         <div class="return_to_list_label">
             {{ include('message/_delete_form.html.twig') }}
-            <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+            {% if broker_id %}
+                <a href="{{ path('broker_edit', {'id':broker_id}) }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+            {% else %}
+                <a href="{{ path('message_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+            {% endif %}
         </div>
     </div>
 </div>

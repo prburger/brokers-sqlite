@@ -20,6 +20,42 @@ class BrokerRepository extends ServiceEntityRepository
         parent::__construct($registry, Broker::class);
     }
 
+    public function findWithoutId($value)
+    {
+        return $this->createQueryBuilder('b')
+        ->where('b.id != :val')
+        ->setParameter('val', $value)
+        ->orderBy('b.id', 'ASC')
+        // ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function findByName($value)
+    {
+        return $this->createQueryBuilder('b')
+        ->where('b.name = :val')
+        ->setParameter('val', $value)
+        ->orderBy('b.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function findWithoutName($value)
+    {
+        return $this->createQueryBuilder('b')
+        ->where('b.name != :val')
+        ->setParameter('val', $value)
+        ->orderBy('b.id', 'ASC')
+        // ->setMaxResults(1)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
 /*     public function createQueryBuilder()
     {
         return $this->createQueryBuilder('b')

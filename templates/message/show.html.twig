@@ -1,34 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Message{% endblock %}
+{% block title %}{{'message_show'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <h1>Message</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ message.id }}</td>
-            </tr>
-            <tr>
-                <th>Text</th>
-                <td>{{ message.text }}</td>
-            </tr>
-            <tr>
-                <th>DateAdded</th>
-                <td>{{ message.dateAdded ? message.dateAdded|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DateEdited</th>
-                <td>{{ message.dateEdited ? message.dateEdited|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'message_show'|trans|raw}}
+        <div class="return_to_list_label">
+            {# {{ include('message/_delete_form.html.twig') }} #}
+            <a href="{{ path('message_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+        </div>
+    </div>
+</div>
 
-    <a href="{{ path('message_index') }}">back to list</a>
+<div class="row">
+    <div class="col">
+        {{ include('message/_form.html.twig', {'button_label': 'Update'}) }} 
+    </div>
+ </div>
 
-    <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a>
-
-    {{ include('message/_delete_form.html.twig') }}
 {% endblock %}
+

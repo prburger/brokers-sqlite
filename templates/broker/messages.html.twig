@@ -22,9 +22,9 @@
                             <tr>
                                 <td>{{message.text}}</td>
                                 <td class="action_column">
-                                   {#  <a class="form_component_link" href="{{ path('message_edit',{'id': message.id}) }}" title="{{'action.edit'|trans|raw}}">
+                                    <a class="form_component_link" href="{{ path('message_edit',{'id': message.id}) }}" title="{{'action.edit'|trans|raw}}">
                                     <i class="fas fa-edit page_icon"></i>
-                                    </a> #}                                     
+                                    </a>                                     
                                 </td>
                             </tr>
                         {% endfor %}

@@ -18,6 +18,7 @@ class CustomersEmbeddedFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['mapped' => true, 'label'=>false])
+            ->add('id', TextType::class, ['mapped' => true, 'label'=>false])
         ;
     }
 

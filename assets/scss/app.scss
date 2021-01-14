@@ -528,11 +528,18 @@ form{
   font-weight: bold;
   text-align:center;
 }
+
 .form_component_link{
   float:right;
   font-size:10px;
   margin:0;
   padding:0;
+}
+
+.form_component_header{
+  font-size:14pt;
+  font-weight: bold;
+  text-align: center;
 }
 
 delete_form{

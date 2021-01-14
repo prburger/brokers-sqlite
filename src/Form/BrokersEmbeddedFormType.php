@@ -20,11 +20,6 @@ class BrokersEmbeddedFormType extends AbstractType
         $builder
             ->add('name', TextType::class, ['mapped' => true, 'label'=>false])
             ->add('id', TextType::class, ['mapped' => true, 'label'=>false])
-         /*    ->add('remove', CollectionType::class, [
-                'entry_type'=> CheckboxType::class, 
-                'label'    => 'Remove',
-                'required' => false,
-            ]) */
            ;
     }
 

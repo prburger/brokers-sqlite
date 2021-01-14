@@ -53,46 +53,148 @@ class MessageController extends AbstractController
         SupplierRepository $supplierRepo
         ): Response
         {
-            $message = new Message();        
-            if($broker_id){
+            $message = new Message();   
+            $message->setId(0);
+            
+            if($broker_id != null)
+            {
                 $message->setSentBy($brokerRepo->find($broker_id)->getName());
             }
             
-            $form = $this->createForm(MessageType::class, $message);
+            $brokerSelection = $brokerRepo->findWithoutId($broker_id);
+            $customerSelection = $customerRepo->findAll();
+            $supplierSelection = $supplierRepo->findAll();
+            
+            $form = $this->createForm(MessageType::class,$message,
+                array('brokerSelection'=>$brokerSelection,
+                      'customerSelection'=>$customerSelection,
+                      'supplierSelection'=>$supplierSelection));  
+            
             $form->handleRequest($request);
-            
-          /*   $brokers = $brokerRepo->findAll();       
-            foreach($brokers as $broker)
-            {
-                $message->getBrokers()->add($broker);
-            }
-            
-            $customers = $customerRepo->findAll();
-            foreach($customers as $customer)
-            {
-                $message->getCustomers()->add($customer);
-            }
-            
-            $suppliers = $supplierRepo->findAll();
-            foreach($suppliers as $supplier)
-            {
-                $message->getSuppliers()->add($supplier);
-            }
-             */
-            if ($form->isSubmitted() && $form->isValid()) {            
+                            
+             if ($form->isSubmitted() && $form->isValid()) {            
                 
                 $entityManager = $this->getDoctrine()->getManager();
                 $message = $form->getViewData();
-                $entityManager->persist($message);             
+                
+                $message->setBrokers($message->brokerSelection);
+                $message->setCustomers($message->customerSelection);
+                $message->setSuppliers($message->supplierSelection);
+                $entityManager->persist($message);   
+
                 $entityManager->flush();
                 
                 return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
             }
 
             return $this->render('message/new.html.twig' , [
-                // 'message'=>$message,
                 'form' => $form->createView(),
+                'brokers'=>$message->getBrokers(),
+                'customers'=>$message->getCustomers(),
+                'suppliers'=>$message->getSuppliers(),
+                'broker_id'=>$broker_id
+
             ]);
+    }
+
+    /**
+     * @Route("/{id}", name="message_show", methods={"GET"})
+     */
+    public function show(Message $message): Response
+    {
+        $form = $this->createForm(MessageType::class, $message);
+        // $form->handleRequest($request);
+        return $this->render('message/show.html.twig', [
+            'message' => $message,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="message_edit", methods={"GET","POST"})
+     */
+    public function edit(
+        Request $request, 
+        Message $message,  
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo): Response
+    {
+        
+        $broker = $brokerRepo->findByName($message->getSentBy());
+        
+        $brokerSelection = $brokerRepo->findWithoutName($message->getSentBy());                
+        for($i=0; $i<count($brokerSelection); $i++)
+        {
+            if($message->getBrokers()->contains($brokerSelection[$i])){
+              array_splice($brokerSelection, $i,1);
+            }
+        }
+        
+        $customerSelection = $customerRepo->findAll();
+        for($i=0; $i<count($customerSelection); $i++)
+        {
+            if($message->getCustomers()->contains($customerSelection[$i])){         
+             array_splice($customerSelection, $i,1);
+            }
+        }        
+
+        $supplierSelection = $supplierRepo->findAll();
+        for($i=0; $i<count($supplierSelection); $i++)
+        {
+            if($message->getSuppliers()->contains($supplierSelection[$i])){
+              array_splice($supplierSelection, $i,1);
+            }
+        }
+
+        $form = $this->createForm(MessageType::class,$message,
+                array('brokerSelection'=>$brokerSelection,
+                      'customerSelection'=>$customerSelection,
+                      'supplierSelection'=>$supplierSelection));  
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $message = $form->getViewData();
+                
+            foreach($message->brokerSelection as $broker){
+                $message->addBroker($broker);
+            }
+            foreach($message->customerSelection as $customer){
+                $message->addCustomer($customer);
+            }
+            foreach($message->supplierSelection as $supplier){
+                $message->addSupplier($supplier);
+            }
+                        
+            $entityManager->persist($message);   
+            $this->getDoctrine()->getManager()->flush();
+            
+            return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+        }
+
+        return $this->render('message/edit.html.twig', [
+            'message' => $message,
+            'form' => $form->createView(),
+            'brokers'=> $message->getBrokers(),
+            'suppliers'=> $message->getSuppliers(),
+            'customers'=> $message->getCustomers(),
+            'broker_id'=>$broker[0]->getId()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="message_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Message $message): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($message);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('message_index');
     }
 
     /**
@@ -269,62 +371,6 @@ class MessageController extends AbstractController
     public function removeSupplier($message, $supplier): Response
     {
         //$message->removeBroker($broker);
-        return $this->redirectToRoute('message_index');
-    }
-
-    /**
-     * @Route("/{id}", name="message_show", methods={"GET"})
-     */
-    public function show(Message $message): Response
-    {
-        return $this->render('message/show.html.twig', [
-            'message' => $message,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="message_edit", methods={"GET","POST"})
-     */
-    public function edit(
-        Request $request, 
-        Message $message,  
-        BrokerRepository $brokerRepo,        
-        SupplierRepository $supplierRepo,
-        CustomerRepository $customerRepo): Response
-    {
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-
-        $brokers = $brokerRepo->findAll();
-        $customers = $customerRepo->findAll();
-        $suppliers = $supplierRepo->findAll();
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('message_index');
-        }
-
-        return $this->render('message/edit.html.twig', [
-            'message' => $message,
-            'form' => $form->createView(),
-            'brokers'=> $brokers ? $brokers : null,
-            'suppliers'=> $suppliers ? $suppliers : null,
-            'customers'=> $customers ? $customers : null,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="message_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Message $message): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($message);
-            $entityManager->flush();
-        }
-
         return $this->redirectToRoute('message_index');
     }
 }

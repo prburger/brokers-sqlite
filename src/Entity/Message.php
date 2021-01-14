@@ -12,56 +12,61 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Message
 {
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
+    
     /**
      * @ORM\Column(type="text")
      */
     private $text;
-
+    
     /**
      * @ORM\Column(type="date")
      */
     private $dateAdded;
-
+    
     /**
      * @ORM\Column(type="date")
      */
     private $dateEdited;
-
+    
     /**
      * @ORM\Column(type="string", length=120, nullable=true)
      */
     private $sentBy;
-
+    
     /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $DateSent;
-
+    
     /**
      * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="messages", cascade={"persist", "remove"})
      */
     private $brokers;
-
+    
     /**
      * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="messages", cascade={"persist", "remove"})
      */
     private $suppliers;
-
+    
     /**
      * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="messages", cascade={"persist", "remove"})
      */
     private $customers;
+    
+    public $brokerSelection;
+    public $customerSelection;
+    public $supplierSelection;
+    public $senderSelection;
 
     public function __construct()
     {
-        $this->setId(1);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->setDateSent(new \DateTime());
@@ -152,10 +157,6 @@ class Message
     {
         return $this->brokers;
     }
-
-    public $brokerSelection;
-    public $customerSelection;
-    public $supplierSelection;
     
     public function addBroker(Broker $broker): self
     {
@@ -176,6 +177,12 @@ class Message
     /**
      * @return Collection|Supplier[]
      */
+    
+    public function setSuppliers(ArrayCollection $suppliers)
+    {
+        $this->suppliers = $suppliers;
+    }
+
     public function getSuppliers(): Collection
     {
         return $this->suppliers;
@@ -200,6 +207,12 @@ class Message
     /**
      * @return Collection|Customer[]
      */
+
+    public function setCustomers(ArrayCollection $customers)
+    {
+        $this->customers = $customers;
+    }
+
     public function getCustomers(): Collection
     {
         return $this->customers;

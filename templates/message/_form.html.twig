@@ -1,121 +1,121 @@
 <div class="form_div">
     {{ form_start(form) }}
-    <div class="row">
-        <div class="col-sm-6">
-            {{ form_row(form.sentBy) }}
-            {{ form_row(form.text) }}
-           
-            <div class="row">
-                <div class="col-sm-12">
-                    {{ 'Broker Selection'|trans|raw}}
-                    {{ form_row(form.brokerSelection) }}
+        {# {% do form.id.setRendered() %} #}
+        <div class="row">
+            <div class="col-sm-6">
+                    {% if form.sentBy=="" %}
+                        {% do form.sentBy.setRendered() %}
+                        {{ form_row(form.senderSelection) }}
+                    {% else %}
+                        {% do form.senderSelection.setRendered() %}
+                        {{ form_row(form.sentBy) }}
+                    {% endif %} 
+
+
+                {{ form_row(form.text) }}
+            
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form_component_header">
+                            {{ 'form_component_header_senders'|trans|raw}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ form_row(form.brokerSelection) }}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ form_row(form.customerSelection) }}
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ form_row(form.supplierSelection) }} 
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    {{ 'Customer Selection'|trans|raw}}
-                    {{ form_row(form.customerSelection) }}
+        
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form_component_header">
+                            {{ 'form_component_header_recipients'|trans|raw}}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    {{ 'Supplier Selection'|trans|raw}}
-                    {{ form_row(form.supplierSelection) }} 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form_component">
+                            <table class="table">
+                                <tbody>
+                                {% for broker in brokers %}
+                                    <tr>
+                                        <td>
+                                            {{ broker.name }}
+                                        </td>
+                                        <td>
+                                            <a href=""><i class="fas fa-minus-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <button class="btn">{{ button_label|default('Save') }}</button>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form_component">
+                            <table class="table">
+                                <tbody>
+                                {% for customer in customers %}
+                                    <tr>
+                                        <td>
+                                            {{ customer.name }}
+                                        </td>
+                                        <td>
+                                            <a href=""><i class="fas fa-minus-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form_component">
+                            <table class="table">
+                                <tbody>
+                                {% for supplier in suppliers %}
+                                    <tr>
+                                        <td>
+                                            {{ supplier.name }}
+                                        </td>
+                                        <td>
+                                        <a href=""><i class="fas fa-minus-circle"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-primary" style="float:right;margin:10px 20px 0 0;">{{ button_label|default('Save') }}</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="row">
-                <h2>Recipients</h2>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form_component">
-                        {{ form_row(form.brokers)}}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form_component">
-                        {{ form_row(form.customers)}}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form_component">
-                        {{ form_row(form.suppliers)}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-           {#  <div class="col-sm-6">        
-                <div class="row">
-                    <div class="form_component">
-                         {% for broker in message.brokers %}
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    {{ broker.name }}
-                                </div>
-                                <div class="col-sm-2">
-                                    <a href="javascript::addBroker({{ broker.id }})">
-                                        <i class="fas fa-plus page_icon"></i>
-                                    </a>
-                                    <a href="javascript::removeBroker({{ broker.id }})">
-                                        <i class="fas fa-trash page_icon"></i>
-                                    </a>
-                                </div>
-                                </div>
-                            {% endfor %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form_component">
-                        {% for customer in message.customers %}
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    {{ customer.name }}
-                                </div>
-                                <div class="col-sm-2">
-                                    <a href="javascript::addCustomer({{ customer.id }})">
-                                        <i class="fas fa-plus page_icon"></i>
-                                    </a>
-                                    <a href="javascript::removeCustomeer({{ customer.id }})">
-                                        <i class="fas fa-trash page_icon"></i>
-                                    </a>
-                                </div>
-                            </div>                        
-                        {% endfor %}
-                      
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form_component">
-                       {% for supplier in message.suppliers %}
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    {{ supplier.name }}
-                                </div>
-                                <div class="col-sm-2">
-                                <a href="javascript::addSupplier({{ supplier.id }})">
-                                    <i class="fas fa-plus page_icon"></i>
-                                </a>
-                                <a href="javascript::removeSupplier({{ supplier.id }})">
-                                    <i class="fas fa-trash page_icon"></i>
-                                </a>
-                                </div>
-                            </div>
-                        {% endfor %}                   
-                    </div>
-                </div>
-            </div>    #}          
-    {# </div> #}
     {{ form_end(form) }}
 </div>

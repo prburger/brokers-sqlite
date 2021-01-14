@@ -13,8 +13,12 @@ use App\Repository\SupplierRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -23,31 +27,40 @@ class MessageType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-            ->add('sentBy')
+            ->add('sentBy', TextType::class, ['required'=>true])
             ->add('text', TextareaType::class,['attr'=>['class'=>'tinymce','rows'=>10],])
-            ->add('brokerSelection', EntityType::class, 
+            ->add('senderSelection', EntityType::class, 
                 [
-                    'choice_attr' => function() {
-                        return ['checked' => 'checked'];
-                    },
-                    'multiple'=>true,
-                    'label'=>false,
+                    'required'=>true,
+                    'multiple'=>false,
+                    'label'=>'Sender',
                     'class'=>Broker::class, 
                     'choice_label' => function ($broker) {
                         return $broker->getName();
-                    },
+                    }, 
                     'choice_value' => function (?Broker $broker) {
                         return $broker ? $broker->getId() : '';
                     },
-                    'query_builder' => function (BrokerRepository $er) {
-                        return $er->createQueryBuilder('u')
-                            ->orderBy('u.dateAdded', 'ASC');},
+                    'choices'=>null
+                ])
+            ->add('brokerSelection', EntityType::class, 
+                [
+                    'required'=>false,
+                    'multiple'=>true,
+                    'expanded'=>false,
+                    'label'=>'Brokers',
+                    'class'=>Broker::class, 
+                    'choice_label' => function ($broker) { return $broker->getName();},
+                    'choice_value' => function (?Broker $broker) { return $broker ? $broker->getId() : '';},
+                    'choices'=>$options['brokerSelection']
                 ])
             ->add('customerSelection', EntityType::class, 
                 [
+                    'required'=>false,
                     'multiple'=>true,
-                    'label'=>false,
+                    'label'=>'Customers',
                     'class'=>Customer::class, 
                     'choice_value' => function (?Customer $customer) {
                         return $customer ? $customer->getId() : '';
@@ -55,60 +68,45 @@ class MessageType extends AbstractType
                     'choice_label'=> function ($customer) {
                         return $customer->getName();
                     },
-                    'query_builder' => function (CustomerRepository $er) {
-                        return $er->createQueryBuilder('u')
-                            ->orderBy('u.dateAdded', 'ASC');},
+                    'choices'=>$options['customerSelection']
                 ])
             ->add('supplierSelection', EntityType::class, 
                 [
+                    'required'=>false,
                     'multiple'=>true,
-                    'label'=>false,
+                    'label'=>'Suppliers',
                     'class'=>Supplier::class, 
                     'choice_value' => function (?Supplier $supplier) {
                         return $supplier ? $supplier->getId() : '';
                     },
                     'choice_label'=> function ($supplier) {
                         return $supplier->getName();
-                    }, 
-                    'query_builder' => function (SupplierRepository $er) {
-                        return $er->createQueryBuilder('u')
-                        ->orderBy('u.dateAdded', 'ASC');}
+                    },
+                    'choices'=>$options['supplierSelection']
                 ])
-            
-             ->add('brokers', CollectionType::class, [
-                'entry_type' => BrokersEmbeddedFormType::class,
-                'entry_options' => ['label'=>false],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'prototype'=>true,
-                'mapped' => true
-            ])
-            ->add('customers', CollectionType::class, [
-                'entry_type' => CustomersEmbeddedFormType::class,
-                'allow_add' => true,
-                'entry_options' => ['label'=>false],
-                'allow_delete' => true,
-                'by_reference' => false,
-                'prototype'=>true,
-                'mapped' => true
-            ])              
-            ->add('suppliers', CollectionType::class, [
-                'entry_type' => SuppliersEmbeddedFormType::class,
-                'allow_add' => true,
-                'entry_options' => ['label'=>false],
-                'allow_delete' => true,
-                'by_reference' => false,
-                'mapped' => true,
-                'prototype'=>true
-            ]) 
-      ;
+                ;
+        
+                // $builder->addEventListener(FormEvents::PRE_SET_DATA,[$this,'preSetData']);
+                // $builder->addEventListener(FormEvents::POST_SET_DATA,[$this,'postSetData']);
+    }
+
+    public function preSetData(FormEvent $event): void
+    {
+        dump($event);
+    }
+
+    public function postSetData(FormEvent $event): void
+    {
+        dump($event);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Message::class,
+            'brokerSelection'=>Collection::class,
+            'customerSelection'=>Collection::class,
+            'supplierSelection'=>Collection::class            
         ]);
     }
 }
