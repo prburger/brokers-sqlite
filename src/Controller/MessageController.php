@@ -86,9 +86,8 @@ class MessageController extends AbstractController
                 
                 return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
             }
-// dump($message);
+
             return $this->render('message/new.html.twig' , [
-                // 'message'=>$message,
                 'form' => $form->createView(),
                 'brokers'=>$message->getBrokers(),
                 'customers'=>$message->getCustomers(),
@@ -174,7 +173,6 @@ class MessageController extends AbstractController
             return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
         }
 
-        dump($broker);
         return $this->render('message/edit.html.twig', [
             'message' => $message,
             'form' => $form->createView(),
