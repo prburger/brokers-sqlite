@@ -38,8 +38,7 @@
         </tbody>
     </table>
     
- {% if paginator.hasNextPage %}
- Paginator 
+ {% if paginator.hasToPaginate %}
          <div class="navigation text-center">
             <ul class="pagination">
                 {% if paginator.hasPreviousPage %}

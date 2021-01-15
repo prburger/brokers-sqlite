@@ -255,6 +255,50 @@ td{
    ------------------------------------------------------------------------- */
 .m-b-0 { margin-bottom: 0 }
 
+.pagination{
+  display: inline-block;
+  padding: 0;
+  margin: 50px 0 0 0;
+}
+
+.pagination > li > next{
+  border-radius: 40px;
+}
+
+.pagination > li{
+  border-radius:4px;
+  display: inline-block;
+  background-color: darkgreen;
+  font-size: 10pt;
+}
+
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+  margin-left: 0;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  background-color: darkgreen;
+}
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+  z-index: 3;
+  color: #fff;
+  cursor: default;
+  background-color: darkgreen;
+  // border-color: transparent;
+}
+
+.pagination > li > a, .pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 10px 15px;
+  margin-left: -1px;
+  line-height: 1.42857;
+  color: #fff;
+  text-decoration: none;
+  background-color:darkgreen;
+  // border: 1px solid transparent;
+}
+
 .paginator_row{
   vertical-align: bottom;
   height: 200px;
