@@ -3,13 +3,16 @@
 {% block title %}{{'message_index'|trans|raw}}{% endblock %}
 
 {% block body %}
-<div class="page_form_heading">{{'message_index'|trans|raw}}
-    <div class="return_to_list_label">
-        <a href="{{ path('message_new_no_id') }}" title="{{'create_new_message'|trans|raw}}"><i class="fas fa-plus page_icon"></i></a>
-        <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+<div class="page_form_header">
+    <div class="page_form_heading">
+    {{'message_index'|trans|raw}}
+        <div class="return_to_list_label">
+            <a href="{{ path('message_new_no_id') }}" title="{{'create_new_message'|trans|raw}}"><i class="fas fa-plus page_icon"></i></a>
+            <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+        </div>
     </div>
 </div>
-    
+
 <div class="index_table">
     <table class="table">
         <thead>
@@ -27,7 +30,7 @@
                 <td>{{ message.text }}</td>
                 <td>{{ message.dateAdded ? message.dateAdded|date('Y-m-d') : '' }}</td>
                 <td>{{ message.dateEdited ? message.dateEdited|date('Y-m-d') : '' }}</td>
-                <td>
+                <td class="action_column">
                     <a href="{{ path('message_show', {'id': message.id}) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
                     <a href="{{ path('message_edit', {'id': message.id}) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
                 </td>

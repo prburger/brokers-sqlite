@@ -64,6 +64,11 @@ class Supplier
     */
     private $messages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="suppliers")
+     */
+    private $customers;
+
     public function __construct()
     {
         $this->setDateAdded(new \DateTime());
@@ -73,6 +78,7 @@ class Supplier
         $this->setContact(new Contact());
         $this->messages = new ArrayCollection();
         $this->setID(0);
+        $this->customers = new ArrayCollection();
     }
 
     public function setID($id)
@@ -225,6 +231,33 @@ class Supplier
             if ($message->getSupplier() === $this) {
                 $message->setSupplier(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Customer[]
+     */
+    public function getCustomers(): Collection
+    {
+        return $this->customers;
+    }
+
+    public function addCustomer(Customer $customer): self
+    {
+        if (!$this->customers->contains($customer)) {
+            $this->customers[] = $customer;
+            $customer->addSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomer(Customer $customer): self
+    {
+        if ($this->customers->removeElement($customer)) {
+            $customer->removeSupplier($this);
         }
 
         return $this;

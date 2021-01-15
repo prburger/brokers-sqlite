@@ -62,7 +62,8 @@ class CustomerController extends AbstractController
             'contact'=>$contactForm->createView(),
             'messages'=>$customer->getMessages(),
             'notes'=>$customer->getNotes(),
-            'products'=>$customer->getProducts()  
+            'products'=>$customer->getProducts(),
+            'edit_state'=>false
         ]);
     }
 
@@ -81,9 +82,10 @@ class CustomerController extends AbstractController
             'contact'=> $contactForm->createView(),
             'messages' => $customer->getMessages(),
             'notes' => $customer->getNotes(),   
-            'products'=>$customer->getProducts()         
-            // 'suppliers' => $customer->getSuppliers(),
-            // 'brokers' => $customer->getBrokers(),
+            'products'=>$customer->getProducts(),
+            'suppliers' => $customer->getSuppliers(),
+            'brokers' => $customer->getBrokers(),
+            'edit_state'=>false
         ]);
 
 
@@ -120,7 +122,8 @@ class CustomerController extends AbstractController
             'messages'=>$customer->getMessages(),
             'products'=>$customer->getProducts(),
             'notes'=>$customer->getNotes(),
-            'contact'=>$contactForm->createView()
+            'contact'=>$contactForm->createView(),
+            'edit_state'=>false
         ]);
     }
 
