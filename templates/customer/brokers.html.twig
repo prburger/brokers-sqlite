@@ -2,21 +2,21 @@
     <div class="col form_component">        
         <div class="row">
             <div class="col-sm-6">
-                <div class="form_component_title">{{'form_component_suppliers_title'|trans|raw}}</div>
+                <div class="form_component_title">{{'form_component_brokers_title'|trans|raw}}</div>
             </div>
             <div class="col-sm-6">
             {% if edit_state %}
-                <a class="form_component_link" href="broker_newSupplier" title="{{'form_component_newSupplier'|trans|raw}}">
+                <a class="form_component_link" href="broker_newBroker" title="{{'form_component_newBroker'|trans|raw}}">
                 <i class="fas fa-plus page_icon"></i>
                 </a>
             {% endif %}
             </div>
         </div>
 
-    {% if suppliers %}        
+    {% if brokers %}        
     <ul>
-        {% for supplier in suppliers %}
-            <li>{{supplier.name}}</li>
+        {% for broker in brokers %}
+            <li>{{broker.name}}</li>
         {% endfor %}
     </ul>
     {% else %}

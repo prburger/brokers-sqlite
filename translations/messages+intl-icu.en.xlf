@@ -708,6 +708,10 @@
             <trans-unit id="form_component_suppliers_title">
                 <source>form_component_suppliers_title</source>
                 <target>Suppliers</target>
+            </trans-unit>    
+            <trans-unit id="form_component_brokers_title">
+                <source>form_component_brokers_title</source>
+                <target>Brokers</target>
             </trans-unit>            
             <trans-unit id="form_component_customers_title">
                 <source>form_component_customers_title</source>

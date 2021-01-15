@@ -9,13 +9,14 @@
         {{'broker_show'|trans|raw}}
         <div class="return_to_list_label">
             {{ include('broker/_delete_form.html.twig') }}
-            <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+            <a href="{{ path('broker_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+            <a href="{{ path('broker_edit',{'id':broker.id}) }}" title="{{'broker_edit'|trans|raw}}"><i class="fas fa-edit page_icon"></i></a>    
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col">
-        {{ include('broker/_form.html.twig', {'button_label': 'Update'}) }} 
+        {{ include('broker/_form.html.twig')}} 
     </div>
  </div>
 

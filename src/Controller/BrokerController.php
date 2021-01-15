@@ -76,7 +76,7 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact'=>$contactForm->createView(),         
-            'new'=>true
+            'edit_state'=>false
         ]);
     }
 
@@ -94,7 +94,11 @@ class BrokerController extends AbstractController
             'broker' => $broker,
             'form' => $form->createView(),
             'contact'=> $contactForm->createView(),
-            'new'=>true
+            'messages'=> $broker->getMessages(),
+            'notes'=>$broker->getNotes(),
+            'suppliers'=>$broker->getSuppliers(),
+            'customers'=>$broker->getCustomers(),
+            'edit_state'=>false
         ]);
     }
 
@@ -130,7 +134,8 @@ class BrokerController extends AbstractController
             'messages'=>$broker->getMessages(),
             'customers'=>$broker->getCustomers(),
             'notes'=>$broker->getNotes(),
-            'suppliers'=>$broker->getSuppliers()
+            'suppliers'=>$broker->getSuppliers(),
+            'edit_state'=> true
         ]);
     }
 

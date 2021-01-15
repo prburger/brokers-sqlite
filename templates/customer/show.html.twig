@@ -4,21 +4,25 @@
 
 {% block body %}
 
- <div class="form_div">
-    <div class="row page_title">{{'customer_show'|trans|raw}}
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'customer_show'|trans|raw}}
         <div class="return_to_list_label">
             <a href="{{ path('customer_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+            <a href="{{ path('customer_edit',{'id': customer.id}) }}" title="{{'customer_edit'|trans|raw}}"><i class="fas fa-edit page_icon"></i></a>
         </div>
     </div>
+</div>
+
     {{ form_start(form) }}
     <div class="row">
         <div class="col-sm-6">
             {{ form_widget(form) }}
-            {# {% include 'customer/messages.html.twig' with messages %} #}
-            {# {% include 'customer/notes.html.twig' %} #}
+            {% include 'customer/messages.html.twig' with messages %}
+            {% include 'customer/notes.html.twig' %}
             {% include 'customer/products.html.twig' %}
-            {# {% include 'customer/suppliers.html.twig' %} #}
-            {# {% include 'customer/brokers.html.twig' %}  #}
+            {% include 'customer/suppliers.html.twig' %}
+            {% include 'customer/brokers.html.twig' %} 
             {# <button class="btn btn-primary form_save_button">{{ button_label|default('Save') }}</button> #}
         </div>
 
@@ -32,7 +36,7 @@
     </div> 
 
     {{ form_end(form) }}
-</div>
+{# </div> #}
 
 {% endblock %}
 
