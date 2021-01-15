@@ -57,7 +57,9 @@
                                 {% for broker in brokers %}
                                     <tr>
                                         <td>
-                                            {{ broker.name }}
+                                            <a href="{{ path('broker_edit',{'id':broker.id}) }}" title="{{'broker_edit'|trans|raw}}">
+                                                {{ broker.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             <a href=""><i class="fas fa-minus-circle"></i></a>
@@ -77,7 +79,9 @@
                                 {% for customer in customers %}
                                     <tr>
                                         <td>
-                                            {{ customer.name }}
+                                            <a href="{{ path('customer_edit',{'id':customer.id}) }}" title="{{'customer_edit'|trans|raw}}">
+                                                {{ customer.name }}
+                                            </a>
                                         </td>
                                         <td>
                                             <a href=""><i class="fas fa-minus-circle"></i></a>
@@ -97,7 +101,9 @@
                                 {% for supplier in suppliers %}
                                     <tr>
                                         <td>
-                                            {{ supplier.name }}
+                                            <a href="{{ path('supplier_edit',{'id':supplier.id}) }}" title="{{'supplier_edit'|trans|raw}}">
+                                                {{ supplier.name }}
+                                            </a>
                                         </td>
                                         <td>
                                         <a href=""><i class="fas fa-minus-circle"></i></a>
