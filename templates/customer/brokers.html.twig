@@ -5,7 +5,7 @@
                 <div class="form_component_title">{{'form_component_brokers_title'|trans|raw}}</div>
             </div>
             <div class="col-sm-6">
-            {% if edit_state %}
+            {% if edit_state or fresh_state %}
                 <a class="form_component_link" href="broker_newBroker" title="{{'form_component_newBroker'|trans|raw}}">
                 <i class="fas fa-plus page_icon"></i>
                 </a>
@@ -13,14 +13,25 @@
             </div>
         </div>
 
-    {% if brokers %}        
-    <ul>
-        {% for broker in brokers %}
-            <li>{{broker.name}}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
-    {% endif %}
+        {% if customer.brokers %}        
+            <div class="form_component_container">
+                <table class="form_component_table">
+                    <tbody>
+                        {% for broker in customer.brokers %}
+                            <tr>
+                                <td>{{broker.name}}</td>
+                                <td class="action_column">
+                                    <a class="form_component_link" href="{{ path('broker_edit',{'id': broker.id}) }}" title="{{'action.edit'|trans|raw}}">
+                                    <i class="fas fa-edit page_icon"></i>
+                                    </a>                                     
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
+            {% endif %}
 </div>        
 </div>           

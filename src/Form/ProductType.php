@@ -3,9 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Product;
+use App\Form\NoteType;
+use App\Form\SpecificationType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class ProductType extends AbstractType
 {
@@ -13,8 +17,8 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name')
-      /*       ->add('dateAdded')
-            ->add('dateEdited') */
+            ->add('specifications', SpecificationType::class, ['label'=>'Specifications'])
+            // ->add('notes', NoteType::class, ['label'=>'Notes'])
         ;
     }
 

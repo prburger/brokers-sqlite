@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Specification;
 use App\Form\SpecificationType;
+use App\Repository\ProductRepository;
 use App\Repository\SpecificationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,25 +27,29 @@ class SpecificationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/new", name="specification_new", methods={"GET","POST"})
+     * @Route("/new", name="specification_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Product $product): Response
+    public function new(Request $request): Response
     {
-        // $specification = new Specification();
-        $form = $this->createForm(SpecificationType::class, $product->getSpecifications());
+        $specification = new Specification();
+        
+        $form = $this->createForm(SpecificationType::class, $specification);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
+            $entityManager->persist($specification);
             $entityManager->flush();
 
             return $this->redirectToRoute('specification_index');
         }
 
-        return $this->render('product/newSpecifications.html.twig', [
-            'specification' => $specification,
+        return $this->render('specification/new.html.twig', [
+           // 'specification' => $product->getSpecifications(),
             'form' => $form->createView(),
+           // 'product'=>$product,
+            'edit_state'=>false,
+            'fresh_state'=>true
         ]);
     }
 
@@ -55,6 +60,8 @@ class SpecificationController extends AbstractController
     {
         return $this->render('specification/show.html.twig', [
             'specification' => $specification,
+            'edit_state'=>false,
+            'fresh_state'=>false
         ]);
     }
 
@@ -75,6 +82,8 @@ class SpecificationController extends AbstractController
         return $this->render('specification/edit.html.twig', [
             'specification' => $specification,
             'form' => $form->createView(),
+            'edit_state'=>true,
+            'fresh_state'=>false
         ]);
     }
 

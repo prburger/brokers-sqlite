@@ -49,13 +49,7 @@ class Broker
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="broker")
-      * @ORM\JoinColumn(nullable=true)
-    */
-    private $suppliers;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $contact;
@@ -65,17 +59,22 @@ class Broker
      * @ORM\JoinColumn(nullable=true)
      */
     private $customers;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="broker")
+     */
+    private $suppliers;
     
     public function __construct()
     {
+        $this->setId(1);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime()); 
         $this->setContact(new Contact());
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
-        $this->suppliers = new ArrayCollection();
         $this->customers = new ArrayCollection();
-        $this->setId(0);
+        $this->suppliers = new ArrayCollection();
     }
 
     public function setId(int $id)
@@ -184,36 +183,6 @@ class Broker
         return $this;
     }
 
-    /**
-     * @return Collection|Supplier[]
-     */
-    public function getSuppliers(): Collection
-    {
-        return $this->suppliers;
-    }
-
-    public function addSupplier(Supplier $supplier): self
-    {
-        if (!$this->suppliers->contains($supplier)) {
-            $this->suppliers[] = $supplier;
-            $supplier->setBroker($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSupplier(Supplier $supplier): self
-    {
-        if ($this->suppliers->removeElement($supplier)) {
-            // set the owning side to null (unless already changed)
-            if ($supplier->getBroker() === $this) {
-                $supplier->setBroker(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getContact(): ?Contact
     {
         return $this->contact;
@@ -250,6 +219,36 @@ class Broker
             // set the owning side to null (unless already changed)
             if ($customer->getBroker() === $this) {
                 $customer->setBroker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supplier[]
+     */
+    public function getSuppliers(): Collection
+    {
+        return $this->suppliers;
+    }
+
+    public function addSupplier(Supplier $supplier): self
+    {
+        if (!$this->suppliers->contains($supplier)) {
+            $this->suppliers[] = $supplier;
+            $supplier->setBroker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupplier(Supplier $supplier): self
+    {
+        if ($this->suppliers->removeElement($supplier)) {
+            // set the owning side to null (unless already changed)
+            if ($supplier->getBroker() === $this) {
+                $supplier->setBroker(null);
             }
         }
 

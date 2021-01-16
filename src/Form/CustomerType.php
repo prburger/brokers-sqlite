@@ -13,8 +13,7 @@ class CustomerType extends AbstractType
     {
         $builder
             ->add('name')
-         /*    ->add('dateAdded')
-            ->add('dateEdited') */
+            ->add('contact', ContactFormType::class,['label'=>false])
         ;
     }
 

@@ -67,6 +67,10 @@
                 <source>portal.admin</source>
                 <target>Administrators</target>
             </trans-unit>
+            <trans-unit id="portal.members">
+                <source>portal.members</source>
+                <target>Members</target>
+            </trans-unit>
             <trans-unit id="portal.brokers">
                 <source>portal.brokers</source>
                 <target>Brokers</target>
@@ -79,10 +83,13 @@
                 <source>title.homepage</source>
                 <target>NamBrokers</target>
             </trans-unit>
-            
+            <trans-unit id="Specifications">
+                <source>Specifications</source>
+                <target>Specifications</target>
+            </trans-unit>            
             <trans-unit id="portal.dashboard.title">
                 <source>portal.dashboard.title</source>
-                <target>Broker Dashboard</target>
+                <target>Dashboard</target>
             </trans-unit>
             <trans-unit id="title.source_code">
                 <source>title.source_code</source>
@@ -201,8 +208,24 @@
                 <source>action.browse_app</source>
                 <target>Login</target>
             </trans-unit>
+            <trans-unit id="Username">
+                <source>Username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="Password">
+                <source>Password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="Agree terms">
+                <source>Agree terms</source>
+                <target>Agree to terms</target>
+            </trans-unit>
             <trans-unit id="action.browse_admin">
                 <source>action.browse_admin</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="action.browse_members">
+                <source>action.browse_members</source>
                 <target>Login</target>
             </trans-unit>
             <trans-unit id="action.edit_user">
@@ -451,6 +474,10 @@
                 <source>help.browse_admin</source>
                 <target><![CDATA[<strong>Administrators</strong>]]></target>
             </trans-unit>
+            <trans-unit id="help.browse_members">
+                <source>help.browse_members</source>
+                <target><![CDATA[<strong>Members</strong>]]></target>
+            </trans-unit>
             <trans-unit id="help.login_users">
                 <source>help.login_users</source>
                 <target>Try either of the following users</target>
@@ -461,7 +488,11 @@
             </trans-unit>
             <trans-unit id="help.role_admin">
                 <source>help.role_admin</source>
-                <target>administrator</target>
+                <target>Administrator</target>
+            </trans-unit>
+            <trans-unit id="help.role_members">
+                <source>help.role_members</source>
+                <target>Members</target>
             </trans-unit>
             <trans-unit id="help.reload_fixtures">
                 <source>help.reload_fixtures</source>
@@ -604,6 +635,10 @@
                 <source>create_new_broker</source>
                 <target>New broker</target>
             </trans-unit>
+            <trans-unit id="create_new_specifications">
+                <source>create_new_specifications</source>
+                <target>New specifications</target>
+            </trans-unit>
             <trans-unit id="create_new_message">
                 <source>create_new_message</source>
                 <target>New message</target>
@@ -677,9 +712,18 @@
                 <source>paginator.current</source>
                 <target>(current)</target>
             </trans-unit>
+            
+            <trans-unit id="Details">
+                <source>Details</source>
+                <target>Details</target>
+            </trans-unit>
             <trans-unit id="form_component_newMessage">
                 <source>form_component_newMessage</source>
                 <target>New Message</target>
+            </trans-unit>
+            <trans-unit id="form_component_newSpecification">
+                <source>form_component_newSpecification</source>
+                <target>New Specifications</target>
             </trans-unit>
             <trans-unit id="form_component_newNote">
                 <source>form_component_newNote</source>
@@ -846,6 +890,10 @@
                <trans-unit id="new_specification">
                 <source>new_specification</source>
                 <target>New specification</target>
+            </trans-unit>
+              <trans-unit id="new_product">
+                <source>new_product</source>
+                <target>New product</target>
             </trans-unit>
             <trans-unit id="broker_edit">
                 <source>broker_edit</source>

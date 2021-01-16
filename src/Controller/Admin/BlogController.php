@@ -32,11 +32,12 @@ use Symfony\Component\Routing\Annotation\Route;
  * See http://knpbundles.com/keyword/admin
  *
  * @Route("/admin/post")
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
  *
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
+
 class BlogController extends AbstractController
 {
     /**
@@ -56,9 +57,9 @@ class BlogController extends AbstractController
     public function index(PostRepository $posts): Response
     {
 
-        $authorPosts = $posts->findBy(['author' => $this->getUser()], ['publishedAt' => 'DESC']);
-        return $this->render('admin/blog/index.html.twig', ['posts' => $authorPosts]);
-
+        // $authorPosts = $posts->findBy(['author' => $this->getUser()], ['publishedAt' => 'DESC']);
+        // return $this->render('admin/blog/index.html.twig', ['posts' => $authorPosts]);
+        return $this->redirectToRoute('portal_index');
     }
 
     /**

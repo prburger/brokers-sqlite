@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Broker;
+use App\Form\ContactFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,15 +14,7 @@ class BrokerType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('id')
-            /* 
-            ->add('messages')
-            ->add('notes')
-            ->add('suppliers')
-            ->add('customers')
-            
-            ->add('dateAdded')
-            ->add('dateEdited') */ 
+            ->add('contact', ContactFormType::class,['label'=>false])
         ;
     }
 

@@ -2,8 +2,8 @@
     {{ form_start(form) }}
     <div class="row">
         <div class="col-sm-6">
-            {% do form.id.setRendered() %}
-            {{ form_widget(form) }}
+            {# {% do form.id.setRendered() %} #}
+            {{ form_row(form.name) }}
             {% include 'broker/messages.html.twig' %} 
             {% include 'broker/notes.html.twig' %}
             {% include 'broker/suppliers.html.twig' %}
@@ -11,10 +11,10 @@
         </div>
 
         <div class="col-sm-6">
-        {{ form_widget(contact) }}
+        {{ form_row(form.contact) }}
         </div>
     </div>
-    {% if edit_state %}
+    {% if edit_state or fresh_state %}
     <div class="row">
         <div class="col-sm-12 form_button">
             <button class="btn btn-primary">{{ button_label|default('Save') }}</button>

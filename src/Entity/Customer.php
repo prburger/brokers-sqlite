@@ -64,12 +64,6 @@ class Customer
     */
     private $messages;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="customers")
-     * @ORM\JoinColumn(nullable=true)
-    */
-    private $suppliers;
-
     public function __construct()
     {
         $this->setId(0);
@@ -80,7 +74,6 @@ class Customer
         $this->messages = new ArrayCollection();
         $this->brokers = new ArrayCollection();        
         $this->setContact(new Contact());
-        $this->suppliers = new ArrayCollection();
     }
 
     public function setId($id)
@@ -269,30 +262,6 @@ class Customer
                 $message->setGetCustomer(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Supplier[]
-     */
-    public function getSuppliers(): Collection
-    {
-        return $this->suppliers;
-    }
-
-    public function addSupplier(Supplier $supplier): self
-    {
-        if (!$this->suppliers->contains($supplier)) {
-            $this->suppliers[] = $supplier;
-        }
-
-        return $this;
-    }
-
-    public function removeSupplier(Supplier $supplier): self
-    {
-        $this->suppliers->removeElement($supplier);
 
         return $this;
     }
