@@ -41,6 +41,11 @@ class Note
      */
     private $products;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $details;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +95,18 @@ class Note
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?string $details): self
+    {
+        $this->details = $details;
 
         return $this;
     }

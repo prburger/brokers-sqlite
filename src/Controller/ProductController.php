@@ -34,21 +34,41 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/specification", name="product_specification", methods={"GET","POST"})
+     */
+    public function specification(Request $request, Product $product): Response
+    {
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_index');
+        }
+
+        return $this->render('specification/new.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>true
+        ]);
+    }
+
+    /**
      * @Route("/new", name="product_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
         $product = new Product();
-        $product->setSpecifications(new Specification());
 
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         
-        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($product->getSpecifications());
-            // $entityManager->persist($product->getNotes());
             $entityManager->persist($product);
             $entityManager->flush();
 
@@ -58,37 +78,8 @@ class ProductController extends AbstractController
         return $this->render('product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
-            'specifications'=>$product->getSpecifications(),
-            'notes'=>$product->getNotes() 
-        ]);
-    }
-
-        /**
-     * @Route("/{product_id}/new/specifications", name="product_newSpecifications", methods={"GET","POST"})
-     */
-    public function newSpecifications(Request $request, Product $product): Response
-    {
-        //$product = new Product();
-        $product->setSpecifications(new Specification());
-
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($product->getSpecifications());
-            // $entityManager->persist($product->getNotes());
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('product_index');
-        }
-
-        return $this->render('product/newSpecifications.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-            'specifications'=>$product->getSpecifications(),
-            'notes'=>$product->getNotes() 
+            'edit_state'=>false,
+            'fresh_state'=>true
         ]);
     }
 
@@ -97,10 +88,12 @@ class ProductController extends AbstractController
      */
     public function show(Product $product): Response
     {
+        $form = $this->createForm(ProductType::class, $product);
         return $this->render('product/show.html.twig', [
             'product' => $product,
-            'specifications'=>$product->getSpecifications(),
-            'notes'=>$product->getNotes()
+            'form'=>$form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>false
         ]);
     }
 
@@ -113,16 +106,18 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $product->setDateEdited(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product); 
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('product_index');
         }
 
         return $this->render('product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
-            'specifications'=>$product->getSpecifications(),
-            'notes'=>$product->getNotes()
+            'edit_state'=>true,
+            'fresh_state'=>false
         ]);
     }
 

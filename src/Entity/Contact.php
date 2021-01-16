@@ -71,9 +71,14 @@ class Contact
 
     public function __construct()
     {
-        // $this->id = 0;
+        $this->setId(1);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 
     public function getId(): ?int

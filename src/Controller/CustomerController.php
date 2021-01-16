@@ -39,16 +39,15 @@ class CustomerController extends AbstractController
     public function new(Request $request): Response
     {
         $customer = new Customer();
-       // $customer->setId(0);
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
-        $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
-        $contactForm->handleRequest($request);
+   /*      $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
+        $contactForm->handleRequest($request); */
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($contactForm->getData());
+            // $entityManager->persist($contactForm->getData());
             $entityManager->persist($customer);
             $entityManager->flush();
 
@@ -58,12 +57,13 @@ class CustomerController extends AbstractController
         return $this->render('customer/new.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
-            'new'=>true,
-            'contact'=>$contactForm->createView(),
+   /*
+               'contact'=>$contactForm->createView(),
             'messages'=>$customer->getMessages(),
             'notes'=>$customer->getNotes(),
-            'products'=>$customer->getProducts(),
-            'edit_state'=>false
+            'products'=>$customer->getProducts(), */
+            'edit_state'=>false,
+            'fresh_state'=>true
         ]);
     }
 
@@ -72,20 +72,20 @@ class CustomerController extends AbstractController
      */
     public function show(Customer $customer): Response
     {
-        $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
+        // $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
         $form = $this->createForm(CustomerType::class, $customer);
         
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
-            'new'=>true,
             'form' => $form->createView(),
-            'contact'=> $contactForm->createView(),
+/*             'contact'=> $contactForm->createView(),
             'messages' => $customer->getMessages(),
             'notes' => $customer->getNotes(),   
             'products'=>$customer->getProducts(),
             'suppliers' => $customer->getSuppliers(),
-            'brokers' => $customer->getBrokers(),
-            'edit_state'=>false
+            'brokers' => $customer->getBrokers(), */
+            'edit_state'=>false,
+            'fresh_state'=>false
         ]);
 
 
@@ -102,12 +102,12 @@ class CustomerController extends AbstractController
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
-        $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
-        $contactForm->handleRequest($request);
+/*         $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
+        $contactForm->handleRequest($request); */
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($contactForm->getData());
+            // $entityManager->persist($contactForm->getData());
             $entityManager->persist($customer);
 
             $entityManager->flush();
@@ -119,11 +119,12 @@ class CustomerController extends AbstractController
             'customer' => $customer,
             'new'=>false,
             'form' => $form->createView(),
-            'messages'=>$customer->getMessages(),
+            /* 'messages'=>$customer->getMessages(),
             'products'=>$customer->getProducts(),
             'notes'=>$customer->getNotes(),
-            'contact'=>$contactForm->createView(),
-            'edit_state'=>false
+            'contact'=>$contactForm->createView(), */
+            'edit_state'=>true,
+            'fresh_state'=>false
         ]);
     }
 

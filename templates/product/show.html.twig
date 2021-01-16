@@ -1,56 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{'customer_show'|trans|raw}}{% endblock %}
+{% block title %}{{'product_show'|trans|raw}}{% endblock %}
 
 {% block body %}
-
- <div class="product_form">
-    <div class="row product_page_title">{{'product_show'|trans|raw}}</div>
-
-    {# {{ form_start(form) }} #}
-    <div class="row">
-        <div class="col-sm-6 product_title">
-            {{ product.name }}           
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'product_show'|trans|raw}}
+        <div class="return_to_list_label">
+            <a href="{{ path('product_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+            <a href="{{ path('product_edit',{'id': product.id}) }}" title="{{'product_edit'|trans|raw}}"><i class="fas fa-edit page_icon"></i></a>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="row">
-                <div class="col-sm-12 product_specifications_title">
-                {{ 'product_specifications_title'|trans|raw}}
-                </div>
-            </div>
-            <div class="row">
-                    <div class="product_specifications">
-                            {{ product.specifications.details }}
-                    </div>
-            </div>
-        </div>    
-        <div class="col-sm-6">
-            <div class="row">
-                <div class="col-sm-12 product_specifications_title">
-                    {{ 'product_notes_title'|trans|raw}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="product_specifications">
-                    <ul>
-                    {% for note in product.notes %}
-                        <li>
-                            {{ note.details }}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-     <div class="row">
-        <div class="col-sm-12 form_button">
-        </div>
-    </div> 
+</div>
 
-    {# {{ form_end(form) }} #}
+<div class="row">
+    <div class="col">
+        {{ include('product/_form.html.twig')}} 
+    </div>
 </div>
 
 {% endblock %}

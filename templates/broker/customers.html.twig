@@ -1,26 +1,39 @@
 <div class="row">
-    <div class="col form_component">        
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form_component_title">{{'form_component_customers_title'|trans|raw}}</div>
+        <div class="col form_component">        
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form_component_title">{{'form_component_customers_title'|trans|raw}}</div>
+                </div>
+                <div class="col-sm-6">
+                {% if edit_state %}
+                    <a class="form_component_link" href="{{ path('customer_new',{'broker_id': broker.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
+                    <i class="fas fa-plus page_icon"></i>
+                    </a>
+                {% endif %}
+                </div>
             </div>
-            <div class="col-sm-6">
-            {% if edit_state %}
-                <a class="form_component_link" href="broker_newCustomer" title="{{'form_component_newCustomer'|trans|raw}}">
-                <i class="fas fa-plus page_icon"></i>
-                </a>
-            {% endif %}
-            </div>
-        </div>
 
-    {% if customers %}        
-    <ul>
-        {% for customer in customers %}
-            <li>{{customer.name}}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
-    {% endif %}
-</div>
+            {% if broker.customers %}        
+            <div class="form_component_container">
+                <table class="form_component_table">
+                    <tbody>
+                        {% for customer in broker.customers %}
+                            <tr>
+                                <td>{{customer.name}}</td>
+                                <td class="action_column">
+                                {% if edit_state %}
+                                    <a class="form_component_link" href="{{ path('customer_edit',{'id': customer.id}) }}" title="{{'action.edit'|trans|raw}}">
+                                    <i class="fas fa-edit page_icon"></i>
+                                    </a>    
+                                    {% endif %}                                 
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
+            {% endif %}
+    </div>
 </div>

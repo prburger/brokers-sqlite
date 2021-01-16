@@ -3,26 +3,23 @@
 
     <div class="row">
             <div class="col-sm-6">
-                {{ form_widget(form) }}
+                {{ form_row(form.name) }}
                 {% include 'customer/messages.html.twig'  %}
                 {% include 'customer/notes.html.twig'  %}
                 {% include 'customer/products.html.twig' %}
             </div>
 
             <div class="col-sm-6">
-            {{ form_widget(contact) }}
+            {{ form_row(form.contact) }}
             </div>
         </div>
+        {% if edit_state or fresh_state %}
         <div class="row">
             <div class="col-sm-12 form_button">
                 <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
             </div>
         </div>
+        {% endif %}
+        
     {{ form_end(form) }}
 </div>
-
-{# {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
- #}

@@ -14,11 +14,11 @@
                 </div>
             </div>
 
-            {% if messages %}        
+            {% if broker.messages %}        
             <div class="form_component_container">
                 <table class="form_component_table">
                     <tbody>
-                        {% for message in messages %}
+                        {% for message in broker.messages %}
                             <tr>
                                 <td>{{message.text}}</td>
                                 <td class="action_column">

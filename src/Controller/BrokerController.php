@@ -56,86 +56,62 @@ class BrokerController extends AbstractController
     public function new(Request $request): Response
     {
         $broker = new Broker();     
-               
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
-
-        $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
-        $contactForm->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {                  
             $entityManager = $this->getDoctrine()->getManager();             
-            $entityManager->persist($contactForm->getData());
             $entityManager->persist($broker);
             $entityManager->flush();
-
-            return $this->redirectToRoute('broker_index');
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
         }
 
         return $this->render('broker/new.html.twig', [
             'broker' => $broker,
-            'form' => $form->createView(),
-            'contact'=>$contactForm->createView(),         
-            'edit_state'=>false
+            'form' => $form->createView(),        
+            'edit_state'=>false,
+            'fresh_state'=>true
         ]);
     }
 
     /**
      * @Route("/{id}", name="broker_show", methods={"GET"})
      */
-    
     public function show(Broker $broker): Response
     {
-        $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
-
         $form = $this->createForm(BrokerType::class, $broker);
         
         return $this->render('broker/show.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
-            'contact'=> $contactForm->createView(),
-            'messages'=> $broker->getMessages(),
-            'notes'=>$broker->getNotes(),
-            'suppliers'=>$broker->getSuppliers(),
-            'customers'=>$broker->getCustomers(),
-            'edit_state'=>false
+            'edit_state'=>false,
+            'fresh_state'=>false
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="broker_edit", methods={"GET","POST"})
      */
-
-
     public function edit(Request $request, Broker $broker): Response
     {
    
-        $contactForm = $this->createForm(ContactFormType::class, $broker->getContact());
-        $contactForm->handleRequest($request);
-
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();  
             $broker->setDateEdited(new \DateTime());          
-            $entityManager->persist($contactForm->getData());       
-        
+           
             $entityManager->persist($broker);
             $entityManager->flush();
-            return $this->redirectToRoute('broker_index');
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
         }
 
         return $this->render('broker/edit.html.twig', [
             'broker' => $broker,
             'form' => $form->createView(),
-            'contact' => $contactForm->createView(),
-            'new'=>false,
-            'messages'=>$broker->getMessages(),
-            'customers'=>$broker->getCustomers(),
-            'notes'=>$broker->getNotes(),
-            'suppliers'=>$broker->getSuppliers(),
-            'edit_state'=> true
+            'edit_state'=> true,
+            'fresh_state'=>false
         ]);
     }
 

@@ -41,12 +41,6 @@ class Supplier
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="suppliers")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $broker;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="suppliers", orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
      */
@@ -65,20 +59,19 @@ class Supplier
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="suppliers")
+     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="suppliers")
      */
-    private $customers;
+    private $broker;
 
     public function __construct()
     {
+        $this->setID(0);
+        $this->setContact(new Contact());
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->notes = new ArrayCollection();
         $this->products = new ArrayCollection();
-        $this->setContact(new Contact());
         $this->messages = new ArrayCollection();
-        $this->setID(0);
-        $this->customers = new ArrayCollection();
     }
 
     public function setID($id)
@@ -146,17 +139,6 @@ class Supplier
         return $this;
     }
 
-    public function getBroker(): ?Broker
-    {
-        return $this->broker;
-    }
-
-    public function setBroker(?Broker $broker): self
-    {
-        $this->broker = $broker;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Note[]
@@ -236,29 +218,14 @@ class Supplier
         return $this;
     }
 
-    /**
-     * @return Collection|Customer[]
-     */
-    public function getCustomers(): Collection
+    public function getBroker(): ?Broker
     {
-        return $this->customers;
+        return $this->broker;
     }
 
-    public function addCustomer(Customer $customer): self
+    public function setBroker(?Broker $broker): self
     {
-        if (!$this->customers->contains($customer)) {
-            $this->customers[] = $customer;
-            $customer->addSupplier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCustomer(Customer $customer): self
-    {
-        if ($this->customers->removeElement($customer)) {
-            $customer->removeSupplier($this);
-        }
+        $this->broker = $broker;
 
         return $this;
     }

@@ -25,20 +25,20 @@
     <div class="row">
                 
 
-        <div class="col-sm-6">
+      {#   <div class="col-sm-6">
             <div class="portal_jumbotron">
                 <p class="jumbotron_title">
                     {{ 'help.browse_app'|trans|raw }}
                 </p>
                 <p class="jumbotron_link">
-                    <a class="btn btn-primary btn-lg" href="{{ path('portal_index') }}">
+                    <a class="btn btn-primary btn-lg" href="{{ path('admin_index') }}">
                         <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_app'|trans }}
                     </a>
                 </p>
             </div>
-        </div>
+        </div> #}
 
-        {# <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="portal_jumbotron">
                 <p class="jumbotron_title">
                     {{ 'help.register.user'|trans|raw }}
@@ -49,16 +49,16 @@
                     </a>
                 </p>
             </div>
-        </div> #}
+        </div> 
 
         <div class="col-sm-6">
             <div class="portal_jumbotron">
                 <p class="jumbotron_title">
-                    {{ 'help.browse_admin'|trans|raw }}
+                    {{ 'help.browse_members'|trans|raw }}
                 </p>
                 <p class="jumbotron_link">
-                    <a class="btn btn-primary btn-lg" href="{{ path('admin_index') }}">
-                        <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_admin'|trans }}
+                    <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}">
+                        <i class="fa fa-lock" aria-hidden="true"></i> {{ 'action.browse_members'|trans }}
                     </a>
                 </p>
             </div>

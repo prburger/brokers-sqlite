@@ -4,32 +4,20 @@
 
 {% block body %}
 
-        <div class="row page_form_heading">
+<div class="page_form_header">
+    <div class="page_form_heading">
         {{'supplier_show'|trans|raw}}
-        </div>
-
- <div class="form_div">
-    {{ form_start(form) }}
-    <div class="row">
-        <div class="col-sm-6">
-            {{ form_widget(form) }}
-            {% include 'supplier/messages.html.twig' %}
-            {% include 'supplier/notes.html.twig' %}
-            {# {% include 'broker/suppliers.html.twig' %} #}
-            {# {% include 'broker/customers.html.twig' %}  #}
-        </div>
-
-        <div class="col-sm-6">
-        {{ form_widget(contact) }}
+        <div class="return_to_list_label">
+            <a href="{{ path('supplier_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+            <a href="{{ path('supplier_edit',{'id': supplier.id}) }}" title="{{'supplier_edit'|trans|raw}}"><i class="fas fa-edit page_icon"></i></a>
         </div>
     </div>
- {#    <div class="row">
-        <div class="col-sm-12 form_button">
-            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-        </div>
-    </div> #}
+</div>
 
-    {{ form_end(form) }}
+<div class="row">
+    <div class="col">
+        {{ include('supplier/_form.html.twig')}} 
+    </div>
 </div>
 
 {% endblock %}

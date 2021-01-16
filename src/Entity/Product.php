@@ -70,10 +70,16 @@ class Product
 
     public function __construct()
     {
+        $this->setId(1);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->notes = new ArrayCollection();
         $this->specifications = new Specification();
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 
     public function getId(): ?int

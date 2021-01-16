@@ -1,14 +1,41 @@
-    <div class="row">
-        <div class="col form_component">        
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form_component_title">{{'form_component_specifications_title'|trans|raw}}</div>
-                </div>
-                <div class="col-sm-6">
-                    <a class="form_component_link" href="{{ path('product_newSpecifications',{ 'product_id': product.id }) }}" title="{{'form_component_newMessage'|trans|raw}}">
+<div class="row">
+    <div class="col form_component">        
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form_component_title">{{'form_component_specifications_title'|trans|raw}}</div>
+            </div>
+            <div class="col-sm-6">
+                {% if edit_state or fresh_state %}
+                    <a class="form_component_link" 
+                    href="{{ path('product_specification',{id: product.id}) }}" 
+                    title="{{'form_component_newSpecification'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>
-                </div>
+                {% endif %}}
             </div>
+        </div>
+
+    {% if product.specifications %}        
+    <div class="form_component_container">
+        <table class="form_component_table">
+            <tbody>
+            {% for specification in product.specifications %}
+                    <tr>
+                        <td>{{specification.text}}</td>
+                        <td class="action_column">
+                        {% if edit_state or fresh_state %}
+                            <a class="form_component_link" href="{{ path('specification_edit',{'id': specification.id}) }}" title="{{'action.edit'|trans|raw}}">
+                            <i class="fas fa-edit page_icon"></i>
+                            </a>                         
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+    {% else %}
+        <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
+    {% endif %}
+</div>
 </div>

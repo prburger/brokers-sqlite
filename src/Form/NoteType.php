@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Notes;
+use App\Entity\Note;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,16 +13,16 @@ class NoteType extends AbstractType
     {
         $builder
             ->add('details')
-            ->add('dateAdded')
+/*             ->add('dateAdded')
             ->add('dateEdited')
-            ->add('getNotes')
+            ->add('getNotes') */
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Notes::class,
+            'data_class' => Note::class,
         ]);
     }
 }
