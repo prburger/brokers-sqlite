@@ -208,6 +208,34 @@
                 <source>action.browse_app</source>
                 <target>Login</target>
             </trans-unit>
+            <trans-unit id="broker_remove">
+                <source>broker_remove</source>
+                <target>Remove broker</target>
+            </trans-unit>
+            <trans-unit id="customer_remove">
+                <source>customer_remove</source>
+                <target>Remove customer</target>
+            </trans-unit>
+            <trans-unit id="supplier_remove">
+                <source>supplier_remove</source>
+                <target>Remove supplier</target>
+            </trans-unit>
+            <trans-unit id="Fullname">
+                <source>Fullname</source>
+                <target>Full Name</target>
+            </trans-unit>
+            <trans-unit id="message_brokers_table_caption">
+                <source>message_brokers_table_caption</source>
+                <target>Brokers</target>
+            </trans-unit>
+            <trans-unit id="message_customers_table_caption">
+                <source>message_customers_table_caption</source>
+                <target>Customers</target>
+            </trans-unit>
+            <trans-unit id="message_suppliers_table_caption">
+                <source>message_suppliers_table_caption</source>
+                <target>Suppliers</target>
+            </trans-unit>
             <trans-unit id="Username">
                 <source>Username</source>
                 <target>Username</target>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Broker;
+use App\Entity\Customer;
 use App\Entity\Message;
 use App\Entity\Product;
 use App\Entity\Supplier;
@@ -314,63 +315,40 @@ class MessageController extends AbstractController
         ]);
     }
   
+
     /**
-     * @Route("/{message}/{broker}/insert/", name="message_insertBroker", methods={"GET","POST"})
+     * @Route("/remove/{message}/broker/{broker}", name="message_removeBroker", methods={"GET","POST"})
     */
-    public function insertBroker(Message $message, Broker $broker): Response
+    public function removeBroker(Message $message, Broker $broker): Response
     {
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-        
-        $message->addBroker($broker);
-        return $this->redirectToRoute('message/edit.html.twig',[
-            'message' => $message,
-            'form' => $form->createView(),
-        ]);
+        $message->removeBroker($broker);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($message);
+        $entityManager->flush();
+        return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
     }
 
     /**
-     * @Route("/remove/{message}/{broker}", name="message_removeBroker", methods={"GET","POST"})
+     * @Route("/remove/{message}/customer/{customer}", name="message_removeCustomer", methods={"GET","POST"})
     */
-    public function removeBroker($message, $broker): Response
+    public function removeCustomer(Message $message, Customer $customer): Response
     {
-        //$message->removeBroker($broker);
-        return $this->redirectToRoute('message_index');
+        $message->removeCustomer($customer);        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($message);
+        $entityManager->flush();
+        return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
     }
 
     /**
-     * @Route("/insert/{message}", name="message_insertCustomer", methods={"GET","POST"})
+     * @Route("/remove/{message}/supplier/{supplier}", name="message_removeSupplier", methods={"GET","POST"})
     */
-    public function insertCustomer($message): Response
+    public function removeSupplier(Message $message, Supplier $supplier): Response
     {
-      //  $message->addBroker($repo->find($id));
-        return $this->redirectToRoute('message_index');
-    }
-
-    /**
-     * @Route("/remove/{message}/{customer}", name="message_removeCustomer", methods={"GET","POST"})
-    */
-    public function removeCustomer($message, $customer): Response
-    {
-        //$message->removeBroker($broker);
-        return $this->redirectToRoute('message_index');
-    }
-
-    /**
-     * @Route("/insert/{message}", name="message_insertSupplier", methods={"GET","POST"})
-    */
-    public function insertSupplier($message): Response
-    {
-      //  $message->addBroker($repo->find($id));
-        return $this->redirectToRoute('message_index');
-    }
-
-    /**
-     * @Route("/remove/{message}/{supplier}", name="message_removeSupplier", methods={"GET","POST"})
-    */
-    public function removeSupplier($message, $supplier): Response
-    {
-        //$message->removeBroker($broker);
-        return $this->redirectToRoute('message_index');
+        $message->removeSupplier($supplier);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($message);
+        $entityManager->flush();
+        return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
     }
 }

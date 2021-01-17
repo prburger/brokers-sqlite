@@ -53,16 +53,22 @@
                     <div class="col-sm-12">
                         <div class="form_component">
                             <table class="table">
-                                <tbody>
+                            <caption class="caption">
+                                {{ 'message_brokers_table_caption'|trans|raw}}
+                            </caption>
+                            <tbody>
                                 {% for broker in brokers %}
                                     <tr>
                                         <td>
-                                            <a href="{{ path('broker_edit',{'id':broker.id}) }}" title="{{'broker_edit'|trans|raw}}">
+                                            <a href="{{ path('broker_edit',{'id':broker.id}) }}" 
+                                            title="{{'broker_edit'|trans|raw}}">
                                                 {{ broker.name }}
                                             </a>
                                         </td>
-                                        <td>
-                                            <a href=""><i class="fas fa-minus-circle"></i></a>
+                                        <td class="action_column">
+                                            <a href="{{ path('message_removeBroker',{ 'message': message.id, 'broker':broker.id }) }}"
+                                            title="{{'broker_remove'|trans|raw}}">
+                                            <i class="fas fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -75,6 +81,7 @@
                     <div class="col-sm-12">
                         <div class="form_component">
                             <table class="table">
+                                <caption class="caption">{{ 'message_customers_table_caption'|trans|raw}}</caption>
                                 <tbody>
                                 {% for customer in customers %}
                                     <tr>
@@ -83,8 +90,10 @@
                                                 {{ customer.name }}
                                             </a>
                                         </td>
-                                        <td>
-                                            <a href=""><i class="fas fa-minus-circle"></i></a>
+                                        <td class="action_column">
+                                            <a href="{{ path('message_removeCustomer',{ 'message': message.id, 'customer':customer.id }) }}"
+                                            title="{{'customer_remove'|trans|raw}}">
+                                            <i class="fas fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -97,6 +106,7 @@
                     <div class="col-sm-12">
                         <div class="form_component">
                             <table class="table">
+                            <caption class="caption">{{ 'message_suppliers_table_caption'|trans|raw}}</caption>
                                 <tbody>
                                 {% for supplier in suppliers %}
                                     <tr>
@@ -105,8 +115,10 @@
                                                 {{ supplier.name }}
                                             </a>
                                         </td>
-                                        <td>
-                                        <a href=""><i class="fas fa-minus-circle"></i></a>
+                                        <td class="action_column">
+                                            <a href="{{ path('message_removeSupplier',{ 'message': message.id, 'supplier':supplier.id }) }}"
+                                            title="{{'supplier_remove'|trans|raw}}">
+                                            <i class="fas fa-minus-circle"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
