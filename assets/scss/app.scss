@@ -284,11 +284,28 @@ td{
   background-color: darkgreen;
 }
 
-.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+.pagination > .active > a, 
+.pagination > .active > a:hover, 
+.pagination > .active > a:focus, 
+.pagination > .active > span, 
+.pagination > .active > span:hover, 
+.pagination > .active > span:focus {
   z-index: 3;
   color: #fff;
   cursor: default;
   background-color: darkgreen;
+  // border-color: transparent;
+}
+
+.pagination > .disabled > span, 
+.pagination > .disabled > span:hover, 
+.pagination > .disabled > span:focus, 
+.pagination > .disabled > a, 
+.pagination > .disabled > a:hover, 
+.pagination > .disabled > a:focus {
+  color: #ecf0f1;
+  cursor: not-allowed;
+  background-color:darkgreen;
   // border-color: transparent;
 }
 
