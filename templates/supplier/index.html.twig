@@ -3,46 +3,54 @@
 {% block title %}{{'supplier_index'|trans|raw}}{% endblock %}
 
 {% block body %}
-<div class="page_form_header">
-    <div class="page_form_heading">
-    {{'supplier_index'|trans|raw}}
-        <div class="return_to_list_label">
-            <a href="{{ path('supplier_new') }}" title="{{'create_new_supplier'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
-            <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+<div class="row">
+    <div class="page_form_header">
+        <div class="page_form_heading">
+        {{'supplier_index'|trans|raw}}
+            <div class="return_to_list_label">
+                <a href="{{ path('supplier_new') }}" title="{{'create_new_supplier'|trans|raw}}"><i class="fas fa-plus page_icon"></i></i></a>
+                <a href="{{ path('portal_index') }}" title="{{'back_to_portal'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="index_table">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>{{'table.column.name'|trans|raw}}</th>
-                <th>{{'table.column.date.added'|trans|raw}}</th>
-                <th>{{'table.column.date.edited'|trans|raw}}</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for supplier in paginator.results %}
-            <tr>
-                <td>{{ supplier.name }}</td>
-                <td>{{ supplier.dateAdded ? supplier.dateAdded|date('Y-m-d') : '' }}</td>
-                <td>{{ supplier.dateEdited ? supplier.dateEdited|date('Y-m-d') : '' }}</td>
-                <td class="action_column">
-                    <a href="{{ path('supplier_show', {'id': supplier.id }) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
-                    <a href="{{ path('supplier_edit', {'id': supplier.id }) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
-                </td>
-            </tr>
-        {% else %}
-        {%include 'no_records_found.php' %}
-          
-        {% endfor %}
-        </tbody>
-    </table>
-    
- {% if paginator.hasToPaginate %}
-         <div class="navigation text-center">
+<div class="row">
+    <div class="index_table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{'table.column.name'|trans|raw}}</th>
+                    <th>{{'table.column.date.added'|trans|raw}}</th>
+                    <th>{{'table.column.date.edited'|trans|raw}}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for supplier in paginator.results %}
+                <tr>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.dateAdded ? supplier.dateAdded|date('Y-m-d') : '' }}</td>
+                    <td>{{ supplier.dateEdited ? supplier.dateEdited|date('Y-m-d') : '' }}</td>
+                    <td class="action_column">
+                        <a href="{{ path('supplier_show', {'id': supplier.id }) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
+                        <a href="{{ path('supplier_edit', {'id': supplier.id }) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+            {%include 'no_records_found.php' %}
+            
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{%  block footer %}
+<div class="row">
+    {% if paginator.hasToPaginate %}
+        <div class="navigation text-center">
             <ul class="pagination">
                 {% if paginator.hasPreviousPage %}
                     <li class="prev"><a href="{{ path('broker_index_paginated', {page: paginator.previousPage}) }}" rel="previous"><i class="fa fw fa-long-arrow-left"></i> {{ 'paginator.previous'|trans }}</a></li>
@@ -65,6 +73,6 @@
                 {% endif %}
             </ul>
         </div>
-     {% endif %} 
+    {% endif %} 
 </div>
 {% endblock %}

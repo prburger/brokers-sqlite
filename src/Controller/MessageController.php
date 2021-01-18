@@ -11,14 +11,15 @@ use App\Form\BrokerType;
 use App\Form\BrokersEmbeddedFormType;
 use App\Form\CustomerType;
 use App\Form\DataTransformer\BrokerArrayToStringTransformer;
-
 use App\Form\MessageType;
+
 use App\Form\SupplierType;
 use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SupplierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -100,13 +101,28 @@ class MessageController extends AbstractController
     /**
      * @Route("/{id}", name="message_show", methods={"GET"})
      */
-    public function show(Message $message): Response
+    public function show(
+        Message $message,
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,        
+        SupplierRepository $supplierRepo): Response
     {
-        $form = $this->createForm(MessageType::class, $message);
-        // $form->handleRequest($request);
-        return $this->render('message/show.html.twig', [
-            'message' => $message,
-            'form' => $form->createView()
+
+        $brokerSelection = $brokerRepo->findAll();
+        $customerSelection = $customerRepo->findAll();
+        $supplierSelection = $supplierRepo->findAll();
+        
+        $form = $this->createForm(MessageType::class,$message,
+            array('brokerSelection'=>$brokerSelection,
+                  'customerSelection'=>$customerSelection,
+                  'supplierSelection'=>$supplierSelection));  
+
+        return $this->render('message/show.html.twig' , [
+            'message'=> $message,
+            'form' => $form->createView(),
+            'brokers'=>$message->getBrokers(),
+            'customers'=>$message->getCustomers(),
+            'suppliers'=>$message->getSuppliers()
         ]);
     }
 
