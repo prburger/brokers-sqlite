@@ -217,7 +217,7 @@ class Customer
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-            $message->setGetCustomer($this);
+            // $message->addCustomer($this);
         }
 
         return $this;
@@ -227,36 +227,9 @@ class Customer
     {
         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
-            if ($message->getGetCustomer() === $this) {
-                $message->setGetCustomer(null);
+            if ($message->getCustomer() === $this) {
+                $message->setCustomer(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Note[]
-     */
-    public function getGetCustomers(): Collection
-    {
-        return $this->getCustomers;
-    }
-
-    public function addGetCustomer(Note $getCustomer): self
-    {
-        if (!$this->getCustomers->contains($getCustomer)) {
-            $this->getCustomers[] = $getCustomer;
-            $getCustomer->addCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGetCustomer(Note $getCustomer): self
-    {
-        if ($this->getCustomers->removeElement($getCustomer)) {
-            $getCustomer->removeCustomer($this);
         }
 
         return $this;

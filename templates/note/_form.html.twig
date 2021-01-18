@@ -1,4 +1,17 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="form_div">
+    {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-sm-12">
+                {{ form_row(form) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                    <button class="btn btn-primary" style="margin:10px 20px 0 0;">{{ button_label|default('Save') }}</button>
+            </div>
+        </div>
+
+    {{ form_end(form) }}
+</div>

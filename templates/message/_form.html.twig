@@ -1,16 +1,16 @@
 <div class="form_div">
+{# {{ dump(form) }} #}
     {{ form_start(form) }}
         {# {% do form.id.setRendered() %} #}
         <div class="row">
             <div class="col-sm-6">
-                    {% if form.sentBy=="" %}
-                        {% do form.sentBy.setRendered() %}
-                        {{ form_row(form.senderSelection) }}
-                    {% else %}
+                    {% if form.sentBy is defined %}
                         {% do form.senderSelection.setRendered() %}
                         {{ form_row(form.sentBy) }}
+                    {% else %}
+                        {% do form.sentBy.setRendered() %}
+                        {{ form_row(form.senderSelection) }}
                     {% endif %} 
-
 
                 {{ form_row(form.text) }}
             

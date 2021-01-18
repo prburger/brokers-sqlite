@@ -8,12 +8,24 @@
     <div class="page_form_heading">
         {{'new_message_title'|trans|raw}}
         <div class="return_to_list_label">
-        {% if broker_id %}
-                <a href="{{ path('broker_edit', {'id':broker_id}) }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
+        {% if broker_id is defined %}
+                <a href="{{ path('broker_edit', {'id':broker_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
+        {% elseif customer_id is defined %}    
+                <a href="{{ path('customer_edit', {'id':customer_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>  
+          {% elseif supplier_id is defined %}    
+                <a href="{{ path('supplier_edit', {'id':supplier_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>  
             {% else %}
                 <a href="{{ path('message_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>    
             {% endif %}
-           {# <a href="{{ path('message_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a> #}
         </div>
         </div>
 </div>

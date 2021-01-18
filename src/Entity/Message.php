@@ -67,6 +67,7 @@ class Message
 
     public function __construct()
     {
+        $this->setId(1);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->setDateSent(new \DateTime());

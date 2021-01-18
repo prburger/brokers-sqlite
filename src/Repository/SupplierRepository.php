@@ -20,6 +20,19 @@ class SupplierRepository extends ServiceEntityRepository
         parent::__construct($registry, Supplier::class);
     }
 
+
+    public function findWithoutId($value)
+    {
+        return $this->createQueryBuilder('b')
+        ->where('b.id != :val')
+        ->setParameter('val', $value)
+        ->orderBy('b.id', 'ASC')
+        // ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     /**
      * Our findLatest() method
      *

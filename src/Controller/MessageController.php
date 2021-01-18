@@ -43,26 +43,25 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/{broker_id}/new", name="message_new", methods={"GET","POST"})
+     * @Route("/broker/{broker}", name="message_broker", methods={"GET","POST"})
      * @Route("/new", name="message_new_no_id", methods={"GET","POST"})
      */
-    public function new(
+    public function broker(
         Request $request, 
-        ?int $broker_id,
+        Broker $broker,
         BrokerRepository $brokerRepo,
         CustomerRepository $customerRepo,        
         SupplierRepository $supplierRepo
         ): Response
         {
             $message = new Message();   
-            $message->setId(0);
             
             if($broker_id != null)
             {
-                $message->setSentBy($brokerRepo->find($broker_id)->getName());
+                $message->setSentBy($brokerRepo->find($broker->getId())->getName());
             }
             
-            $brokerSelection = $brokerRepo->findWithoutId($broker_id);
+            $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
             $customerSelection = $customerRepo->findAll();
             $supplierSelection = $supplierRepo->findAll();
             
@@ -93,7 +92,7 @@ class MessageController extends AbstractController
                 'brokers'=>$message->getBrokers(),
                 'customers'=>$message->getCustomers(),
                 'suppliers'=>$message->getSuppliers(),
-                'broker_id'=>$broker_id
+                'broker_id'=>$broker->getId()
 
             ]);
     }
@@ -112,7 +111,7 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="message_edit", methods={"GET","POST"})
+     * @Route("/{message}/edit", name="message_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request, 
@@ -121,7 +120,6 @@ class MessageController extends AbstractController
         SupplierRepository $supplierRepo,
         CustomerRepository $customerRepo): Response
     {
-        
         $broker = $brokerRepo->findByName($message->getSentBy());
         
         $brokerSelection = $brokerRepo->findWithoutName($message->getSentBy());                
@@ -180,7 +178,151 @@ class MessageController extends AbstractController
             'brokers'=> $message->getBrokers(),
             'suppliers'=> $message->getSuppliers(),
             'customers'=> $message->getCustomers(),
-            'broker_id'=>$broker[0]->getId()
+            'broker_id'=>'1'
+        ]);
+    }
+
+    /**
+     * @Route("/{message}/{customer}/edit", name="message_edit_customer", methods={"GET","POST"})
+    */
+    public function editCustomer(
+        Request $request, 
+        Message $message,  
+        Customer $customer,
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo): Response
+    {
+        $broker = $brokerRepo->findByName($message->getSentBy());        
+        $brokerSelection = $brokerRepo->findWithoutName($message->getSentBy());                
+        for($i=0; $i<count($brokerSelection); $i++)
+        {
+            if($message->getBrokers()->contains($brokerSelection[$i])){
+              array_splice($brokerSelection, $i,1);
+            }
+        }
+        
+        $customerSelection = $customerRepo->findAll();
+        for($i=0; $i<count($customerSelection); $i++)
+        {
+            if($message->getCustomers()->contains($customerSelection[$i])){         
+             array_splice($customerSelection, $i,1);
+            }
+        }        
+
+        $supplierSelection = $supplierRepo->findAll();
+        for($i=0; $i<count($supplierSelection); $i++)
+        {
+            if($message->getSuppliers()->contains($supplierSelection[$i])){
+              array_splice($supplierSelection, $i,1);
+            }
+        }
+
+        $form = $this->createForm(MessageType::class,$message,
+                array('brokerSelection'=>$brokerSelection,
+                      'customerSelection'=>$customerSelection,
+                      'supplierSelection'=>$supplierSelection));  
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $message = $form->getViewData();
+                
+            foreach($message->brokerSelection as $broker){
+                $message->addBroker($broker);
+            }
+            foreach($message->customerSelection as $customer){
+                $message->addCustomer($customer);
+            }
+            foreach($message->supplierSelection as $supplier){
+                $message->addSupplier($supplier);
+            }
+                        
+            $entityManager->persist($message);   
+            $this->getDoctrine()->getManager()->flush();
+            
+            return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+        }
+
+        return $this->render('message/edit.html.twig', [
+            'message' => $message,
+            'form' => $form->createView(),
+            'brokers'=> $message->getBrokers(),
+            'suppliers'=> $message->getSuppliers(),
+            'customers'=> $message->getCustomers(),
+            'customer_id'=>$customer->getId()
+        ]);
+    }
+
+        /**
+     * @Route("/{message}/{supplier}/edit", name="message_edit_supplier", methods={"GET","POST"})
+    */
+    public function editSupplier(
+        Request $request, 
+        Message $message,  
+        Supplier $supplier,
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo): Response
+    {
+        $broker = $brokerRepo->findByName($message->getSentBy());        
+        $brokerSelection = $brokerRepo->findWithoutName($message->getSentBy());                
+        for($i=0; $i<count($brokerSelection); $i++)
+        {
+            if($message->getBrokers()->contains($brokerSelection[$i])){
+              array_splice($brokerSelection, $i,1);
+            }
+        }
+        
+        $customerSelection = $customerRepo->findAll();
+        for($i=0; $i<count($customerSelection); $i++)
+        {
+            if($message->getCustomers()->contains($customerSelection[$i])){         
+             array_splice($customerSelection, $i,1);
+            }
+        }        
+
+        $supplierSelection = $supplierRepo->findAll();
+        for($i=0; $i<count($supplierSelection); $i++)
+        {
+            if($message->getSuppliers()->contains($supplierSelection[$i])){
+              array_splice($supplierSelection, $i,1);
+            }
+        }
+
+        $form = $this->createForm(MessageType::class,$message,
+                array('brokerSelection'=>$brokerSelection,
+                      'customerSelection'=>$customerSelection,
+                      'supplierSelection'=>$supplierSelection));  
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $message = $form->getViewData();
+                
+            foreach($message->brokerSelection as $broker){
+                $message->addBroker($broker);
+            }
+            foreach($message->customerSelection as $customer){
+                $message->addCustomer($customer);
+            }
+            foreach($message->supplierSelection as $supplier){
+                $message->addSupplier($supplier);
+            }
+                        
+            $entityManager->persist($message);   
+            $this->getDoctrine()->getManager()->flush();
+            
+            return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+        }
+
+        return $this->render('message/edit.html.twig', [
+            'message' => $message,
+            'form' => $form->createView(),
+            'brokers'=> $message->getBrokers(),
+            'suppliers'=> $message->getSuppliers(),
+            'customers'=> $message->getCustomers(),
+            'supplier_id'=>$supplier->getId()
         ]);
     }
 
@@ -199,122 +341,94 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/{customer_id}/new", name="message_newCustomer", methods={"GET","POST"})
+     * @Route("/customer/{customer}/new", name="message_customer", methods={"GET","POST"})
      */
-    public function newCustomer(
+    public function customer(
         Request $request, 
-        ?int $customer_id,
+        Customer $customer,
         BrokerRepository $brokerRepo,        
         SupplierRepository $supplierRepo,
         CustomerRepository $customerRepo
     ): Response
     {
         $message = new Message();
-        $message->setId("1");
-        $broker = $brokerRepo->find($broker_id);
 
-        $message->setSentBy($broker->getName());
+        $message->setSentBy($customer->getName());
 
-        $brokers = $brokerRepo->findAll();
-        $customers = $customerRepo->findAll();
-        $suppliers = $supplierRepo->findAll();
+        $brokerSelection = $brokerRepo->findAll();
+        $customerSelection = $customerRepo->findWithoutId($customer->getId());
+        $supplierSelection = $supplierRepo->findAll();
+            
+        $form = $this->createForm(MessageType::class,$message,
+            array('brokerSelection'=>$brokerSelection,
+                    'customerSelection'=>$customerSelection,
+                    'supplierSelection'=>$supplierSelection));  
 
-        $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer);            
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('broker_edit', array('id'=>$broker_id));
+            return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
         }
 
         return $this->render('message/new.html.twig' , [
             'message' => $message,
             'form' => $form->createView(),
-            'messages'=>$customer->getMessages(),
-            'brokers'=> $brokers ? $brokers : null,
-            'suppliers'=> $suppliers ? $suppliers : null,
-            'customers'=> $customers ? $customers : null,
+            'brokers'=>$message->getBrokers(),
+            'customers'=>$message->getCustomers(),
+            'suppliers'=>$message->getSuppliers(),
+            'customer_id'=>$customer->getId()
         ]);
     }
 
-    /**
-     * @Route("/{supplier_id}/new", name="message_newSupplier", methods={"GET","POST"})
+      /**
+     * @Route("/supplier/{supplier}/new", name="message_supplier", methods={"GET","POST"})
      */
-    public function newSupplier(
+    public function supplier(
         Request $request, 
-        ?int $supplier_id,
+        Supplier $ssupplier,
         BrokerRepository $brokerRepo,        
         SupplierRepository $supplierRepo,
         CustomerRepository $customerRepo
     ): Response
     {
         $message = new Message();
-        $message->setId("1");
-        // $supplier = $supplierRepo->find($supplier_id);
-        // $message->setSentBy($supplier->getName());
 
-        $brokers = $brokerRepo->findAll();
-        $customers = $customerRepo->findAll();
-        // $suppliers = $supplierRepo->findAll();
+        $message->setSentBy($supplier->getName());
 
-        $form = $this->createForm(MessageType::class, $message);
+        $brokerSelection = $brokerRepo->findAll();
+        $customerSelection = $customerRepo->findAll();
+        $supplierSelection = $supplierRepo->findWithoutId($supplier->getId());
+            
+        $form = $this->createForm(MessageType::class,$message,
+            array('brokerSelection'=>$brokerSelection,
+                    'customerSelection'=>$customerSelection,
+                    'supplierSelection'=>$supplierSelection));  
+
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+           // $message = $form->getViewData();
             $entityManager->persist($message);
             $entityManager->flush();
 
-            return $this->redirectToRoute('supplier_edit', array('id'=>$supplier_id));
+            return $this->redirectToRoute('supplier_edit', array('id'=>$supplier->getId()));
         }
 
         return $this->render('message/new.html.twig' , [
             'message' => $message,
             'form' => $form->createView(),
-            'brokers'=> $brokers ? $brokers : null,
-            // 'suppliers'=> $suppliers ? $suppliers : null,
-            'customers'=> $customers ? $customers : null,
+            'brokers'=>$message->getBrokers(),
+            'customers'=>$message->getCustomers(),
+            'suppliers'=>$message->getSuppliers(),
+            'supplier_id'=>$supplier->getId()
         ]);
     }
-
-       /**
-     * @Route("/{product_id}/new", name="message_newProduct", methods={"GET","POST"})
-     */
-     public function newProduct(
-        Request $request, 
-        ?int $product_id,
-        BrokerRepository $brokerRepo,        
-        SupplierRepository $supplierRepo,
-        CustomerRepository $customerRepo
-    ): Response
-    {
-        $message = new Message();
-        $message->setId("1");
-        $product = $productRepo->find($product_id);
-
-        $form = $this->createForm(MessageType::class, $message);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($message);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('product_edit', array('id'=>$product_id));
-        }
-
-        return $this->render('message/new.html.twig' , [
-            'message' => $message,
-            'form' => $form->createView(),
-            // 'notes'=> $product->getNotes(),
-            // 'specifications'=> $product->getSpecifications(),
-        ]);
-    }
-  
 
     /**
      * @Route("/remove/{message}/broker/{broker}", name="message_removeBroker", methods={"GET","POST"})

@@ -24,7 +24,7 @@
                                 <td class="action_column">
                                 {% if edit_state %}
                                     <a class="form_component_link" 
-                                    href="{{ path('note_edit',{'id': note.id}) }}" 
+                                    href="{{ path('note_editBroker',{'note': note.id, 'broker': broker.id}) }}" 
                                     title="{{'action.edit'|trans|raw}}">
                                     <i class="fas fa-edit page_icon"></i>
                                     </a> 
