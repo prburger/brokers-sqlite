@@ -6,9 +6,8 @@ use App\Entity\Broker;
 use App\Entity\Customer;
 use App\Form\CustomerType;
 use\App\Form\ContactFormType;
-use\App\Form\InsertCustomersType;
-
 use App\Repository\CustomerRepository;
+use App\Repository\MessageRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,10 +81,20 @@ class CustomerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="customer_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Customer $customer): Response
+    public function edit(
+        Request $request, 
+        Customer $customer, 
+        MessageRepository $messageRepo
+        ): Response
     {
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
+
+        $messages = $messageRepo->findByName($customer->getName());
+        foreach($messages as $message)
+        {
+            $customer->addMessage($message);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -152,11 +161,6 @@ class CustomerController extends AbstractController
     */
     public function insertBroker(Broker $broker): Response
     {
-        /* $broker->removeSupplier($supplier);
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($broker);
-        $entityManager->flush(); */
-        // return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
         $customer = new Customer();
         $customer->setBroker($broker);
         

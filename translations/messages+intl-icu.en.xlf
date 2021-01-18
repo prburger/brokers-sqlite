@@ -204,14 +204,38 @@
                 <source>action.sign_in</source>
                 <target>Sign in</target>
             </trans-unit>
+            <trans-unit id="return_to_broker">
+                <source>return_to_broker</source>
+                <target>Back to broker</target>
+            </trans-unit>
+            <trans-unit id="return_to_customer">
+                <source>return_to_customer</source>
+                <target>Back to customer</target>
+            </trans-unit>
+            <trans-unit id="return_to_supplier">
+                <source>return_to_supplier</source>
+                <target>Back to supplier</target>
+            </trans-unit>
+            <trans-unit id="Note">
+                <source>Note</source>
+                <target>Details</target>
+            </trans-unit>
             <trans-unit id="action.browse_app">
                 <source>action.browse_app</source>
                 <target>Login</target>
+            </trans-unit>
+            <trans-unit id="note_edit">
+                <source>note_edit</source>
+                <target>Edit note</target>
             </trans-unit>
             <trans-unit id="form_component_insertCustomer">
                 <source>form_component_insertCustomer</source>
                 <target>Insert customer</target>
             </trans-unit>
+            <trans-unit id="form_component_newProduct">
+                <source>form_component_newProduct</source>
+                <target>New product</target>
+            </trans-unit>            
             <trans-unit id="form_component_insertSupplier">
                 <source>form_component_insertSupplier</source>
                 <target>Insert supplier</target>

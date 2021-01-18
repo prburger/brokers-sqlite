@@ -6,7 +6,9 @@
             </div>
             <div class="col-sm-6">
             {% if edit_state or fresh_state %}
-                <a class="form_component_link" href="customer_newNote" title="{{'form_component_newNote'|trans|raw}}">
+                <a class="form_component_link" 
+                href="{{ path('note_customer', { 'customer': customer.id})}}" 
+                title="{{'form_component_newNote'|trans|raw}}">
                 <i class="fas fa-plus page_icon"></i>
                 </a>
         {% endif %}
@@ -19,7 +21,7 @@
                     <tbody>
                         {% for note in customer.notes %}
                             <tr>
-                                <td>{{note.text}}</td>
+                                <td>{{note.details}}</td>
                                 <td class="action_column">
                                     <a class="form_component_link" href="{{ path('note_edit',{'id': note.id}) }}" title="{{'action.edit'|trans|raw}}">
                                     <i class="fas fa-edit page_icon"></i>

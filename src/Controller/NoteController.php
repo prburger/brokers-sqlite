@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Broker;
+use App\Entity\Customer;
 use App\Entity\Note;
+use App\Entity\Supplier;
 use App\Form\NoteType;
 use App\Repository\BrokerRepository;
 use App\Repository\NoteRepository;
@@ -62,7 +64,6 @@ class NoteController extends AbstractController
     public function broker(Request $request, Broker $broker): Response
     {
         $note = new Note();
-        // $broker = $brokerRepo->find($broker_id)
         $note->setBroker($broker);
         
         $form = $this->createForm(NoteType::class, $note);
@@ -70,7 +71,6 @@ class NoteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($note->getBroker());
             $entityManager->persist($note);
             $entityManager->flush();
 
@@ -80,6 +80,59 @@ class NoteController extends AbstractController
         return $this->render('note/new.html.twig', [
             'note' => $note,
             'form' => $form->createView(),
+            'broker_id'=>$broker->getId()
+        ]);
+    }
+
+    /**
+     * @Route("/customer/{customer}", name="note_customer", methods={"GET","POST"})
+     */
+    public function customer(Request $request, Customer $customer): Response
+    {
+        $note = new Note();
+        $note->setCustomer($customer);
+        
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($note);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
+        }
+
+        return $this->render('note/new.html.twig', [
+            'note' => $note,
+            'form' => $form->createView(),
+            'customer_id'=>$customer->getId()
+        ]);
+    }
+
+    /**
+     * @Route("/supplier/{supplier}", name="note_supplier", methods={"GET","POST"})
+     */
+    public function supplier(Request $request, Supplier $supplier): Response
+    {
+        $note = new Note();
+        $note->setSupplier($supplier);
+        
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($note);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('supplier_edit', array('id'=>$supplier->getId()));
+        }
+
+        return $this->render('note/new.html.twig', [
+            'note' => $note,
+            'form' => $form->createView(),
+            'supplier_id'=>$supplier->getId()
         ]);
     }
 
@@ -110,6 +163,29 @@ class NoteController extends AbstractController
         return $this->render('note/edit.html.twig', [
             'note' => $note,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/note/{note}/broker/{broker}/edit", name="note_editBroker", methods={"GET","POST"})
+     */
+    public function editBroker(Request $request, Note $note, Broker $broker): Response
+    {
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $note = $form->getViewData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($note);
+            $entityManager->flush();
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+        }
+
+        return $this->render('note/edit.html.twig', [
+            'note' => $note,
+            'form' => $form->createView(),
+            'broker_id'=>$broker->getId()
         ]);
     }
 

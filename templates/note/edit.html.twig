@@ -1,13 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Note{% endblock %}
+{% block title %}{{'note_edit'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <h1>Edit Note</h1>
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'note_edit'|trans|raw}}
+        <div class="return_to_list_label">
+            {{ include('note/_delete_form.html.twig') }}
+            {% if broker_id is defined %}
+                <a href="{{ path('broker_edit', {'id':broker_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
+            {% elseif customer_id is defined %}
+                <a href="{{ path('customer_edit', {'id':customer_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
+            {% elseif supplier_id is defined %}
+                <a href="{{ path('supplier_edit', {'id':supplier_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
+            {# 
+            {% else %}
+                <a href="{{ path('message_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+                 #}    
+            {% endif %}
+        </div>
+    </div>
+</div>
 
-    {{ include('note/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="row">
+    <div class="col">
+        {{ include('note/_form.html.twig', {'button_label': 'Update'}) }} 
+    </div>
+ </div>
 
-    <a href="{{ path('note_index') }}">back to list</a>
-
-    {{ include('note/_delete_form.html.twig') }}
 {% endblock %}
