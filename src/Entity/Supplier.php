@@ -41,12 +41,6 @@ class Supplier
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="suppliers", orphanRemoval=true)
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $notes;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="suppliers")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -63,15 +57,20 @@ class Supplier
      */
     private $broker;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="supplier")
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->setID(0);
         $this->setContact(new Contact());
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
-        $this->notes = new ArrayCollection();
         $this->products = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function setID($id)
@@ -120,13 +119,6 @@ class Supplier
         return $this;
     }
 
-    public function removeNote(Note $note): self
-    {
-        $this->notes->removeElement($note);
-
-        return $this;
-    }
-
     public function getContact(): ?Contact
     {
         return $this->contact;
@@ -135,25 +127,6 @@ class Supplier
     public function setContact(Contact $contact): self
     {
         $this->contact = $contact;
-
-        return $this;
-    }
-
-
-    /**
-     * @return Collection|Note[]
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): self
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes[] = $note;
-            $note->setSupplier($this);
-        }
 
         return $this;
     }
@@ -226,6 +199,63 @@ class Supplier
     public function setBroker(?Broker $broker): self
     {
         $this->broker = $broker;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supplier[]
+     */
+    public function getGetSuppliers(): Collection
+    {
+        return $this->getSuppliers;
+    }
+
+    public function addGetSupplier(Note $getSupplier): self
+    {
+        if (!$this->getSuppliers->contains($getSupplier)) {
+            $this->getSuppliers[] = $getSupplier;
+            $getSupplier->addSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGetSupplier(Note $getSupplier): self
+    {
+        if ($this->getSuppliers->removeElement($getSupplier)) {
+            $getSupplier->removeSupplier($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getSupplier() === $this) {
+                $note->setSupplier(null);
+            }
+        }
 
         return $this;
     }

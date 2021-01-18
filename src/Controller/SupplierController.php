@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Broker;
 use App\Entity\Contact;
 use App\Entity\Supplier;
 use App\Form\SupplierType;
@@ -110,5 +111,57 @@ class SupplierController extends AbstractController
         }
 
         return $this->redirectToRoute('supplier_index');
+    }
+
+    /**
+     * @Route("/broker/{broker}", name="supplier_broker", methods={"GET","POST"})
+     */
+    public function broker(Request $request, Broker $broker): Response
+    {
+        $supplier = new Supplier();
+        $supplier->setBroker($broker);
+        // $broker->addSupplier(supplier);
+        $form = $this->createForm(SupplierType::class, $supplier);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($supplier);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+        }
+
+        return $this->render('supplier/new.html.twig', [
+            'supplier' => $supplier,
+            'form' => $form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>true,
+
+        ]);
+    }
+
+    /**
+     * @Route("/remove/{supplier}/broker/{broker}", name="supplier_removeBroker", methods={"GET","POST"})
+    */
+    public function removeBroker(Supplier $supplier, Broker $broker): Response
+    {
+        $broker->removeSupplier($supplier);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($broker);
+        $entityManager->flush();
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+    }
+
+    /**
+     * @Route("/insert/{broker}", name="supplier_insertBroker", methods={"GET","POST"})
+    */
+    public function insertBroker(Broker $broker): Response
+    {
+        /* $broker->removeSupplier($supplier);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($broker);
+        $entityManager->flush(); */
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
     }
 }

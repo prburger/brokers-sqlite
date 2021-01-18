@@ -6,7 +6,6 @@ use App\Entity\Broker;
 use App\Entity\Customer;
 use App\Entity\Message;
 use App\Entity\Supplier;
-use App\Form\BrokersEmbeddedFormType;
 use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\SupplierRepository;
@@ -17,8 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -85,19 +82,6 @@ class MessageType extends AbstractType
                     'choices'=>$options['supplierSelection']
                 ])
                 ;
-        
-                // $builder->addEventListener(FormEvents::PRE_SET_DATA,[$this,'preSetData']);
-                // $builder->addEventListener(FormEvents::POST_SET_DATA,[$this,'postSetData']);
-    }
-
-    public function preSetData(FormEvent $event): void
-    {
-        dump($event);
-    }
-
-    public function postSetData(FormEvent $event): void
-    {
-        dump($event);
     }
 
     public function configureOptions(OptionsResolver $resolver)

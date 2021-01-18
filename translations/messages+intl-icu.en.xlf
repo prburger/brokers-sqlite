@@ -208,6 +208,22 @@
                 <source>action.browse_app</source>
                 <target>Login</target>
             </trans-unit>
+            <trans-unit id="form_component_insertCustomer">
+                <source>form_component_insertCustomer</source>
+                <target>Insert customer</target>
+            </trans-unit>
+            <trans-unit id="form_component_insertSupplier">
+                <source>form_component_insertSupplier</source>
+                <target>Insert supplier</target>
+            </trans-unit>
+            <trans-unit id="action.remove">
+                <source>action.remove</source>
+                <target>Remove</target>
+            </trans-unit>
+            <trans-unit id="new_note_title">
+                <source>new_note_title</source>
+                <target>New note</target>
+            </trans-unit>            
             <trans-unit id="broker_remove">
                 <source>broker_remove</source>
                 <target>Remove broker</target>

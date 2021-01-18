@@ -325,7 +325,7 @@ class MessageController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($message);
         $entityManager->flush();
-        return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
     }
 
     /**
@@ -337,7 +337,7 @@ class MessageController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($message);
         $entityManager->flush();
-        return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+        return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
     }
 
     /**
@@ -349,6 +349,6 @@ class MessageController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($message);
         $entityManager->flush();
-        return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+        return $this->redirectToRoute('supplier_edit', array('id'=>$supplier->getId()));
     }
 }

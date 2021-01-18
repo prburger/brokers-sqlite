@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Broker;
 use App\Entity\Customer;
 use App\Form\CustomerType;
 use\App\Form\ContactFormType;
+use\App\Form\InsertCustomersType;
 
 use App\Repository\CustomerRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
@@ -42,12 +44,8 @@ class CustomerController extends AbstractController
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
-   /*      $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
-        $contactForm->handleRequest($request); */
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($contactForm->getData());
             $entityManager->persist($customer);
             $entityManager->flush();
 
@@ -57,12 +55,6 @@ class CustomerController extends AbstractController
         return $this->render('customer/new.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
-   /*
-               'contact'=>$contactForm->createView(),
-            'messages'=>$customer->getMessages(),
-            'notes'=>$customer->getNotes(),
-            'products'=>$customer->getProducts(), */
-            'edit_state'=>false,
             'fresh_state'=>true
         ]);
     }
@@ -72,18 +64,11 @@ class CustomerController extends AbstractController
      */
     public function show(Customer $customer): Response
     {
-        // $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
         $form = $this->createForm(CustomerType::class, $customer);
         
         return $this->render('customer/show.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
-/*             'contact'=> $contactForm->createView(),
-            'messages' => $customer->getMessages(),
-            'notes' => $customer->getNotes(),   
-            'products'=>$customer->getProducts(),
-            'suppliers' => $customer->getSuppliers(),
-            'brokers' => $customer->getBrokers(), */
             'edit_state'=>false,
             'fresh_state'=>false
         ]);
@@ -102,12 +87,8 @@ class CustomerController extends AbstractController
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
-/*         $contactForm = $this->createForm(ContactFormType::class, $customer->getContact());
-        $contactForm->handleRequest($request); */
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($contactForm->getData());
             $entityManager->persist($customer);
 
             $entityManager->flush();
@@ -119,12 +100,36 @@ class CustomerController extends AbstractController
             'customer' => $customer,
             'new'=>false,
             'form' => $form->createView(),
-            /* 'messages'=>$customer->getMessages(),
-            'products'=>$customer->getProducts(),
-            'notes'=>$customer->getNotes(),
-            'contact'=>$contactForm->createView(), */
             'edit_state'=>true,
             'fresh_state'=>false
+        ]);
+    }
+
+    /**
+     * @Route("/broker/{broker}", name="customer_broker", methods={"GET","POST"})
+     */
+    public function broker(Request $request, Broker $broker): Response
+    {
+        $customer = new Customer();
+        $customer->setBroker($broker);
+        
+        $form = $this->createForm(CustomerType::class, $customer);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+        }
+
+        return $this->render('customer/new.html.twig', [
+            'customer' => $customer,
+            'form' => $form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>true,
+
         ]);
     }
 
@@ -140,5 +145,30 @@ class CustomerController extends AbstractController
         }
 
         return $this->redirectToRoute('customer_index');
+    }
+
+  /**
+     * @Route("/insert/{broker}", name="customer_insertBroker", methods={"GET","POST"})
+    */
+    public function insertBroker(Broker $broker): Response
+    {
+        /* $broker->removeSupplier($supplier);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($broker);
+        $entityManager->flush(); */
+        // return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+        $customer = new Customer();
+        $customer->setBroker($broker);
+        
+        $form = $this->createForm(InsertCustomersType::class, $customer);
+        $form->handleRequest($request);
+        
+        return $this->render('customer/selectlist.html.twig', [
+            'customer' => $customer,
+            'form' => $form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>true,
+
+        ]);
     }
 }

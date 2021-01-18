@@ -35,7 +35,7 @@ class Product
     private $dateEdited;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="products", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="product")
      * @ORM\JoinColumn(nullable=true)
      */
     private $notes;

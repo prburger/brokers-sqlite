@@ -6,9 +6,12 @@
                 </div>
                 <div class="col-sm-6">
                 {% if edit_state %}
-                    <a class="form_component_link" href="{{ path('customer_new',{'broker_id': broker.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
+                     <a class="form_component_link" 
+                    href="{{ path('customer_broker',{'broker': broker.id}) }}" 
+                    title="{{'form_component_newCustomer'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>
+                    
                 {% endif %}
                 </div>
             </div>
@@ -22,9 +25,18 @@
                                 <td>{{customer.name}}</td>
                                 <td class="action_column">
                                 {% if edit_state %}
-                                    <a class="form_component_link" href="{{ path('customer_edit',{'id': customer.id}) }}" title="{{'action.edit'|trans|raw}}">
+                                    <a class="form_component_link" 
+                                    href="{{ path('customer_edit',{'id': customer.id}) }}" 
+                                    title="{{'action.edit'|trans|raw}}">
                                     <i class="fas fa-edit page_icon"></i>
-                                    </a>    
+                                    </a> 
+                                    
+                                    <a class="form_component_link" 
+                                    href="{{ path('customer_removeBroker',{'customer': customer.id, 'broker':broker.id}) }}" 
+                                    title="{{'action.remove'|trans|raw}}">
+                                    <i class="fas fa-minus-circle"></i></a>
+                                    </a> 
+
                                     {% endif %}                                 
                                 </td>
                             </tr>
