@@ -29,7 +29,7 @@
                 <td>{{ note.id }}</td>
                  <td>{{ note.dateAdded ? note.dateAdded|date('Y-m-d') : '' }}</td>
                 <td>{{ note.dateEdited ? note.dateEdited|date('Y-m-d') : '' }}</td>
-                <td>
+                <td class="action_column">
                     <a href="{{ path('note_show', {'id': note.id}) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
                     <a href="{{ path('note_edit', {'id': note.id}) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
                 </td>

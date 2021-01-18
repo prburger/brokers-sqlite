@@ -41,12 +41,6 @@ class Customer
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="customers", orphanRemoval=true)
-     * @ORM\JoinColumn(nullable=true)
-    */
-    private $notes;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="customers")
      * @ORM\JoinColumn(nullable=true)
     */
@@ -64,16 +58,21 @@ class Customer
     */
     private $messages;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="customer")
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->setId(0);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->products = new ArrayCollection();
-        $this->notes = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->brokers = new ArrayCollection();        
         $this->setContact(new Contact());
+        $this->notes = new ArrayCollection();
     }
 
     public function setId($id)
@@ -130,36 +129,6 @@ class Customer
     public function setContact(Contact $contact): self
     {
         $this->contact = $contact;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Note[]
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): self
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes[] = $note;
-            $note->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(Note $note): self
-    {
-        if ($this->notes->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getCustomer() === $this) {
-                $note->setCustomer(null);
-            }
-        }
 
         return $this;
     }
@@ -260,6 +229,63 @@ class Customer
             // set the owning side to null (unless already changed)
             if ($message->getGetCustomer() === $this) {
                 $message->setGetCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getGetCustomers(): Collection
+    {
+        return $this->getCustomers;
+    }
+
+    public function addGetCustomer(Note $getCustomer): self
+    {
+        if (!$this->getCustomers->contains($getCustomer)) {
+            $this->getCustomers[] = $getCustomer;
+            $getCustomer->addCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGetCustomer(Note $getCustomer): self
+    {
+        if ($this->getCustomers->removeElement($getCustomer)) {
+            $getCustomer->removeCustomer($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getCustomer() === $this) {
+                $note->setCustomer(null);
             }
         }
 

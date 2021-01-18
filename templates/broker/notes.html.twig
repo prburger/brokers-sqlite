@@ -6,7 +6,8 @@
                 </div>
                 <div class="col-sm-6">
                 {% if edit_state %}
-                    <a class="form_component_link" href="{{ path('note_new',{'broker_id': broker.id}) }}" title="{{'form_component_newMessage'|trans|raw}}">
+                    <a class="form_component_link" href="{{ path('note_broker',{ 'broker': broker.id}) }}" 
+                    title="{{'form_component_newMessage'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>
                 {% endif %}
@@ -19,11 +20,18 @@
                     <tbody>
                         {% for note in broker.notes %}
                             <tr>
-                                <td>{{note.text}}</td>
+                                <td>{{note.details}}</td>
                                 <td class="action_column">
                                 {% if edit_state %}
-                                    <a class="form_component_link" href="{{ path('note_edit',{'id': note.id}) }}" title="{{'action.edit'|trans|raw}}">
+                                    <a class="form_component_link" 
+                                    href="{{ path('note_edit',{'id': note.id}) }}" 
+                                    title="{{'action.edit'|trans|raw}}">
                                     <i class="fas fa-edit page_icon"></i>
+                                    </a> 
+                                    <a class="form_component_link" 
+                                    href="{{ path('note_removeBroker',{'note': note.id, 'broker':broker.id}) }}" 
+                                    title="{{'action.remove'|trans|raw}}">
+                                    <i class="fas fa-minus-circle"></i></a>
                                     </a>    
                                     {% endif %}                                 
                                 </td>

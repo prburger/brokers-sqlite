@@ -1,0 +1,17 @@
+<div class="form_div">
+    {{ form_start(form) }}
+
+    <div class="row">
+            <div class="col-sm-6">
+                {{ form_row(form.customers) }}
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12 form_button">
+                <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+            </div>
+        </div>
+        
+    {{ form_end(form) }}
+</div>

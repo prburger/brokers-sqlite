@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Broker;
 use App\Entity\Note;
-use App\Form\Note1Type;
+use App\Form\NoteType;
+use App\Repository\BrokerRepository;
 use App\Repository\NoteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,15 +36,45 @@ class NoteController extends AbstractController
     public function new(Request $request): Response
     {
         $note = new Note();
-        $form = $this->createForm(Note1Type::class, $note);
+        
+        $form = $this->createForm(NoteType::class, $note);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($note->getBroker());
             $entityManager->persist($note);
             $entityManager->flush();
 
-            return $this->redirectToRoute('note_index');
+            return $this->redirectToRoute('note_edit', array('id'=>$note->getId()));
+        }
+
+        return $this->render('note/new.html.twig', [
+            'note' => $note,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Route("/broker/{broker}", name="note_broker", methods={"GET","POST"})
+     */
+    public function broker(Request $request, Broker $broker): Response
+    {
+        $note = new Note();
+        // $broker = $brokerRepo->find($broker_id)
+        $note->setBroker($broker);
+        
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($note->getBroker());
+            $entityManager->persist($note);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
         }
 
         return $this->render('note/new.html.twig', [
@@ -66,7 +98,7 @@ class NoteController extends AbstractController
      */
     public function edit(Request $request, Note $note): Response
     {
-        $form = $this->createForm(Note1Type::class, $note);
+        $form = $this->createForm(NoteType::class, $note);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,4 +126,17 @@ class NoteController extends AbstractController
 
         return $this->redirectToRoute('note_index');
     }
+
+     /**
+     * @Route("/remove/{note}/broker/{broker}", name="note_removeBroker", methods={"GET","POST"})
+    */
+    public function removeBroker(Note $note, Broker $broker): Response
+    {
+        $broker->removeNote($note);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($broker);
+        $entityManager->flush();
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+    }
+
 }

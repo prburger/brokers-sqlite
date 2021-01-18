@@ -43,12 +43,6 @@ class Broker
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="broker")
-     * @ORM\JoinColumn(nullable=true)
-    */
-    private $notes;
-
-    /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -64,6 +58,11 @@ class Broker
      * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="broker")
      */
     private $suppliers;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="broker")
+     */
+    private $notes;
     
     public function __construct()
     {
@@ -72,9 +71,9 @@ class Broker
         $this->setDateEdited(new \DateTime()); 
         $this->setContact(new Contact());
         $this->messages = new ArrayCollection();
-        $this->notes = new ArrayCollection();
         $this->customers = new ArrayCollection();
         $this->suppliers = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function setId(int $id)
@@ -153,36 +152,6 @@ class Broker
         return $this;
     }
 
-    /**
-     * @return Collection|Note[]
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
-
-    public function addNote(Note $note): self
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes[] = $note;
-            $note->setBroker($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNote(Note $note): self
-    {
-        if ($this->notes->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getBroker() === $this) {
-                $note->setBroker(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getContact(): ?Contact
     {
         return $this->contact;
@@ -249,6 +218,36 @@ class Broker
             // set the owning side to null (unless already changed)
             if ($supplier->getBroker() === $this) {
                 $supplier->setBroker(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setBroker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getBroker() === $this) {
+                $note->setBroker(null);
             }
         }
 
