@@ -137,7 +137,6 @@ class Broker
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-           // $message->setBroker($this);
         }
 
         return $this;
@@ -146,13 +145,6 @@ class Broker
     public function removeMessage(Message $message): self
     {
         $this->messages->removeElement($message);
-/*         if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getBroker() === $this) {
-                $message->setBroker(null);
-            }
-        }
- */
         return $this;
     }
 
@@ -180,7 +172,6 @@ class Broker
     {
         if (!$this->customers->contains($customer)) {
             $this->customers[] = $customer;
-            // $customer->setBroker($this);
         }
 
         return $this;
@@ -189,14 +180,6 @@ class Broker
     public function removeCustomer(Customer $customer): self
     {
         $this->customers->removeElement($customer);
-
-/*         if ($this->customers->removeElement($customer)) {
-            // set the owning side to null (unless already changed)
-            if ($customer->getBroker() === $this) {
-                $customer->setBroker(null);
-            }
-        } */
-
         return $this;
     }
 
@@ -212,7 +195,6 @@ class Broker
     {
         if (!$this->notes->contains($note)) {
             $this->notes[] = $note;
-            //$note->setBroker($this);
         }
 
         return $this;
@@ -221,13 +203,6 @@ class Broker
     public function removeNote(Note $note): self
     {
         $this->notes->removeElement($note);
-/*         if ($this->notes->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getBroker() === $this) {
-                $note->setBroker(null);
-            }
-        }
- */
         return $this;
     }
 
