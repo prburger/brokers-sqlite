@@ -45,12 +45,12 @@ class Note
     private $brokers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="notes")
      */
     private $suppliers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="notes")
     */
     private $products;
 

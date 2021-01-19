@@ -40,27 +40,27 @@ class Supplier
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="suppliers", cascade={"persist", "remove"})
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Message::class, inversedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Message::class, inversedBy="suppliers", cascade={"persist", "remove"})
     */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Note::class, inversedBy="suppliers", cascade={"persist", "remove"})
      */
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="suppliers", cascade={"persist", "remove"})
      */
     private $brokers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="suppliers", cascade={"persist", "remove"})
      */
     private $suppliers;
 
@@ -147,7 +147,6 @@ class Supplier
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->setSupplier($this);
         }
 
         return $this;
@@ -155,13 +154,7 @@ class Supplier
 
     public function removeProduct(Product $product): self
     {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getSupplier() === $this) {
-                $product->setSupplier(null);
-            }
-        }
-
+        $this->products->removeElement($product);
         return $this;
     }
 
@@ -177,7 +170,6 @@ class Supplier
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-            $message->setSupplier($this);
         }
 
         return $this;
@@ -185,13 +177,7 @@ class Supplier
 
     public function removeMessage(Message $message): self
     {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getSupplier() === $this) {
-                $message->setSupplier(null);
-            }
-        }
-
+        $this->messages->removeElement($message);
         return $this;
     }
 
@@ -207,7 +193,6 @@ class Supplier
     {
         if (!$this->getSuppliers->contains($getSupplier)) {
             $this->getSuppliers[] = $getSupplier;
-            $getSupplier->addSupplier($this);
         }
 
         return $this;
@@ -215,10 +200,7 @@ class Supplier
 
     public function removeGetSupplier(Note $getSupplier): self
     {
-        if ($this->getSuppliers->removeElement($getSupplier)) {
-            $getSupplier->removeSupplier($this);
-        }
-
+        $this->getSuppliers->removeElement($getSupplier);
         return $this;
     }
 
@@ -234,7 +216,6 @@ class Supplier
     {
         if (!$this->notes->contains($note)) {
             $this->notes[] = $note;
-            $note->setSupplier($this);
         }
 
         return $this;
@@ -242,13 +223,7 @@ class Supplier
 
     public function removeNote(Note $note): self
     {
-        if ($this->notes->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getSupplier() === $this) {
-                $note->setSupplier(null);
-            }
-        }
-
+        $this->notes->removeElement($note);
         return $this;
     }
 
@@ -264,7 +239,6 @@ class Supplier
     {
         if (!$this->brokers->contains($broker)) {
             $this->brokers[] = $broker;
-            $broker->addSupplier($this);
         }
 
         return $this;
@@ -272,10 +246,7 @@ class Supplier
 
     public function removeBroker(Broker $broker): self
     {
-        if ($this->brokers->removeElement($broker)) {
-            $broker->removeSupplier($this);
-        }
-
+        $this->brokers->removeElement($broker);
         return $this;
     }
 
@@ -291,7 +262,6 @@ class Supplier
     {
         if (!$this->suppliers->contains($supplier)) {
             $this->suppliers[] = $supplier;
-            $supplier->addSupplier($this);
         }
 
         return $this;
@@ -299,12 +269,7 @@ class Supplier
 
     public function removeSupplier(Customer $supplier): self
     {
-        if ($this->suppliers->removeElement($supplier)) {
-            $supplier->removeSupplier($this);
-        }
-
+        $this->suppliers->removeElement($supplier);
         return $this;
     }
-
-
 }

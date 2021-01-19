@@ -90,12 +90,12 @@ class CustomerController extends AbstractController
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
-        $messages = $messageRepo->findByName($customer->getName());
+ /*        $messages = $messageRepo->findByName($customer->getName());
         foreach($messages as $message)
         {
             $customer->addMessage($message);
         }
-
+ */
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($customer);

@@ -58,7 +58,7 @@ class Broker
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="brokers")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="brokers")
      */
     private $suppliers;
 

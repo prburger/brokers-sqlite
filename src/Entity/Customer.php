@@ -41,7 +41,7 @@ class Customer
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="customers")
+     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="customers")
      * @ORM\JoinColumn(nullable=true)
     */
     private $products;
@@ -65,7 +65,7 @@ class Customer
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="suppliers")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="suppliers")
      */
     private $suppliers;
 
