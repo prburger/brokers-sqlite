@@ -35,7 +35,7 @@ class Product
     private $dateEdited;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="products")
+     * @ORM\ManyToMany(targetEntity=Note::class, inversedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $notes;
@@ -47,13 +47,13 @@ class Product
     private $specifications;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="products")
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $customers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="products")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $suppliers;
