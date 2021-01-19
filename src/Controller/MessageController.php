@@ -58,10 +58,7 @@ class MessageController extends AbstractController
 
             $message = new Message();   
             $message->setSentBy($broker->getName());
-         /*    if($broker_id != null)
-            {
-                $message->setSentBy($brokerRepo->find($broker->getId())->getName());
-            } */
+      
             $broker->addMessage($message);
             $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
             $customerSelection = $customerRepo->findAll();
@@ -77,16 +74,11 @@ class MessageController extends AbstractController
              if ($form->isSubmitted() && $form->isValid()) {            
                 
                 $entityManager = $this->getDoctrine()->getManager();
-                // $message = $form->getViewData();
                 $message->setBrokers($message->brokerSelection);
                 $message->setCustomers($message->customerSelection);
                 $message->setSuppliers($message->supplierSelection);
-                // $entityManager->persist($message);   
                 $entityManager->persist($broker);   
                 $entityManager->flush();
-                
-                dump($message);
-                
                 return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
             }
 
@@ -380,8 +372,7 @@ class MessageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($customer);            
+            $entityManager = $this->getDoctrine()->getManager();           
             $entityManager->persist($supplier);
             $entityManager->flush();
 
