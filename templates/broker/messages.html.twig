@@ -17,7 +17,7 @@
             </div>
 
             {% if broker.messages %}        
-            <div class="form_component_container">
+            {# <div class="form_component_container"> #}
                 <table class="form_component_table">
                     <tbody>
                         {% for message in broker.messages %}
@@ -30,7 +30,7 @@
                                     <i class="fas fa-edit page_icon"></i>
                                     </a>    
                                      <a class="form_component_link" 
-                                    href="{{ path('message_removeBroker',{'message': message.id, 'broker':broker.id}) }}" 
+                                    href="{{ path('broker_removeMessage',{'message': message.id, 'broker':broker.id}) }}" 
                                     title="{{'action.remove'|trans|raw}}">
                                     <i class="fas fa-minus-circle"></i></a>
                                     </a> 
@@ -40,7 +40,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            </div>
+            {# </div> #}
             {% else %}
                 <div class="form_component_no_records">{{'form_component_no_records'|trans|raw}}</div>
             {% endif %}

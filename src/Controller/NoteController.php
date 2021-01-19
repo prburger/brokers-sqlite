@@ -64,14 +64,14 @@ class NoteController extends AbstractController
     public function broker(Request $request, Broker $broker): Response
     {
         $note = new Note();
-        $note->setBroker($broker);
+        $broker->addNote($note);
         
         $form = $this->createForm(NoteType::class, $note);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($note);
+            $entityManager->persist($broker);            
             $entityManager->flush();
 
             return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
@@ -175,7 +175,8 @@ class NoteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $note = $form->getViewData();
+            // $note = $form->getViewData();
+            $note->setBrokerId($broker->getID());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($note);
             $entityManager->flush();

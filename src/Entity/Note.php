@@ -35,33 +35,36 @@ class Note
     private $dateEdited;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="notes")
      */
-    private $customer;
+    private $customers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="notes")
      */
-    private $broker;
+    private $brokers;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Supplier::class, inversedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="notes")
      */
-    private $supplier;
+    private $suppliers;
 
-       /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="notes")
-     */
-    private $product;
-
+    /**
+     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="notes")
+    */
+    private $products;
 
     public function __construct()
     {
         $this->setId(1);
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
-    }
- 
+        $this->brokers=new ArrayCollection();
+        $this->customers = new ArrayCollection();
+        $this->suppliers = new ArrayCollection();
+        $this->products = new ArrayCollection();
+    } 
+  
     public function setId(int $id)
     {
         $this->id = $id;
@@ -108,51 +111,96 @@ class Note
         return $this;
     }
 
-    public function getProduct(): ?Product
+    /**
+     * @return Collection|Broker[]
+    */
+
+    public function getBrokers(): Collection
     {
-        return $this->product;
+        return $this->brokers;
     }
 
-    public function setProduct(?Product $product): self
+    public function addBroker(Broker $broker): self
     {
-        $this->product = $product;
-
-        return $this;
-    }
-    
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): self
-    {
-        $this->customer = $customer;
+        if (!$this->brokers->contains($broker)) {
+            $this->brokers[] = $broker;
+        }
 
         return $this;
     }
 
-    public function getBroker(): ?Broker
+    public function removeBroker(Broker $broker): self
     {
-        return $this->broker;
-    }
-
-    public function setBroker(?Broker $broker): self
-    {
-        $this->broker = $broker;
-
+        $this->brokers->removeElement($broker);
         return $this;
     }
 
-    public function getSupplier(): ?Supplier
+    /**
+     * @return Collection|Customer[]
+    */
+
+    public function getCustomers(): Collection
     {
-        return $this->supplier;
+        return $this->customers;
     }
 
-    public function setSupplier(?Supplier $supplier): self
+    public function addCustomer(Customer $customer): self
     {
-        $this->supplier = $supplier;
+        if (!$this->customers->contains($customer)) {
+            $this->customers[] = $customer;
+        }
+        return $this;
+    }
 
+    public function removeCustomer(Customer $customer): self
+    {
+        $this->customers->removeElement($customer);
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+    */
+
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+        }
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        $this->products->removeElement($product);
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supplier[]
+    */
+
+    public function getSuppliers(): Collection
+    {
+        return $this->suppliers;
+    }
+
+    public function addSupplier(Supplier $supplier): self
+    {
+        if (!$this->suppliers->contains($supplier)) {
+            $this->suppliers[] = $supplier;
+        }
+        return $this;
+    }
+
+    public function removeSupplier(Supplier $supplier): self
+    {
+        $this->suppliers->removeElement($supplier);
         return $this;
     }
 

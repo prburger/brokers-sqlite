@@ -36,31 +36,33 @@ class Supplier
 
     /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
      */
     private $contact;
 
     /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="suppliers")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="suppliers")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToMany(targetEntity=Message::class, inversedBy="suppliers")
     */
     private $messages;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Broker::class, inversedBy="suppliers")
-     */
-    private $broker;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="supplier")
+     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="suppliers")
      */
     private $notes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="suppliers")
+     */
+    private $brokers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="suppliers")
+     */
+    private $suppliers;
 
     public function __construct()
     {
@@ -71,6 +73,8 @@ class Supplier
         $this->products = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->brokers = new ArrayCollection();
+        $this->suppliers = new ArrayCollection();
     }
 
     public function setID($id)
@@ -191,18 +195,6 @@ class Supplier
         return $this;
     }
 
-    public function getBroker(): ?Broker
-    {
-        return $this->broker;
-    }
-
-    public function setBroker(?Broker $broker): self
-    {
-        $this->broker = $broker;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Supplier[]
      */
@@ -259,5 +251,60 @@ class Supplier
 
         return $this;
     }
+
+    /**
+     * @return Collection|Broker[]
+     */
+    public function getBrokers(): Collection
+    {
+        return $this->brokers;
+    }
+
+    public function addBroker(Broker $broker): self
+    {
+        if (!$this->brokers->contains($broker)) {
+            $this->brokers[] = $broker;
+            $broker->addSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBroker(Broker $broker): self
+    {
+        if ($this->brokers->removeElement($broker)) {
+            $broker->removeSupplier($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Customer[]
+     */
+    public function getSuppliers(): Collection
+    {
+        return $this->suppliers;
+    }
+
+    public function addSupplier(Customer $supplier): self
+    {
+        if (!$this->suppliers->contains($supplier)) {
+            $this->suppliers[] = $supplier;
+            $supplier->addSupplier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupplier(Customer $supplier): self
+    {
+        if ($this->suppliers->removeElement($supplier)) {
+            $supplier->removeSupplier($this);
+        }
+
+        return $this;
+    }
+
 
 }

@@ -20,6 +20,16 @@ class SupplierRepository extends ServiceEntityRepository
         parent::__construct($registry, Supplier::class);
     }
 
+    public function findByBroker($id)
+    {
+        return $this->createQueryBuilder('s')
+        ->where('s.broker_id=:val')
+        ->setParameter('val', $id)
+        ->orderBy('s.broker_id', 'ASC')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
 
     public function findWithoutId($value)
     {

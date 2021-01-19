@@ -31,7 +31,18 @@ class CustomerRepository extends ServiceEntityRepository
         ->getResult()
         ;
     }
-        
+    
+    public function findByBroker($id)
+    {
+        return $this->createQueryBuilder('c')
+        ->where('c.broker_id =:val')
+        ->setParameter('val', $id)
+        ->orderBy('c.broker_id', 'ASC')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     /**
      * Our findLatest() method
      *

@@ -46,17 +46,17 @@ class Message
     private $DateSent;
     
     /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="messages", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="messages", cascade={"persist", "remove"})
      */
     private $brokers;
     
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="messages", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="messages", cascade={"persist", "remove"})
      */
     private $suppliers;
     
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="messages", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="messages", cascade={"persist", "remove"})
      */
     private $customers;
     

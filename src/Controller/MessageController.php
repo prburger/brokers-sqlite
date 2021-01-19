@@ -55,13 +55,14 @@ class MessageController extends AbstractController
         SupplierRepository $supplierRepo
         ): Response
         {
+
             $message = new Message();   
-            
-            if($broker_id != null)
+            $message->setSentBy($broker->getName());
+         /*    if($broker_id != null)
             {
                 $message->setSentBy($brokerRepo->find($broker->getId())->getName());
-            }
-            
+            } */
+            $broker->addMessage($message);
             $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
             $customerSelection = $customerRepo->findAll();
             $supplierSelection = $supplierRepo->findAll();
@@ -76,16 +77,17 @@ class MessageController extends AbstractController
              if ($form->isSubmitted() && $form->isValid()) {            
                 
                 $entityManager = $this->getDoctrine()->getManager();
-                $message = $form->getViewData();
-                
+                // $message = $form->getViewData();
                 $message->setBrokers($message->brokerSelection);
                 $message->setCustomers($message->customerSelection);
                 $message->setSuppliers($message->supplierSelection);
-                $entityManager->persist($message);   
-
+                // $entityManager->persist($message);   
+                $entityManager->persist($broker);   
                 $entityManager->flush();
                 
-                return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+                dump($message);
+                
+                return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
             }
 
             return $this->render('message/new.html.twig' , [
@@ -93,8 +95,9 @@ class MessageController extends AbstractController
                 'brokers'=>$message->getBrokers(),
                 'customers'=>$message->getCustomers(),
                 'suppliers'=>$message->getSuppliers(),
-                'broker_id'=>$broker->getId()
-
+                'broker_id'=>$broker->getId(),
+                'edit_state'=>true,
+                'fresh_state'=>false
             ]);
     }
 
@@ -127,7 +130,7 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/{message}/edit", name="message_edit", methods={"GET","POST"})
+     * @Route("/message/{id}/edit", name="message_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request, 
@@ -397,7 +400,9 @@ class MessageController extends AbstractController
             'brokers'=>$message->getBrokers(),
             'customers'=>$message->getCustomers(),
             'suppliers'=>$message->getSuppliers(),
-            'customer_id'=>$customer->getId()
+            'customer_id'=>$customer->getId(),
+            'fresh_state'=>true,
+            'edit_state'=>true
         ]);
     }
 
