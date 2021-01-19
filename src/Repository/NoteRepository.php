@@ -20,6 +20,17 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
+    public function findByBroker($id)
+    {
+        return $this->createQueryBuilder('n')
+        ->where('n.broker_id =:val')
+        ->setParameter('val', $id)
+        ->orderBy('n.broker_id', 'ASC')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
      /**
      * Our findLatest() method
      *
@@ -39,33 +50,4 @@ class NoteRepository extends ServiceEntityRepository
 
         return (new Paginator($qb))->paginate($page);
     }
-    
-    // /**
-    //  * @return Note[] Returns an array of Note objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Note
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -20,13 +20,21 @@ class BrokerRepository extends ServiceEntityRepository
         parent::__construct($registry, Broker::class);
     }
 
+    public function findAll()
+    {
+        return $this->createQueryBuilder('b')
+        ->orderBy('b.id', 'ASC')
+        ->getQuery()
+        ->getResult()
+        ;   
+    }
+
     public function findWithoutId($value)
     {
         return $this->createQueryBuilder('b')
         ->where('b.id != :val')
         ->setParameter('val', $value)
         ->orderBy('b.id', 'ASC')
-        // ->setMaxResults(10)
         ->getQuery()
         ->getResult()
         ;
@@ -50,23 +58,10 @@ class BrokerRepository extends ServiceEntityRepository
         ->where('b.name != :val')
         ->setParameter('val', $value)
         ->orderBy('b.id', 'ASC')
-        // ->setMaxResults(1)
         ->getQuery()
         ->getResult()
         ;
     }
-
-/*     public function createQueryBuilder()
-    {
-        return $this->createQueryBuilder('b')
-        // ->andWhere('b.exampleField = :val')
-        // ->setParameter('val', $value)
-        ->orderBy('b.id', 'ASC')
-        ->setMaxResults(10)
-        ->getQuery()
-        ->getResult()
-        ;
-    } */
 
     /**
      * Our findLatest() method
@@ -82,38 +77,9 @@ class BrokerRepository extends ServiceEntityRepository
     public function findLatest(int $page = 1): Paginator
     {
         $qb = $this->createQueryBuilder('p')
-           ->orderBy('p.dateAdded', 'ASC')
+        ->orderBy('p.dateAdded', 'ASC')
         ;      
 
         return (new Paginator($qb))->paginate($page);
     }
-
-    // /**
-    //  * @return Broker[] Returns an array of Broker objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Broker
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

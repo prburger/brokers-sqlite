@@ -35,8 +35,8 @@ class Product
     private $dateEdited;
 
     /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="product")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToMany(targetEntity=Note::class, mappedBy="products")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $notes;
 
@@ -48,25 +48,15 @@ class Product
 
     /**
      * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $customers;
 
     /**
      * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $suppliers;
-
-    /**
-     * @ORM\Column(type="string", length=120, nullable=true)
-     */
-    private $customer_id;
-
-        /**
-     * @ORM\Column(type="string", length=120, nullable=true)
-     */
-    private $supplier_id;
 
     public function __construct()
     {
@@ -74,6 +64,8 @@ class Product
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
         $this->notes = new ArrayCollection();
+        $this->customers = new ArrayCollection();
+        $this->suppliers = new ArrayCollection();
         $this->specifications = new Specification();
     }
 
@@ -119,30 +111,6 @@ class Product
     public function setDateEdited(\DateTimeInterface $dateEdited): self
     {
         $this->dateEdited = $dateEdited;
-
-        return $this;
-    }
-
-    public function getCustomer(): ?Customer
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?Customer $customer): self
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    public function getSupplier(): ?Supplier
-    {
-        return $this->supplier;
-    }
-
-    public function setSupplier(?Supplier $supplier): self
-    {
-        $this->supplier = $supplier;
 
         return $this;
     }

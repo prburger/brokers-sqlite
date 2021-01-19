@@ -37,33 +37,31 @@ class Broker
     private $dateEdited;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="brokers")
-     * @ORM\JoinColumn(nullable=true)
-    */
-    private $messages;
-
-    /**
      * @ORM\OneToOne(targetEntity=Contact::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $contact;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity=Message::class, inversedBy="brokers", cascade={"persist"})
+    */
+    private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="brokers")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="brokers", cascade={"persist"})
      */
     private $customers;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity=Note::class, inversedBy="brokers", cascade={"persist"})
+     */
+    private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Supplier::class, mappedBy="broker")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="brokers")
      */
     private $suppliers;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Note::class, mappedBy="broker")
-     */
-    private $notes;
-    
     public function __construct()
     {
         $this->setId(1);
@@ -72,8 +70,8 @@ class Broker
         $this->setContact(new Contact());
         $this->messages = new ArrayCollection();
         $this->customers = new ArrayCollection();
-        $this->suppliers = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->suppliers = new ArrayCollection();
     }
 
     public function setId(int $id)
@@ -125,6 +123,11 @@ class Broker
     /**
      * @return Collection|Message[]
      */
+    public function setMessages($array)
+    {
+        $this->messages = $array;
+    }
+
     public function getMessages(): Collection
     {
         return $this->messages;
@@ -134,7 +137,7 @@ class Broker
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-            $message->setBroker($this);
+           // $message->setBroker($this);
         }
 
         return $this;
@@ -142,13 +145,14 @@ class Broker
 
     public function removeMessage(Message $message): self
     {
-        if ($this->messages->removeElement($message)) {
+        $this->messages->removeElement($message);
+/*         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
             if ($message->getBroker() === $this) {
                 $message->setBroker(null);
             }
         }
-
+ */
         return $this;
     }
 
@@ -176,7 +180,7 @@ class Broker
     {
         if (!$this->customers->contains($customer)) {
             $this->customers[] = $customer;
-            $customer->setBroker($this);
+            // $customer->setBroker($this);
         }
 
         return $this;
@@ -184,42 +188,14 @@ class Broker
 
     public function removeCustomer(Customer $customer): self
     {
-        if ($this->customers->removeElement($customer)) {
+        $this->customers->removeElement($customer);
+
+/*         if ($this->customers->removeElement($customer)) {
             // set the owning side to null (unless already changed)
             if ($customer->getBroker() === $this) {
                 $customer->setBroker(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Supplier[]
-     */
-    public function getSuppliers(): Collection
-    {
-        return $this->suppliers;
-    }
-
-    public function addSupplier(Supplier $supplier): self
-    {
-        if (!$this->suppliers->contains($supplier)) {
-            $this->suppliers[] = $supplier;
-            $supplier->setBroker($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSupplier(Supplier $supplier): self
-    {
-        if ($this->suppliers->removeElement($supplier)) {
-            // set the owning side to null (unless already changed)
-            if ($supplier->getBroker() === $this) {
-                $supplier->setBroker(null);
-            }
-        }
+        } */
 
         return $this;
     }
@@ -236,7 +212,7 @@ class Broker
     {
         if (!$this->notes->contains($note)) {
             $this->notes[] = $note;
-            $note->setBroker($this);
+            //$note->setBroker($this);
         }
 
         return $this;
@@ -244,12 +220,37 @@ class Broker
 
     public function removeNote(Note $note): self
     {
-        if ($this->notes->removeElement($note)) {
+        $this->notes->removeElement($note);
+/*         if ($this->notes->removeElement($note)) {
             // set the owning side to null (unless already changed)
             if ($note->getBroker() === $this) {
                 $note->setBroker(null);
             }
         }
+ */
+        return $this;
+    }
+
+    /**
+     * @return Collection|Supplier[]
+     */
+    public function getSuppliers(): Collection
+    {
+        return $this->suppliers;
+    }
+
+    public function addSupplier(Supplier $supplier): self
+    {
+        if (!$this->suppliers->contains($supplier)) {
+            $this->suppliers[] = $supplier;
+        }
+
+        return $this;
+    }
+
+    public function removeSupplier(Supplier $supplier): self
+    {
+        $this->suppliers->removeElement($supplier);
 
         return $this;
     }

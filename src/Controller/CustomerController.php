@@ -120,7 +120,7 @@ class CustomerController extends AbstractController
     public function broker(Request $request, Broker $broker): Response
     {
         $customer = new Customer();
-        $customer->setBroker($broker);
+        $broker->addCustomer($customer);
         
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
@@ -156,7 +156,7 @@ class CustomerController extends AbstractController
         return $this->redirectToRoute('customer_index');
     }
 
-  /**
+    /**
      * @Route("/insert/{broker}", name="customer_insertBroker", methods={"GET","POST"})
     */
     public function insertBroker(Broker $broker): Response
@@ -175,4 +175,5 @@ class CustomerController extends AbstractController
 
         ]);
     }
+
 }

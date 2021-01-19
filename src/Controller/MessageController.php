@@ -11,14 +11,15 @@ use App\Form\BrokerType;
 use App\Form\BrokersEmbeddedFormType;
 use App\Form\CustomerType;
 use App\Form\DataTransformer\BrokerArrayToStringTransformer;
-
 use App\Form\MessageType;
+
 use App\Form\SupplierType;
 use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
 use App\Repository\ProductRepository;
 use App\Repository\SupplierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,13 +55,14 @@ class MessageController extends AbstractController
         SupplierRepository $supplierRepo
         ): Response
         {
+
             $message = new Message();   
-            
-            if($broker_id != null)
+            $message->setSentBy($broker->getName());
+         /*    if($broker_id != null)
             {
                 $message->setSentBy($brokerRepo->find($broker->getId())->getName());
-            }
-            
+            } */
+            $broker->addMessage($message);
             $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
             $customerSelection = $customerRepo->findAll();
             $supplierSelection = $supplierRepo->findAll();
@@ -75,16 +77,17 @@ class MessageController extends AbstractController
              if ($form->isSubmitted() && $form->isValid()) {            
                 
                 $entityManager = $this->getDoctrine()->getManager();
-                $message = $form->getViewData();
-                
+                // $message = $form->getViewData();
                 $message->setBrokers($message->brokerSelection);
                 $message->setCustomers($message->customerSelection);
                 $message->setSuppliers($message->supplierSelection);
-                $entityManager->persist($message);   
-
+                // $entityManager->persist($message);   
+                $entityManager->persist($broker);   
                 $entityManager->flush();
                 
-                return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
+                dump($message);
+                
+                return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
             }
 
             return $this->render('message/new.html.twig' , [
@@ -92,26 +95,42 @@ class MessageController extends AbstractController
                 'brokers'=>$message->getBrokers(),
                 'customers'=>$message->getCustomers(),
                 'suppliers'=>$message->getSuppliers(),
-                'broker_id'=>$broker->getId()
-
+                'broker_id'=>$broker->getId(),
+                'edit_state'=>true,
+                'fresh_state'=>false
             ]);
     }
 
     /**
      * @Route("/{id}", name="message_show", methods={"GET"})
      */
-    public function show(Message $message): Response
+    public function show(
+        Message $message,
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,        
+        SupplierRepository $supplierRepo): Response
     {
-        $form = $this->createForm(MessageType::class, $message);
-        // $form->handleRequest($request);
-        return $this->render('message/show.html.twig', [
-            'message' => $message,
-            'form' => $form->createView()
+
+        $brokerSelection = $brokerRepo->findAll();
+        $customerSelection = $customerRepo->findAll();
+        $supplierSelection = $supplierRepo->findAll();
+        
+        $form = $this->createForm(MessageType::class,$message,
+            array('brokerSelection'=>$brokerSelection,
+                  'customerSelection'=>$customerSelection,
+                  'supplierSelection'=>$supplierSelection));  
+
+        return $this->render('message/show.html.twig' , [
+            'message'=> $message,
+            'form' => $form->createView(),
+            'brokers'=>$message->getBrokers(),
+            'customers'=>$message->getCustomers(),
+            'suppliers'=>$message->getSuppliers()
         ]);
     }
 
     /**
-     * @Route("/{message}/edit", name="message_edit", methods={"GET","POST"})
+     * @Route("/message/{id}/edit", name="message_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request, 
@@ -381,7 +400,9 @@ class MessageController extends AbstractController
             'brokers'=>$message->getBrokers(),
             'customers'=>$message->getCustomers(),
             'suppliers'=>$message->getSuppliers(),
-            'customer_id'=>$customer->getId()
+            'customer_id'=>$customer->getId(),
+            'fresh_state'=>true,
+            'edit_state'=>true
         ]);
     }
 

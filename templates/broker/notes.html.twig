@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                 {% if edit_state %}
                     <a class="form_component_link" href="{{ path('note_broker',{ 'broker': broker.id}) }}" 
-                    title="{{'form_component_newMessage'|trans|raw}}">
+                    title="{{'form_component_newNote'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>
                 {% endif %}
@@ -29,7 +29,7 @@
                                     <i class="fas fa-edit page_icon"></i>
                                     </a> 
                                     <a class="form_component_link" 
-                                    href="{{ path('note_removeBroker',{'note': note.id, 'broker':broker.id}) }}" 
+                                    href="{{ path('broker_removeNote',{'note': note.id, 'broker':broker.id}) }}" 
                                     title="{{'action.remove'|trans|raw}}">
                                     <i class="fas fa-minus-circle"></i></a>
                                     </a>    

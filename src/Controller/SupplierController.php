@@ -119,14 +119,16 @@ class SupplierController extends AbstractController
     public function broker(Request $request, Broker $broker): Response
     {
         $supplier = new Supplier();
-        $supplier->setBroker($broker);
-        // $broker->addSupplier(supplier);
+        // $supplier->setBroker($broker);
+        $broker->addSupplier($supplier);
+        
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($supplier);
+            $entityManager->persist($broker);
             $entityManager->flush();
 
             return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));

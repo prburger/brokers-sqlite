@@ -92,19 +92,22 @@ class BrokerController extends AbstractController
     /**
      * @Route("/{id}/edit", name="broker_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Broker $broker): Response
+    public function edit(
+        Request $request, 
+        Broker $broker): Response
     {
-   
+        
         $form = $this->createForm(BrokerType::class, $broker);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();  
+            
             $broker->setDateEdited(new \DateTime());          
            
             $entityManager->persist($broker);
             $entityManager->flush();
-            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+            return $this->redirectToRoute('broker_edit', array('customer'=>$customer, 'broker'=>$broker));
         }
 
         return $this->render('broker/edit.html.twig', [
@@ -127,5 +130,54 @@ class BrokerController extends AbstractController
         }
 
         return $this->redirectToRoute('broker_index');
+    }
+
+    /**
+     * @Route("/customer/{customer}/broker/{broker}/remove", name="broker_removeCustomer", methods={"GET","POST"})
+    */
+    public function removeCustomer(Customer $customer, Broker $broker): Response
+    {
+        $broker->removeCustomer($customer);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($broker);
+        $entityManager->flush();
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+    }
+
+    /**
+     * @Route("/supplier/{supplier}/broker/{broker}/remove", name="broker_removeSupplier", methods={"GET","POST"})
+    */
+    public function removeSupplier(Supplier $supplier, Broker $broker): Response
+    {
+        $broker->removeSupplier($supplier);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($broker);
+        $entityManager->flush();
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+    }
+
+    /**
+     * @Route("/message/{message}/broker/{broker}/remove", name="broker_removeMessage", methods={"GET","POST"})
+    */
+    public function removeMessage(Message $message, Broker $broker): Response
+    {
+        $broker->removeMessage($message);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($message);
+        $entityManager->persist($broker);
+        $entityManager->flush();
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+    }
+
+    /**
+     * @Route("/note/{note}/broker/{broker}/remove", name="broker_removeNote", methods={"GET","POST"})
+    */
+    public function removeNote(Note $note, Broker $broker): Response
+    {
+        $broker->removeNote($note);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($broker);
+        $entityManager->flush();
+        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
     }
 }
