@@ -8,7 +8,7 @@
                 <div class="col-sm-6">
                 {% if edit_state %}
                     <a class="form_component_link" 
-                    href="{{ path('message_broker',{'broker': broker.id}) }}" 
+                    href="{{ path('broker_message',{'broker': broker.id}) }}" 
                     title="{{'form_component_newMessage'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>

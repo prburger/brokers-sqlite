@@ -240,6 +240,10 @@
                 <source>form_component_insertSupplier</source>
                 <target>Insert supplier</target>
             </trans-unit>
+            <trans-unit id="form_supplier_selection_list">
+                <source>form_supplier_selection_list</source>
+                <target>Select suppliers</target>
+            </trans-unit>
             <trans-unit id="action.remove">
                 <source>action.remove</source>
                 <target>Remove</target>

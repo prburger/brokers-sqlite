@@ -41,33 +41,28 @@ class Customer
     private $contact;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="customers")
+     * @ORM\ManyToMany(targetEntity=Product::class, inversedBy="customers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
     */
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="customers")
+     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="customers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $brokers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Message::class, inversedBy="customers")
+     * @ORM\ManyToMany(targetEntity=Message::class, inversedBy="customers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
     */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Note::class, inversedBy="customers")
+     * @ORM\ManyToMany(targetEntity=Note::class, inversedBy="customers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
     */
     private $notes;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="suppliers")
-     */
-    private $suppliers;
 
     public function __construct()
     {
@@ -79,7 +74,6 @@ class Customer
         $this->messages = new ArrayCollection();
         $this->brokers = new ArrayCollection();        
         $this->notes = new ArrayCollection();
-        $this->suppliers = new ArrayCollection();
     }
 
     public function setId($id)
@@ -232,27 +226,4 @@ class Customer
         return $this;
     }
 
-    /**
-     * @return Collection|Supplier[]
-     */
-    public function getSuppliers(): Collection
-    {
-        return $this->suppliers;
-    }
-
-    public function addSupplier(Supplier $supplier): self
-    {
-        if (!$this->suppliers->contains($supplier)) {
-            $this->suppliers[] = $supplier;
-        }
-
-        return $this;
-    }
-
-    public function removeSupplier(Supplier $supplier): self
-    {
-        $this->suppliers->removeElement($supplier);
-
-        return $this;
-    }
 }

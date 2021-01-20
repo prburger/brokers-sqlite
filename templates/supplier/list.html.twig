@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'form_supplier_selection_list'|trans|raw}}{% endblock %}
+
+{% block body %}
+
+ <div class="form_selection_list">
+    
+    {{ form_start(form) }}
+    {# {% do form.name.setRendered() %} #}
+        <div class="row">
+            <div class="selection_list_title">
+            {{ 'form_supplier_selection_list'|trans|raw }}
+            </div>
+        </div>
+        <div class="row selection_list_body">
+            {{ form_row(form.supplierSelection) }} 
+        </div>
+
+        {% if edit_state or fresh_state %}
+            <div class="row">
+                <div class="col-sm-12 form_button">
+                    <button class="btn btn-primary">{{ button_label|default('Insert selected suppliers') }}</button>
+                </div>
+            </div>
+        {% endif %}
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}

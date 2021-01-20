@@ -127,7 +127,7 @@ class CustomerController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($customer);
+            $entityManager->persist($broker);
             $entityManager->flush();
 
             return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));

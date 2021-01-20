@@ -55,18 +55,16 @@ class Supplier
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, inversedBy="suppliers", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="suppliers", cascade={"persist", "remove"})
      */
     private $brokers;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, inversedBy="suppliers", cascade={"persist", "remove"})
-     */
-    private $suppliers;
-
+    public $supplierSelection;
+    
     public function __construct()
     {
-        $this->setID(0);
+        $this->setID(1);
+        $this->setName("");
         $this->setContact(new Contact());
         $this->setDateAdded(new \DateTime());
         $this->setDateEdited(new \DateTime());
@@ -74,7 +72,6 @@ class Supplier
         $this->messages = new ArrayCollection();
         $this->notes = new ArrayCollection();
         $this->brokers = new ArrayCollection();
-        $this->suppliers = new ArrayCollection();
     }
 
     public function setID($id)
@@ -182,29 +179,6 @@ class Supplier
     }
 
     /**
-     * @return Collection|Supplier[]
-     */
-    public function getGetSuppliers(): Collection
-    {
-        return $this->getSuppliers;
-    }
-
-    public function addGetSupplier(Note $getSupplier): self
-    {
-        if (!$this->getSuppliers->contains($getSupplier)) {
-            $this->getSuppliers[] = $getSupplier;
-        }
-
-        return $this;
-    }
-
-    public function removeGetSupplier(Note $getSupplier): self
-    {
-        $this->getSuppliers->removeElement($getSupplier);
-        return $this;
-    }
-
-    /**
      * @return Collection|Note[]
      */
     public function getNotes(): Collection
@@ -250,26 +224,4 @@ class Supplier
         return $this;
     }
 
-    /**
-     * @return Collection|Customer[]
-     */
-    public function getSuppliers(): Collection
-    {
-        return $this->suppliers;
-    }
-
-    public function addSupplier(Customer $supplier): self
-    {
-        if (!$this->suppliers->contains($supplier)) {
-            $this->suppliers[] = $supplier;
-        }
-
-        return $this;
-    }
-
-    public function removeSupplier(Customer $supplier): self
-    {
-        $this->suppliers->removeElement($supplier);
-        return $this;
-    }
 }
