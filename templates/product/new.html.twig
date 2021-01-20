@@ -8,7 +8,13 @@
     <div class="page_form_heading">
         {{'new_product'|trans|raw}}
         <div class="return_to_list_label">
-            <a href="{{ path('product_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
+            <a href="{{ path('portal_index') }}" 
+            title="{{'back_to_dashboard'|trans|raw}}">
+            <i class="fas fa-home page_icon"></i></a>
+            
+            <a href="{{ path('product_index_paginated') }}" 
+            title="{{'back_to_list'|trans|raw}}">
+            <i class="fas fa-undo page_icon"></i></a>
         </div>
         </div>
 </div>

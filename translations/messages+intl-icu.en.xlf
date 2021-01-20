@@ -726,8 +726,28 @@
                 <source>create_new_customer</source>
                 <target>New customer</target>
             </trans-unit>
-            <trans-unit id="create_new_product">
-                <source>create_new_product</source>
+            <trans-unit id="dashboard_brokers_table">
+                <source>dashboard_brokers_table</source>
+                <target>Brokers</target>
+            </trans-unit>
+            <trans-unit id="return_to_dashboard">
+                <source>return_to_dashboard</source>
+                <target>Back to dashboard</target>
+            </trans-unit>
+            <trans-unit id="dashboard_customers_table">
+                <source>dashboard_customers_table</source>
+                <target>Customers</target>
+            </trans-unit>
+            <trans-unit id="dashboard_suppliers_table">
+                <source>dashboard_suppliers_table</source>
+                <target>Suppliers</target>
+            </trans-unit>
+            <trans-unit id="dashboard_products_table">
+                <source>dashboard_products_table</source>
+                <target>Products</target>
+            </trans-unit>
+            <trans-unit id="product_new">
+                <source>product_new</source>
                 <target>New product</target>
             </trans-unit>
             <trans-unit id="form_component_specifications_title">
@@ -988,11 +1008,11 @@
             </trans-unit>
             <trans-unit id="broker_index">
                 <source>broker_index</source>
-                <target>Broker List</target>
+                <target>Brokers</target>
             </trans-unit>
                <trans-unit id="customer_index">
                 <source>customer_index</source>
-                <target>Customer List</target>
+                <target>Customers</target>
             </trans-unit>
             <trans-unit id="Brokers">
                 <source>Brokers</source>
@@ -1008,11 +1028,11 @@
             </trans-unit>
             <trans-unit id="message_index">
                 <source>message_index</source>
-                <target>Message List</target>
+                <target>Messages</target>
             </trans-unit>
             <trans-unit id="note_index">
                 <source>note_index</source>
-                <target>Note List</target>
+                <target>Notes</target>
             </trans-unit>
             <trans-unit id="menu.messages">
                 <source>menu.messages</source>
@@ -1048,11 +1068,11 @@
             </trans-unit>
                <trans-unit id="supplier_index">
                 <source>supplier_index</source>
-                <target>Supplier List</target>
+                <target>Suppliers</target>
             </trans-unit>
                <trans-unit id="product_index">
                 <source>product_index</source>
-                <target>Product List</target>
+                <target>Products</target>
             </trans-unit>
             
         </body>

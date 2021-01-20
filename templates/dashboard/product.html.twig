@@ -1,8 +1,15 @@
 {% block body %}
 
 <div class="dashboard_title">
-    {{'dashboard.title.products'|trans|raw}}  
-    <a class="return_to_list_label" href="{{ path('product_index') }}" title="Details"><i class="fas fa-file-alt page_icon"></i></a>
+    {{'dashboard.title.products'|trans|raw}}
+        <div class="return_to_list_label"> 
+            <a href="{{ path('product_new') }}" 
+                title="{{'product_new'|trans|raw}}">
+                <i class="fas fa-plus page_icon"></i></a>
+            <a href="{{ path('product_index_paginated', {'page':1}) }}" 
+            title="{{'dashboard_products_table'|trans|raw}}">
+            <i class="fas fa-file-alt page_icon"></i></a>
+        </div>  
 </div>
      
 <div class="dashboard_table">
