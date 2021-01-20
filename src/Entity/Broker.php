@@ -58,10 +58,14 @@ class Broker
     private $notes;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="brokers")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, inversedBy="brokers", cascade={"persist"})
      */
     private $suppliers;
 
+    public $brokerSelection;
+    public $customerSelection;
+    public $supplierSelection;
+    
     public function __construct()
     {
         $this->setId(1);

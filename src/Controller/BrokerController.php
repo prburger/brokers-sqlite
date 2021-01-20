@@ -15,6 +15,7 @@ use\App\Form\MessageType;
 use\App\Form\NoteType;
 use\App\Form\SupplierType;
 use\App\Form\CustomerType;
+use\App\Form\SupplierListType;
 
 use App\Repository\BrokerRepository;
 use App\Repository\ContactRepository;
@@ -53,12 +54,21 @@ class BrokerController extends AbstractController
     /**
      * @Route("/new", name="broker_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(
+        Request $request,
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,
+        SupplierRepository $supplierRepo): Response
     {
         $broker = new Broker();     
-        $form = $this->createForm(BrokerType::class, $broker);
-        $form->handleRequest($request);
+
+        $form = $this->createForm(BrokerType::class, $broker,
+            array('brokerSelection'=>$brokerRepo->findall(),
+                  'customerSelection'=>$customerRepo->findAll(),
+                 'supplierSelection'=>$supplierRepo->findAll()));  
         
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {                  
             $entityManager = $this->getDoctrine()->getManager();             
             $entityManager->persist($broker);
@@ -94,10 +104,21 @@ class BrokerController extends AbstractController
      */
     public function edit(
         Request $request, 
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,
+        SupplierRepository $supplierRepo,
         Broker $broker): Response
     {
-        
-        $form = $this->createForm(BrokerType::class, $broker);
+     
+        $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
+        $customerSelection = $customerRepo->findAll();
+        $supplierSelection = $supplierRepo->findAll();
+
+        $form = $this->createForm(BrokerType::class, $broker,
+            array('brokerSelection'=>$brokerSelection,
+                  'customerSelection'=>$customerSelection,
+                 'supplierSelection'=>$supplierSelection));  
+
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -179,5 +200,118 @@ class BrokerController extends AbstractController
         $entityManager->persist($broker);
         $entityManager->flush();
         return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+    }
+
+    /**
+     * @Route("/{broker}/message", name="broker_message", methods={"GET","POST"})
+    */
+    public function message(
+        Request $request, 
+        Broker $broker,
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,        
+        SupplierRepository $supplierRepo
+        ): Response
+        {
+
+            $message = new Message();   
+            $message->setSentBy($broker->getName());
+      
+            $broker->addMessage($message);
+            $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
+            $customerSelection = $customerRepo->findAll();
+            $supplierSelection = $supplierRepo->findAll();
+            
+            $form = $this->createForm(MessageType::class,$message,
+                array('brokerSelection'=>$brokerSelection,
+                      'customerSelection'=>$customerSelection,
+                      'supplierSelection'=>$supplierSelection));  
+            
+            $form->handleRequest($request);
+                            
+             if ($form->isSubmitted() && $form->isValid()) {            
+                
+                $entityManager = $this->getDoctrine()->getManager();
+                $message->setBrokers($message->brokerSelection);
+                $message->setCustomers($message->customerSelection);
+                $message->setSuppliers($message->supplierSelection);
+                $entityManager->persist($broker);   
+                $entityManager->flush();
+                return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+            }
+
+            return $this->render('message/new.html.twig' , [
+                'form' => $form->createView(),
+                'brokers'=>$message->getBrokers(),
+                'customers'=>$message->getCustomers(),
+                'suppliers'=>$message->getSuppliers(),
+                'broker_id'=>$broker->getId(),
+                'edit_state'=>true,
+                'fresh_state'=>false
+            ]);
+    }
+
+    /**
+     * @Route("/{broker}/supplier", name="broker_addSupplier", methods={"GET","POST"})
+    */
+    public function addSupplier(Request $request, Broker $broker, SupplierRepository $supplierRepo): Response
+    {
+        $supplier = new Supplier();
+        $broker->addSupplier($supplier);
+        
+        $supplierSelection = $supplierRepo->findAll();
+        $form = $this->createForm(SupplierType::class, $supplier);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($supplier);
+            $entityManager->persist($broker);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+        }
+
+        return $this->render('supplier/new.html.twig', [
+            'supplier' => $supplier,
+            'form' => $form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>true,
+
+        ]);
+    }
+
+    /**
+     * @Route("/{broker}/suppliers", name="broker_insertSuppliers", methods={"GET","POST"})
+    */
+    public function insertSuppliers(Request $request, Broker $broker, SupplierRepository $supplierRepo): Response
+    {
+        $supplier = new Supplier();
+        $broker->addSupplier($supplier);
+
+        $supplierSelection = $supplierRepo->findAll();        
+
+        $form = $this->createForm(SupplierListType::class, $supplier, array('supplierSelection'=>$supplierSelection));
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            foreach($supplier->supplierSelection as $supplier)
+            {
+                $broker->addSupplier($supplier);
+            }
+            $entityManager->persist($broker);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+        }
+
+        return $this->render('supplier/list.html.twig', [
+            // 'supplier' => $supplier,
+            'form' => $form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>true,
+
+        ]);
     }
 }

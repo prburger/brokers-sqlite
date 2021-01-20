@@ -35,22 +35,22 @@ class Note
     private $dateEdited;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Customer::class, mappedBy="notes", cascade={"persist"})
      */
     private $customers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Broker::class, mappedBy="notes", cascade={"persist"})
      */
     private $brokers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Supplier::class, mappedBy="notes", cascade={"persist"})
      */
     private $suppliers;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="notes")
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="notes", cascade={"persist"})
     */
     private $products;
 

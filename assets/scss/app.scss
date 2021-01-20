@@ -259,6 +259,22 @@ td{
    ------------------------------------------------------------------------- */
 .m-b-0 { margin-bottom: 0 }
 
+.form_selection_list{
+  width:400px;
+  height:500px;
+  border:1px solid darkgreen;
+}
+
+.selection_list_body{
+height:350px;
+}
+
+.selection_list_title{
+  font-size: 18pt;
+  margin-bottom:20px;
+  border-bottom: 1px solid darkgreen;
+}
+
 .contact_column{
   height:400px;
   overflow-y: auto;
