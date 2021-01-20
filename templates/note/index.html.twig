@@ -20,7 +20,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>{{'table.column.name'|trans|raw}}</th>
+                    <th>{{'table.column.details'|trans|raw}}</th>
                     <th>{{'table.column.date.added'|trans|raw}}</th>
                     <th>{{'table.column.date.edited'|trans|raw}}</th>
                     <th></th>
@@ -29,7 +29,7 @@
             <tbody>
             {% for note in paginator.results %}
                 <tr>
-                    <td>{{ note.id }}</td>
+                    <td>{{ note.details }}</td>
                     <td>{{ note.dateAdded ? note.dateAdded|date('Y-m-d') : '' }}</td>
                     <td>{{ note.dateEdited ? note.dateEdited|date('Y-m-d') : '' }}</td>
                     <td class="action_column">

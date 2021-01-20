@@ -7,7 +7,7 @@
     <div class="page_form_heading">
         {{'note_edit'|trans|raw}}
         <div class="return_to_list_label">
-            {{ include('note/_delete_form.html.twig') }}
+            {# {{ include('note/_delete_form.html.twig') }} #}
             {% if broker_id is defined %}
                 <a href="{{ path('broker_edit', {'id':broker_id}) }}" 
                 title="{{'back_to_list'|trans|raw}}">
@@ -23,10 +23,11 @@
                 title="{{'back_to_list'|trans|raw}}">
                 <i class="fas fa-undo page_icon"></i>
                 </a>    
-            {# 
             {% else %}
-                <a href="{{ path('message_index') }}" title="{{'back_to_list'|trans|raw}}"><i class="fas fa-undo page_icon"></i></a>
-                 #}    
+                <a href="{{ path('note_index') }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>  
             {% endif %}
         </div>
     </div>

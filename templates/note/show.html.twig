@@ -1,22 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Note{% endblock %}
+{% block title %}{{'note_show'|trans|raw}}{% endblock %}
 
 {% block body %}
-    <h1>Note</h1>
+<div class="page_form_header">
+    <div class="page_form_heading">
+        {{'note_show'|trans|raw}}
+        <div class="return_to_list_label">
+{#             <a href="{{ path('note_index') }}" 
+            title="{{'back_to_list'|trans|raw}}">
+            <i class="fas fa-undo page_icon"></i>
+            </a>     #}
+             {% if broker_id is defined %}
+                <a href="{{ path('broker_edit', {'id':broker_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
+            {% elseif customer_id is defined %}
+                <a href="{{ path('customer_edit', {'id':customer_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
+            {% elseif supplier_id is defined %}
+                <a href="{{ path('supplier_edit', {'id':supplier_id}) }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
+            {% else %}
+                <a href="{{ path('note_index') }}" 
+                title="{{'back_to_list'|trans|raw}}">
+                <i class="fas fa-undo page_icon"></i>
+                </a>  
+            {% endif %}
+        </div>
+    </div>
+</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ note.id }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('note_index') }}">back to list</a>
-
-    <a href="{{ path('note_edit', {'id': note.id}) }}">edit</a>
-
-    {{ include('note/_delete_form.html.twig') }}
+<div class="row">
+    <div class="col">
+        {{ include('note/_form.html.twig')}} 
+    </div>
+ </div>
 {% endblock %}

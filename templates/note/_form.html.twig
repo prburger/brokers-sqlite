@@ -7,11 +7,13 @@
             </div>
         </div>
 
+{% if edit_state or fresh_state %}
         <div class="row">
             <div class="col-sm-12">
                     <button class="btn btn-primary" style="margin:10px 20px 0 0;">{{ button_label|default('Save') }}</button>
             </div>
         </div>
+{% endif %}
 
     {{ form_end(form) }}
 </div>
