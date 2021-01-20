@@ -203,6 +203,88 @@ class BrokerController extends AbstractController
     }
 
     /**
+     * @Route("/{broker}/note", name="broker_note", methods={"GET","POST"})
+    */
+    public function note(
+        Request $request, 
+        Broker $broker,
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,        
+        SupplierRepository $supplierRepo
+        ): Response
+        {
+
+            $note = new Note();   
+            $broker->addNote($note);
+            $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
+            $customerSelection = $customerRepo->findAll();
+            $supplierSelection = $supplierRepo->findAll();
+            
+            $form = $this->createForm(NoteType::class, $note,
+                array('brokerSelection'=>$brokerSelection,
+                      'customerSelection'=>$customerSelection,
+                      'supplierSelection'=>$supplierSelection));  
+            
+            $form->handleRequest($request);
+                            
+             if ($form->isSubmitted() && $form->isValid()) {            
+                
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($broker);   
+                $entityManager->flush();
+                return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+            }
+
+            return $this->render('note/new.html.twig' , [
+                'note'=>$note,
+                'form' => $form->createView(),
+                'broker_id'=>$broker->getId(),
+                'edit_state'=>true,
+                'fresh_state'=>false
+            ]);
+    }
+
+    /**
+     * @Route("/{note}/{broker}/note", name="broker_note_edit", methods={"GET","POST"})
+    */
+    public function editnote(
+        Request $request, 
+        Note $note,
+        Broker $broker,
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,        
+        SupplierRepository $supplierRepo
+        ): Response
+        {
+
+            $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
+            $customerSelection = $customerRepo->findAll();
+            $supplierSelection = $supplierRepo->findAll();
+            
+            $form = $this->createForm(NoteType::class, $note);
+            $form->handleRequest($request);
+            
+             if ($form->isSubmitted() && $form->isValid()) {            
+                
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($broker);   
+                $entityManager->flush();
+                return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+            }
+
+            return $this->render('note/edit.html.twig' , [
+                'note'=>$note,
+                'form' => $form->createView(),
+                'broker_id'=>$broker->getId(),
+                'edit_state'=>true,
+                'fresh_state'=>false
+            ]);
+    }
+
+
+
+
+    /**
      * @Route("/{broker}/message", name="broker_message", methods={"GET","POST"})
     */
     public function message(

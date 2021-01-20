@@ -594,7 +594,6 @@
                 <source>help.comment_content</source>
                 <target>Comments not complying with our Code of Conduct will be moderated.</target>
             </trans-unit>
-
             <trans-unit id="info.change_password">
                 <source>info.change_password</source>
                 <target>After changing your password, you will be logged out of the application.</target>
@@ -603,6 +602,10 @@
                 <source>table.column.name</source>
                 <target>Name</target>
             </trans-unit>
+            <trans-unit id="table.column.details">
+                <source>table.column.details</source>
+                <target>Details</target>
+            </trans-unit>            
             <trans-unit id="help.register.user">
                 <source>help.register.user</source>
                 <target><![CDATA[<strong>New Users</strong>]]></target>
@@ -735,6 +738,10 @@
                 <source>supplier_show</source>
                 <target>Supplier Details</target>
             </trans-unit>
+            <trans-unit id="note_show">
+                <source>note_show</source>
+                <target>Note Details</target>
+            </trans-unit>            
             <trans-unit id="supplier_edit">
                 <source>supplier_edit</source>
                 <target>Edit Supplier</target>
