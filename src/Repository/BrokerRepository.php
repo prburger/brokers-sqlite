@@ -25,8 +25,7 @@ class BrokerRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('b')
         ->orderBy('b.id', 'ASC')
         ->getQuery()
-        ->getResult()
-        ;   
+        ->getResult();   
     }
 
     public function findWithoutId($value)
@@ -36,20 +35,18 @@ class BrokerRepository extends ServiceEntityRepository
         ->setParameter('val', $value)
         ->orderBy('b.id', 'ASC')
         ->getQuery()
-        ->getResult()
-        ;
+        ->getResult();
     }
 
-    public function findByName($value)
+    public function findByName($value): Broker
     {
-        return $this->createQueryBuilder('b')
+        $this->createQueryBuilder('b')
         ->where('b.name = :val')
         ->setParameter('val', $value)
         ->orderBy('b.id', 'ASC')
-        ->setMaxResults(1)
         ->getQuery()
-        ->getResult()
-        ;
+        ->setMaxResults(1)
+        ->getOneOrNullResult(); 
     }
 
     public function findWithoutName($value)
@@ -59,8 +56,7 @@ class BrokerRepository extends ServiceEntityRepository
         ->setParameter('val', $value)
         ->orderBy('b.id', 'ASC')
         ->getQuery()
-        ->getResult()
-        ;
+        ->getResult();
     }
 
     /**
@@ -76,10 +72,7 @@ class BrokerRepository extends ServiceEntityRepository
      */
     public function findLatest(int $page = 1): Paginator
     {
-        $qb = $this->createQueryBuilder('p')
-        ->orderBy('p.dateAdded', 'ASC')
-        ;      
-
+        $qb = $this->createQueryBuilder('p')->orderBy('p.dateAdded', 'ASC');      
         return (new Paginator($qb))->paginate($page);
     }
 }

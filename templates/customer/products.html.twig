@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                 {% if edit_state or fresh_state %}
                     <a class="form_component_link" 
-                    href="{{ path('product_new',{'customer': customer.id}) }}" 
+                    href="{{ path('customer_product',{'customer': customer.id}) }}" 
                     title="{{'form_component_newProduct'|trans|raw}}">
                     <i class="fas fa-plus page_icon"></i>
                     </a>

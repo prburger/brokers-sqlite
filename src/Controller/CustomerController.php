@@ -4,10 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Broker;
 use App\Entity\Customer;
+use App\Entity\Message;
+use App\Entity\Note;
+use App\Entity\Product;
 use App\Form\CustomerType;
 use\App\Form\ContactFormType;
+use\App\Form\MessageType;
+use\App\Form\NoteType;
+use\App\Form\ProductType;
+use App\Repository\BrokerRepository;
 use App\Repository\CustomerRepository;
 use App\Repository\MessageRepository;
+use App\Repository\SupplierRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -90,12 +98,6 @@ class CustomerController extends AbstractController
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
- /*        $messages = $messageRepo->findByName($customer->getName());
-        foreach($messages as $message)
-        {
-            $customer->addMessage($message);
-        }
- */
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($customer);
@@ -143,6 +145,80 @@ class CustomerController extends AbstractController
     }
 
     /**
+     * @Route("/{customer}/note", name="customer_note", methods={"GET","POST"})
+     */
+    public function note(Request $request, Customer $customer): Response
+    {
+        $note = new Note();
+        $customer->addNote($note);
+        
+        $form = $this->createForm(NoteType::class, $note);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
+        }
+
+        return $this->render('note/new.html.twig', [
+            'note' => $note,
+            'form' => $form->createView(),
+            'customer_id'=>$customer->getId(),
+            'edit_state'=>true,
+            'fresh_state'=>true
+        ]);
+    }
+
+    /**
+     * @Route("/{customer}/message", name="customer_message", methods={"GET","POST"})
+    */
+    public function message(
+        Request $request, 
+        Customer $customer,
+        BrokerRepository $brokerRepo,        
+        SupplierRepository $supplierRepo,
+        CustomerRepository $customerRepo
+    ): Response
+    {
+        $message = new Message();
+        $message->setSentBy($customer->getName());
+        $customer->addMessage($message);
+
+        $brokerSelection = $brokerRepo->findAll();
+        $customerSelection = $customerRepo->findWithoutId($customer->getId());
+        $supplierSelection = $supplierRepo->findAll();
+            
+        $form = $this->createForm(MessageType::class,$message,
+            array('brokerSelection'=>$brokerSelection,
+                    'customerSelection'=>$customerSelection,
+                    'supplierSelection'=>$supplierSelection));  
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer);            
+            $entityManager->flush();
+
+            return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
+        }
+
+        return $this->render('message/new.html.twig' , [
+            'message' => $message,
+            'form' => $form->createView(),
+            'brokers'=>$message->getBrokers(),
+            'customers'=>$message->getCustomers(),
+            'suppliers'=>$message->getSuppliers(),
+            'customer_id'=>$customer->getId(),
+            'fresh_state'=>true,
+            'edit_state'=>true
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="customer_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Customer $customer): Response
@@ -176,4 +252,30 @@ class CustomerController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{customer}/product", name="customer_product", methods={"GET","POST"})
+    */
+    public function product(Request $request, Customer $customer): Response
+    {
+        $product = new Product();
+        $customer->addProduct($product);
+
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($customer);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
+        }
+
+        return $this->render('product/new.html.twig', [
+            'product' => $product,
+            'form' => $form->createView(),
+            'edit_state'=>false,
+            'fresh_state'=>true
+        ]);
+    }
 }
