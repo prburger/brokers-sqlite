@@ -85,32 +85,6 @@ class NoteController extends AbstractController
     }
 
     /**
-     * @Route("/customer/{customer}", name="note_customer", methods={"GET","POST"})
-     */
-    public function customer(Request $request, Customer $customer): Response
-    {
-        $note = new Note();
-        $note->setCustomer($customer);
-        
-        $form = $this->createForm(NoteType::class, $note);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($note);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
-        }
-
-        return $this->render('note/new.html.twig', [
-            'note' => $note,
-            'form' => $form->createView(),
-            'customer_id'=>$customer->getId()
-        ]);
-    }
-
-    /**
      * @Route("/supplier/{supplier}", name="note_supplier", methods={"GET","POST"})
      */
     public function supplier(Request $request, Supplier $supplier): Response

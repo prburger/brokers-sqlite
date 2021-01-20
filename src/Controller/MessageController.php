@@ -131,8 +131,28 @@ class MessageController extends AbstractController
         SupplierRepository $supplierRepo,
         CustomerRepository $customerRepo): Response
     {
-        $broker = $brokerRepo->findByName($message->getSentBy());
+        $broker_id = 0;
+        $customer_id = 0;
+        $supplier_id = 0;
+
+        $broker = $brokerRepo->findOneBy(['name' => $message->getSentBy()]);
+        if($broker){
+            $broker_id = $broker->getId();
+        }
         
+        $customer = $customerRepo->findOneBy(['name' => $message->getSentBy()]);
+        if($customer)
+        {
+            $customer_id = $customer->getId();
+        }
+              
+        $supplier = $supplierRepo->findOneBy(['name' => $message->getSentBy()]);
+        if($supplier)
+        {
+            $supplier_id = $supplier->getId();
+        }   
+
+
         $brokerSelection = $brokerRepo->findWithoutName($message->getSentBy());                
         for($i=0; $i<count($brokerSelection); $i++)
         {
@@ -189,7 +209,11 @@ class MessageController extends AbstractController
             'brokers'=> $message->getBrokers(),
             'suppliers'=> $message->getSuppliers(),
             'customers'=> $message->getCustomers(),
-            'broker_id'=>'1'
+            'broker_id'=> $broker_id ? $broker_id : null,
+            'customer_id'=> $customer_id ? $customer_id : null,
+            'supplier_id'=> $supplier_id ? $supplier_id : null,
+            'edit_state'=>true,
+            'fresh_state'=>false
         ]);
     }
 
@@ -389,57 +413,7 @@ class MessageController extends AbstractController
             'fresh_state'=>true,
             'edit_state'=>true
         ]);
-
-    }
-
-    /**
-     * @Route("/customer/{customer}/new", name="message_customer", methods={"GET","POST"})
-     */
-    public function customer(
-        Request $request, 
-        Customer $customer,
-        BrokerRepository $brokerRepo,        
-        SupplierRepository $supplierRepo,
-        CustomerRepository $customerRepo
-    ): Response
-    {
-        $message = new Message();
-
-        $message->setSentBy($customer->getName());
-
-        $brokerSelection = $brokerRepo->findAll();
-        $customerSelection = $customerRepo->findWithoutId($customer->getId());
-        $supplierSelection = $supplierRepo->findAll();
-            
-        $form = $this->createForm(MessageType::class,$message,
-            array('brokerSelection'=>$brokerSelection,
-                    'customerSelection'=>$customerSelection,
-                    'supplierSelection'=>$supplierSelection));  
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($customer);            
-            $entityManager->persist($message);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('customer_edit', array('id'=>$customer->getId()));
-        }
-
-        return $this->render('message/new.html.twig' , [
-            'message' => $message,
-            'form' => $form->createView(),
-            'brokers'=>$message->getBrokers(),
-            'customers'=>$message->getCustomers(),
-            'suppliers'=>$message->getSuppliers(),
-            'customer_id'=>$customer->getId(),
-            'fresh_state'=>true,
-            'edit_state'=>true
-        ]);
-    }
-
-  
+    }  
 
     /**
      * @Route("/remove/{message}/broker/{broker}", name="message_removeBroker", methods={"GET","POST"})
