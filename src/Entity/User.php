@@ -79,6 +79,16 @@ class User implements UserInterface, \Serializable
      */
     private $roles = [];
 
+    /**
+     * @ORM\OneToOne(targetEntity=Broker::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $broker;
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -186,4 +196,17 @@ class User implements UserInterface, \Serializable
         // add $this->salt too if you don't use Bcrypt or Argon2i
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
     }
+
+    public function getBroker(): ?Broker
+    {
+        return $this->broker;
+    }
+
+    public function setBroker(Broker $broker): self
+    {
+        $this->broker = $broker;
+
+        return $this;
+    }
+
 }

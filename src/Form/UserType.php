@@ -11,7 +11,9 @@
 
 namespace App\Form;
 
+use App\Entity\Broker;
 use App\Entity\User;
+use App\Form\BrokerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -50,6 +52,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'label.email',
             ])
+            // ->add('broker', BrokerType::class,['required'=>true])
         ;
     }
 
@@ -60,6 +63,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            // 'broker'=>BrokerType::class
         ]);
     }
 }

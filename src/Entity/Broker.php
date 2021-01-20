@@ -65,6 +65,11 @@ class Broker
     public $brokerSelection;
     public $customerSelection;
     public $supplierSelection;
+
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="broker", cascade={"persist", "remove"})
+     */
+    private $user;
     
     public function __construct()
     {
@@ -230,6 +235,23 @@ class Broker
     public function removeSupplier(Supplier $supplier): self
     {
         $this->suppliers->removeElement($supplier);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        // set the owning side of the relation if necessary
+        if ($user->getBroker() !== $this) {
+            $user->setBroker($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
