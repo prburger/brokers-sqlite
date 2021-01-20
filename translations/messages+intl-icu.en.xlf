@@ -728,7 +728,7 @@
             </trans-unit>
             <trans-unit id="dashboard_brokers_table">
                 <source>dashboard_brokers_table</source>
-                <target>Brokers</target>
+                <target>Brokers list</target>
             </trans-unit>
             <trans-unit id="return_to_dashboard">
                 <source>return_to_dashboard</source>
@@ -736,15 +736,15 @@
             </trans-unit>
             <trans-unit id="dashboard_customers_table">
                 <source>dashboard_customers_table</source>
-                <target>Customers</target>
+                <target>Customers list</target>
             </trans-unit>
             <trans-unit id="dashboard_suppliers_table">
                 <source>dashboard_suppliers_table</source>
-                <target>Suppliers</target>
+                <target>Suppliers list</target>
             </trans-unit>
             <trans-unit id="dashboard_products_table">
                 <source>dashboard_products_table</source>
-                <target>Products</target>
+                <target>Products list</target>
             </trans-unit>
             <trans-unit id="product_new">
                 <source>product_new</source>
