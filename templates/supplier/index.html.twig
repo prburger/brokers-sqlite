@@ -8,7 +8,7 @@
         <div class="page_form_heading">
         {{'supplier_index'|trans|raw}}
             <div class="return_to_list_label">
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_ADMIN') or broker.id is defined %}
                 <a href="{{ path('supplier_new') }}" 
                 title="{{'create_new_supplier'|trans|raw}}">
                 <i class="fas fa-plus page_icon"></i>
@@ -45,7 +45,7 @@
                         title="{{'action_show'|trans|raw}}">
                         <i class="fas fa-glasses action_icon"></i>
                         </a>
-                        {% if is_granted('ROLE_ADMIN') or broker_id == supplier.getBrokerId() %}
+                        {% if is_granted('ROLE_ADMIN') or broker.id == supplier.getBrokerId() %}
                             <a href="{{ path('supplier_edit', {'id': supplier.id }) }}" 
                             title="{{'action_edit'|trans|raw}}">
                             <i class="far fa-edit action_icon"></i>

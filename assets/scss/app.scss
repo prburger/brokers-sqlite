@@ -190,12 +190,9 @@ padding:0;
   width:100%;
   padding:0;
   margin:0;
-}
-
-.dashboard_table_body{
+  overflow-y: scroll;
   font-size: 10pt;
   background-color: white;
-  overflow-y: scroll;
   height:150px;
   min-height: min-content;
   max-height:max-content;

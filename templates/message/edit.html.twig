@@ -8,16 +8,16 @@
         {{'message_edit'|trans|raw}}
         <div class="return_to_list_label">
             {{ include('message/_delete_form.html.twig') }}
-            {% if broker_id != 0  %}
-                <a href="{{ path('broker_edit', {'id': broker_id}) }}" 
+            {% if broker is defined  %}
+                <a href="{{ path('broker_edit', {'id': broker.id}) }}" 
                 title="{{'return_to_broker'|trans|raw}}">
                 <i class="fas fa-undo page_icon"></i></a>  
-            {% elseif customer_id != 0 %}
-                <a href="{{ path('customer_edit', {'id':customer_id}) }}" 
+            {% elseif customer is defined %}
+                <a href="{{ path('customer_edit', {'id':customer.id}) }}" 
                 title="{{'return_to_customer'|trans|raw}}">
                 <i class="fas fa-undo page_icon"></i></a>  
-            {% elseif supplier_id != 0 %}
-                <a href="{{ path('supplier_edit', {'id':supplier_id}) }}" 
+            {% elseif supplier is defined %}
+                <a href="{{ path('supplier_edit', {'id':supplier.id}) }}" 
                 title="{{'return_to_supplier'|trans|raw}}">
                 <i class="fas fa-undo page_icon"></i></a>  
             {% else %}

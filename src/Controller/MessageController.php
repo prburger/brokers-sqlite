@@ -40,17 +40,16 @@ class MessageController extends AbstractController
 
         return $this->render('message/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
-            'broker_id'=>$this->getUser()->getBroker()->getId()
+            'broker'=>$this->getUser()->getBroker()
         ]);
     }
 
     /**
-     * @Route("/broker/{broker}", name="message_broker", methods={"GET","POST"})
+     * @Route("/new", name="message_new", methods={"GET","POST"})
      * @Route("/new", name="message_new_no_id", methods={"GET","POST"})
      */
-    public function broker(
+    public function new(
         Request $request, 
-        Broker $broker,
         BrokerRepository $brokerRepo,
         CustomerRepository $customerRepo,        
         SupplierRepository $supplierRepo
@@ -58,30 +57,33 @@ class MessageController extends AbstractController
         {
 
             $message = new Message();   
-            $message->setSentBy($broker->getName());
+            $message->setSentBy($this->getUser()->getBroker()->getName());
             $message->setBrokerId($this->getUser()->getBroker()->getId());
-      
-            $broker->addMessage($message);
-            $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
+    
+            $this->getUser()->getBroker()->addMessage($message);
+/*             $brokerSelection = $brokerRepo->findWithoutId($this->getUser()->getBroker()->getId());
             $customerSelection = $customerRepo->findAll();
             $supplierSelection = $supplierRepo->findAll();
             
+            dump($brokerSelection); */
+
             $form = $this->createForm(MessageType::class,$message,
-                array('brokerSelection'=>$brokerSelection,
-                      'customerSelection'=>$customerSelection,
-                      'supplierSelection'=>$supplierSelection));  
+                array('brokerSelection'=>$brokerRepo->findWithoutId($this->getUser()->getBroker()->getId()),
+                      'customerSelection'=>$customerRepo->findAll(),
+                      'supplierSelection'=>$supplierRepo->findAll()));  
             
             $form->handleRequest($request);
-                            
-             if ($form->isSubmitted() && $form->isValid()) {            
+            
+            if ($form->isSubmitted() && $form->isValid()) {            
                 
                 $entityManager = $this->getDoctrine()->getManager();
-                $message->setBrokers($message->brokerSelection);
-                $message->setCustomers($message->customerSelection);
-                $message->setSuppliers($message->supplierSelection);
-                $entityManager->persist($broker);   
+                
+                $message->setBrokers($form->brokerSelection);
+                $message->setCustomers($form->customerSelection);
+                $message->setSuppliers($form->supplierSelection);
+                $entityManager->persist($this->getUser()->getBroker());   
                 $entityManager->flush();
-                return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+                return $this->redirectToRoute('broker_edit', array('id'=>$this->getUser()->getBroker()->getId()));
             }
 
             return $this->render('message/new.html.twig' , [
@@ -89,7 +91,7 @@ class MessageController extends AbstractController
                 'brokers'=>$message->getBrokers(),
                 'customers'=>$message->getCustomers(),
                 'suppliers'=>$message->getSuppliers(),
-                'broker_id'=>$broker->getId(),
+                'broker_id'=>$this->getUser()->getBroker()->getId(),
                 'edit_state'=>true,
                 'fresh_state'=>false,
                 // 'broker_id'=>$this->getUser()->getBroker()->getId()
@@ -125,7 +127,7 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/message/{id}/edit", name="message_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="message_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request, 
@@ -137,7 +139,7 @@ class MessageController extends AbstractController
         $broker_id = 0;
         $customer_id = 0;
         $supplier_id = 0;
-
+        
         $broker = $brokerRepo->findOneBy(['name' => $message->getSentBy()]);
         if($broker){
             $broker_id = $broker->getId();
@@ -155,51 +157,61 @@ class MessageController extends AbstractController
             $supplier_id = $supplier->getId();
         }   
 
-
-        $brokerSelection = $brokerRepo->findWithoutName($message->getSentBy());                
-        for($i=0; $i<count($brokerSelection); $i++)
+        $brokerSelection = $brokerRepo->findWithoutName($message->getSentBy());     
+        $len = count($brokerSelection);   
+        for($i=0; $i<$len; $i++)
         {
-            if($message->getBrokers()->contains($brokerSelection[$i])){
-              array_splice($brokerSelection, $i,1);
-            }
+           if($message->getBrokers()->contains($brokerSelection[$i]))
+            {
+                unset($brokerSelection[$i]);
+            } 
         }
-        
+
         $customerSelection = $customerRepo->findAll();
-        for($i=0; $i<count($customerSelection); $i++)
+        $len = count($customerSelection); 
+        for($i=0; $i<$len; $i++)
         {
             if($message->getCustomers()->contains($customerSelection[$i])){         
-             array_splice($customerSelection, $i,1);
+             unset($customerSelection[$i]);
             }
         }        
 
         $supplierSelection = $supplierRepo->findAll();
-        for($i=0; $i<count($supplierSelection); $i++)
+        $len = count($supplierSelection); 
+        for($i=0; $i<$len; $i++)
         {
             if($message->getSuppliers()->contains($supplierSelection[$i])){
-              array_splice($supplierSelection, $i,1);
+              unset($supplierSelection[$i]);
             }
-        }
+        } 
 
         $form = $this->createForm(MessageType::class,$message,
                 array('brokerSelection'=>$brokerSelection,
                       'customerSelection'=>$customerSelection,
                       'supplierSelection'=>$supplierSelection));  
+        
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $message = $form->getViewData();
-                
+      
             foreach($message->brokerSelection as $broker){
+                $broker->addMessage($message);
                 $message->addBroker($broker);
-            }
+                $entityManager->persist($broker); 
+            }          
+
             foreach($message->customerSelection as $customer){
+                $customer->addMessage($message);
                 $message->addCustomer($customer);
+                $entityManager->persist($customer); 
             }
             foreach($message->supplierSelection as $supplier){
+                $supplier->addMessage($message);
                 $message->addSupplier($supplier);
+                $entityManager->persist($supplier); 
             }
-                        
+            
             $entityManager->persist($message);   
             $this->getDoctrine()->getManager()->flush();
             
@@ -212,9 +224,9 @@ class MessageController extends AbstractController
             'brokers'=> $message->getBrokers(),
             'suppliers'=> $message->getSuppliers(),
             'customers'=> $message->getCustomers(),
-            'broker_id'=> $broker_id ? $broker_id : null,
-            'customer_id'=> $customer_id ? $customer_id : null,
-            'supplier_id'=> $supplier_id ? $supplier_id : null,
+            'broker'=> $broker? $broker : null,
+            'customer'=> $customer ? $customer : null,
+            'supplier'=> $supplier ? $supplier : null,
             'edit_state'=>true,
             'fresh_state'=>false
         ]);
@@ -423,11 +435,13 @@ class MessageController extends AbstractController
     */
     public function removeBroker(Message $message, Broker $broker): Response
     {
+        $broker->removeMessage($message);        
         $message->removeBroker($broker);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($message);
+        $entityManager->persist($broker);
         $entityManager->flush();
-        return $this->redirectToRoute('broker_edit', array('id'=>$broker->getId()));
+        return $this->redirectToRoute('message_edit', array('id'=>$message->getId()));
     }
 
     /**

@@ -20,7 +20,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="product_index")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="product_rss")
-     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="product_index_paginated")
+     * @Route("/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="product_index_paginated")
      * @Cache(smaxage="10")    
     */
     
@@ -47,14 +47,15 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('portal_index');
         }
 
         return $this->render('specification/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
             'edit_state'=>false,
-            'fresh_state'=>true
+            'fresh_state'=>true,
+            'broker'=>$this->getUser()->getBroker()
         ]);
     }
 
@@ -75,14 +76,15 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('product_index');
+            return $this->redirectToRoute('portal_index');
         }
 
         return $this->render('product/new.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
             'edit_state'=>false,
-            'fresh_state'=>true
+            'fresh_state'=>true,
+            'broker'=>$this->getUser()->getBroker()
         ]);
     }
 

@@ -3,7 +3,7 @@
 <div class="dashboard_title">
     {{'dashboard.title.products'|trans|raw}}
         <div class="return_to_list_label"> 
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_ADMIN') or broker.id is defined %}
             <a href="{{ path('product_new') }}" 
             title="{{'product_new'|trans|raw}}">
             <i class="fas fa-plus page_icon"></i>

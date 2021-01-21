@@ -2,7 +2,7 @@
 <div class="dashboard_title">
     {{'dashboard.title.suppliers'|trans|raw}}
         <div class="return_to_list_label"> 
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_ADMIN') or broker.id is defined %}
             <a href="{{ path('supplier_new') }}" 
             title="{{'supplier_new'|trans|raw}}">
             <i class="fas fa-plus page_icon"></i>
@@ -24,7 +24,6 @@
         </thead>
         <tbody>
         {% for supplier in suppliers %}
-        {# {{ dump(supplier.getBrokerId()) }} #}
             <tr><td>{{ supplier.name }}</td>
                 <td class="return_to_list_label">
                         <a href="{{ path('supplier_show', {'id': supplier.id}) }}" title="View"><i class="far fa-eye dashboard_icon"></i></a>

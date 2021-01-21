@@ -132,7 +132,7 @@ class BrokerController extends AbstractController
                  'supplierSelection'=>$supplierSelection));  
 
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();  
             

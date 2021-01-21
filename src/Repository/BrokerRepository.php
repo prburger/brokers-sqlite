@@ -20,14 +20,14 @@ class BrokerRepository extends ServiceEntityRepository
         parent::__construct($registry, Broker::class);
     }
 
-    public function findAll()
+/*     public function findAll()
     {
         return $this->createQueryBuilder('b')
         ->orderBy('b.id', 'ASC')
         ->getQuery()
         ->getResult();   
     }
-
+ */
     public function findWithoutId($value)
     {
         return $this->createQueryBuilder('b')
