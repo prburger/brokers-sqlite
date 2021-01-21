@@ -60,6 +60,11 @@ class Supplier
     private $brokers;
 
     public $supplierSelection;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $broker_id;
     
     public function __construct()
     {
@@ -221,6 +226,18 @@ class Supplier
     public function removeBroker(Broker $broker): self
     {
         $this->brokers->removeElement($broker);
+        return $this;
+    }
+
+    public function getBrokerId(): ?int
+    {
+        return $this->broker_id;
+    }
+
+    public function setBrokerId(?int $broker_id): self
+    {
+        $this->broker_id = $broker_id;
+
         return $this;
     }
 

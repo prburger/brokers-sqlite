@@ -40,6 +40,7 @@ class MessageController extends AbstractController
 
         return $this->render('message/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
+            'broker_id'=>$this->getUser()->getBroker()->getId()
         ]);
     }
 
@@ -58,6 +59,7 @@ class MessageController extends AbstractController
 
             $message = new Message();   
             $message->setSentBy($broker->getName());
+            $message->setBrokerId($this->getUser()->getBroker()->getId());
       
             $broker->addMessage($message);
             $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
@@ -89,7 +91,8 @@ class MessageController extends AbstractController
                 'suppliers'=>$message->getSuppliers(),
                 'broker_id'=>$broker->getId(),
                 'edit_state'=>true,
-                'fresh_state'=>false
+                'fresh_state'=>false,
+                // 'broker_id'=>$this->getUser()->getBroker()->getId()
             ]);
     }
 

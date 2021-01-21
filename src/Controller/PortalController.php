@@ -35,6 +35,7 @@ class PortalController extends AbstractController
             'products' => $productRepository->findAll(),
             'suppliers' => $supplierRepository->findAll(),
             'customers' => $customerRepository->findAll(),
+            'broker_id'=> $this->getUser()->getBroker()->getId()
         ]);
     }
 }

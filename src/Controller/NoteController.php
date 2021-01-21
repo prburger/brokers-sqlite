@@ -29,6 +29,7 @@ class NoteController extends AbstractController
 
         return $this->render('note/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
+            'broker_id'=>$this->getUser()->getBroker()->getId()
         ]);
     }
 
@@ -38,6 +39,7 @@ class NoteController extends AbstractController
     public function new(Request $request): Response
     {
         $note = new Note();
+        $note->setBrokerId($this->getUser()->getBroker()->getId());
         
         $form = $this->createForm(NoteType::class, $note);
         $form->handleRequest($request);
