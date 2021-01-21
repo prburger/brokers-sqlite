@@ -33,14 +33,12 @@ class SupplierRepository extends ServiceEntityRepository
 
     public function findWithoutId($value)
     {
-        return $this->createQueryBuilder('b')
-        ->where('b.id != :val')
+        return $this->createQueryBuilder('s')
+        ->where('s.id != :val')
         ->setParameter('val', $value)
-        ->orderBy('b.id', 'ASC')
-        // ->setMaxResults(10)
+        ->orderBy('s.id', 'ASC')
         ->getQuery()
-        ->getResult()
-        ;
+        ->getResult();
     }
 
     /**
@@ -56,10 +54,8 @@ class SupplierRepository extends ServiceEntityRepository
      */
     public function findLatest(int $page = 1): Paginator
     {
-        $qb = $this->createQueryBuilder('p')
-           ->orderBy('p.id', 'DESC')
-        ;      
-
+        $qb = $this->createQueryBuilder('s')
+            ->orderBy('s.id', 'DESC');      
         return (new Paginator($qb))->paginate($page);
     }
 }

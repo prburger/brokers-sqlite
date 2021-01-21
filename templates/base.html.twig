@@ -28,7 +28,6 @@
                             <a class="navbar-brand" href="{{ path('portal_index') }}">
                                  <i class="fa fa-home" aria-hidden="true"></i>{{'portal.version'|trans|raw}}
                             </a>
-
                             <button type="button" class="navbar-toggle"
                                     data-toggle="collapse"
                                     data-target=".navbar-collapse">
@@ -40,6 +39,7 @@
                         </div>
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav navbar-right">
+                            {% if app.user %}
 
                                 {% block header_navigation_links %}
 
@@ -82,6 +82,7 @@
                                         </li>
                                     {% endif %}
                                 {% endblock %}
+                                {% endif %}
 
                                 {% if app.user %}
                                     <li class="dropdown">

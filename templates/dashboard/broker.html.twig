@@ -3,13 +3,17 @@
 <div class="dashboard_title">
     {{'dashboard.title.brokers'|trans|raw}}
         <div class="return_to_list_label">  
+        {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('broker_new') }}" 
             title="{{'broker_new'|trans|raw}}">
-            <i class="fas fa-plus page_icon"></i></a>
+            <i class="fas fa-plus page_icon"></i>
+            </a>
+        {% endif %}
 
             <a href="{{ path('broker_index_paginated', {'page':1}) }}" 
             title="{{'dashboard_brokers_table'|trans|raw}}">
-            <i class="fas fa-file-alt page_icon"></i></a>
+            <i class="fas fa-file-alt page_icon"></i>
+            </a>
         </div>
 </div>
 
@@ -22,13 +26,14 @@
                 </tr>
             </thead>
             <tbody>
-             {% for broker in brokers %} 
-            
+             {% for broker in brokers %}             
                 <tr>
                     <td>{{ broker.name }}</td>
                     <td class="return_to_list_label">
                         <a href="{{ path('broker_show', {'id': broker.id}) }}" title="View"><i class="far fa-eye dashboard_icon"></i></a>
-                        <a href="{{ path('broker_edit', {'id': broker.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
+                        {% if is_granted('ROLE_ADMIN') or broker_id == broker.id %}
+                            <a href="{{ path('broker_edit', {'id': broker.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

@@ -39,6 +39,7 @@ class SupplierController extends AbstractController
 
         return $this->render('supplier/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
+            'broker_id'=> $this->getUser()->getBroker()->getId()
         ]);
     }
 
@@ -48,6 +49,8 @@ class SupplierController extends AbstractController
     public function new(Request $request): Response
     {
         $supplier = new Supplier();
+        $supplier->setBrokerId($this->getUser()->getBroker()->getId());
+
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
         

@@ -44,10 +44,12 @@ class BrokerController extends AbstractController
     
     public function index(Request $_request, int $page = 1, string $_format="html", BrokerRepository $repository): Response
     {        
+        
         $pageData = $repository->findLatest($page);
 
         return $this->render('broker/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
+            'broker_id'=>$this->getUser()->getBroker()->getId()
         ]);
     }
 
@@ -87,9 +89,19 @@ class BrokerController extends AbstractController
     /**
      * @Route("/{id}", name="broker_show", methods={"GET"})
      */
-    public function show(Broker $broker): Response
+    public function show(
+        Broker $broker,
+        BrokerRepository $brokerRepo,
+        CustomerRepository $customerRepo,
+        SupplierRepository $supplierRepo): Response
     {
-        $form = $this->createForm(BrokerType::class, $broker);
+        $brokerSelection = $brokerRepo->findWithoutId($broker->getId());
+        $customerSelection = $customerRepo->findAll();
+        $supplierSelection = $supplierRepo->findAll();
+        $form = $this->createForm(BrokerType::class, $broker,
+        array('brokerSelection'=>$brokerSelection,
+                  'customerSelection'=>$customerSelection,
+                 'supplierSelection'=>$supplierSelection));  
         
         return $this->render('broker/show.html.twig', [
             'broker' => $broker,
@@ -128,7 +140,7 @@ class BrokerController extends AbstractController
            
             $entityManager->persist($broker);
             $entityManager->flush();
-            return $this->redirectToRoute('broker_edit', array('customer'=>$customer, 'broker'=>$broker));
+            return $this->redirectToRoute('broker_index');
         }
 
         return $this->render('broker/edit.html.twig', [

@@ -36,9 +36,9 @@ class CustomerController extends AbstractController
     public function index(Request $_request, int $page = 1, string $_format="html", CustomerRepository $repository): Response
     {        
         $pageData = $repository->findLatest($page);
-
         return $this->render('customer/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
+            'broker_id'=> $this->getUser()->getBroker()->getId()
         ]);
     }
 
@@ -48,6 +48,8 @@ class CustomerController extends AbstractController
     public function new(Request $request): Response
     {
         $customer = new Customer();
+        $customer->setBrokerId($this->getUser()->getBroker()->getId());
+        
         $form = $this->createForm(CustomerType::class, $customer);
         $form->handleRequest($request);
 
@@ -62,7 +64,8 @@ class CustomerController extends AbstractController
         return $this->render('customer/new.html.twig', [
             'customer' => $customer,
             'form' => $form->createView(),
-            'fresh_state'=>true
+            'fresh_state'=>true,
+            'edit_state'=>false
         ]);
     }
 

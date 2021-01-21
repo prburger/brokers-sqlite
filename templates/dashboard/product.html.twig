@@ -3,12 +3,16 @@
 <div class="dashboard_title">
     {{'dashboard.title.products'|trans|raw}}
         <div class="return_to_list_label"> 
+        {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('product_new') }}" 
-                title="{{'product_new'|trans|raw}}">
-                <i class="fas fa-plus page_icon"></i></a>
+            title="{{'product_new'|trans|raw}}">
+            <i class="fas fa-plus page_icon"></i>
+            </a>
+        {% endif %}
             <a href="{{ path('product_index_paginated', {'page':1}) }}" 
             title="{{'dashboard_products_table'|trans|raw}}">
-            <i class="fas fa-file-alt page_icon"></i></a>
+            <i class="fas fa-file-alt page_icon"></i>
+            </a>
         </div>  
 </div>
      
@@ -26,7 +30,9 @@
                 <td>{{ product.name }}</td>
              <td class="return_to_list_label">
                         <a href="{{ path('product_show', {'id': product.id}) }}" title="View"><i class="far fa-eye dashboard_icon"></i></a>
-                        <a href="{{ path('product_edit', {'id': product.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
+                        {% if is_granted('ROLE_ADMIN') or broker_id == product.getBrokerId() %}
+                            <a href="{{ path('product_edit', {'id': product.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
+                        {% endif %}
                     </td>
             </tr>
         {% else %}

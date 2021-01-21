@@ -8,12 +8,16 @@
         <div class="page_form_heading">
         {{'product_index'|trans|raw}}
             <div class="return_to_list_label">
+            {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('product_new') }}" 
                 title="{{'product_new'|trans|raw}}">
-                <i class="fas fa-plus page_icon"></i></i></a>
+                <i class="fas fa-plus page_icon"></i>
+                </a>
+            {% endif %}
                 <a href="{{ path('portal_index') }}" 
                 title="{{'back_to_portal'|trans|raw}}">
-                <i class="fas fa-undo page_icon"></i></a>    
+                <i class="fas fa-undo page_icon"></i>
+                </a>    
             </div>
         </div>
     </div>
@@ -38,7 +42,9 @@
                     <td>{{ product.dateEdited ? product.dateEdited|date('Y-m-d') : '' }}</td>
                     <td class="action_column">
                         <a href="{{ path('product_show', {'id': product.id }) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
-                        <a href="{{ path('product_edit', {'id': product.id }) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
+                        {% if is_granted('ROLE_ADMIN') or broker_id == product.getBrokerId() %}
+                            <a href="{{ path('product_edit', {'id': product.id }) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

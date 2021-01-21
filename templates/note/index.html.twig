@@ -34,7 +34,12 @@
                     <td>{{ note.dateEdited ? note.dateEdited|date('Y-m-d') : '' }}</td>
                     <td class="action_column">
                         <a href="{{ path('note_show', {'id': note.id}) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
-                        <a href="{{ path('note_edit', {'id': note.id}) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
+                        {% if is_granted('ROLE_ADMIN') or broker_id == note.getBrokerId() %}
+                            <a href="{{ path('note_edit', {'id': note.id}) }}" 
+                            title="{{'action_edit'|trans|raw}}">
+                            <i class="far fa-edit action_icon"></i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

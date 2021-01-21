@@ -30,6 +30,7 @@ class ProductController extends AbstractController
 
         return $this->render('product/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
+            'broker_id' => $this->getUser()->getBroker()->getId()
         ]);
     }
 
@@ -63,6 +64,8 @@ class ProductController extends AbstractController
     public function new(Request $request): Response
     {
         $product = new Product();
+        $user = $this->getUser();
+        $product->setBrokerId($user->getBroker()->getId());
 
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);

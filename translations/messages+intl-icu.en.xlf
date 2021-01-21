@@ -734,6 +734,10 @@
                 <source>return_to_dashboard</source>
                 <target>Back to dashboard</target>
             </trans-unit>
+            <trans-unit id="back_to_dashboard">
+                <source>back_to_dashboard</source>
+                <target>Back to dashboard</target>
+            </trans-unit>
             <trans-unit id="dashboard_customers_table">
                 <source>dashboard_customers_table</source>
                 <target>Customers list</target>

@@ -26,10 +26,8 @@ class CustomerRepository extends ServiceEntityRepository
         ->where('b.id != :val')
         ->setParameter('val', $value)
         ->orderBy('b.id', 'ASC')
-        // ->setMaxResults(10)
         ->getQuery()
-        ->getResult()
-        ;
+        ->getResult();
     }
     
     public function findByBroker($id)
@@ -39,8 +37,7 @@ class CustomerRepository extends ServiceEntityRepository
         ->setParameter('val', $id)
         ->orderBy('c.broker_id', 'ASC')
         ->getQuery()
-        ->getResult()
-        ;
+        ->getResult();
     }
 
     /**
@@ -56,9 +53,8 @@ class CustomerRepository extends ServiceEntityRepository
      */
     public function findLatest(int $page = 1): Paginator
     {
-        $qb = $this->createQueryBuilder('p')
-           ->orderBy('p.id', 'DESC')
-        ;      
+        $qb = $this->createQueryBuilder('c')
+            ->orderBy('c.id', 'DESC');      
 
         return (new Paginator($qb))->paginate($page);
     }

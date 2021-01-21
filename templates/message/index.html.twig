@@ -36,13 +36,17 @@
             <tbody>
             {% for message in paginator.results %}
                 <tr>
-                    {# <td>{{ message.id }}</td> #}
                     <td>{{ message.text }}</td>
                     <td>{{ message.dateAdded ? message.dateAdded|date('Y-m-d') : '' }}</td>
                     <td>{{ message.dateEdited ? message.dateEdited|date('Y-m-d') : '' }}</td>
                     <td class="action_column">
                         <a href="{{ path('message_show', {'id': message.id}) }}" title="{{'action_show'|trans|raw}}"><i class="fas fa-glasses action_icon"></i></a>
-                        <a href="{{ path('message_edit', {'id': message.id}) }}" title="{{'action_edit'|trans|raw}}"><i class="far fa-edit action_icon"></i></a>
+                       {% if is_granted('ROLE_ADMIN') or broker_id == message.getBrokerId() %}
+                            <a href="{{ path('message_edit', {'id': message.id}) }}" 
+                            title="{{'action_edit'|trans|raw}}">
+                            <i class="far fa-edit action_icon"></i>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

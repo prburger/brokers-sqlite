@@ -65,6 +65,11 @@ class Message
     public $supplierSelection;
     public $senderSelection;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $broker_id;
+
     public function __construct()
     {
         $this->setId(1);
@@ -231,6 +236,18 @@ class Message
     public function removeCustomer(Customer $customer): self
     {
         $this->customers->removeElement($customer);
+
+        return $this;
+    }
+
+    public function getBrokerId(): ?int
+    {
+        return $this->broker_id;
+    }
+
+    public function setBrokerId(?int $broker_id): self
+    {
+        $this->broker_id = $broker_id;
 
         return $this;
     }
