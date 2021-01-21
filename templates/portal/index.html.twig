@@ -8,7 +8,22 @@
     .example-wrapper code { background-color: #F5F5F5; padding: 2px 6px; }
 </style>
 
-    <div class="page_form_heading">{{'portal.dashboard.title'|trans|raw}}</div>
+    <div class="page_form_heading">
+        <div class="row">
+            <div class="col-sm-6">
+                {{'portal.dashboard.title'|trans|raw}}
+            </div>
+            <div class="col-sm-6">
+                <div class="loggedIn">
+                {{ 'logged_in_as'|trans|raw }}
+                <a href="{{ path('broker_edit', {'id': broker.id}) }}"
+                title="{{'action.edit'|trans|raw}}">
+                    {{ broker.getName() }}
+                    </a>
+                </div>
+            </div> 
+        </div> 
+    </div>
 
     <div class="row">
         <div class="col-sm-6" >

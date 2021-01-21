@@ -55,7 +55,7 @@
                 <source>http_error_500.suggestion</source>
                 <target><![CDATA[Try loading this page again in some minutes or <a href="{url}">go back to the homepage</a>.]]></target>
             </trans-unit>
-<trans-unit id="portal.version">
+            <trans-unit id="portal.version">
                 <source>portal.version</source>
                 <target>V1.0</target>
             </trans-unit>
@@ -147,6 +147,10 @@
             <trans-unit id="action.edit">
                 <source>action.edit</source>
                 <target>Edit</target>
+            </trans-unit>     
+            <trans-unit id="action.viiew">
+                <source>action.view</source>
+                <target>View</target>
             </trans-unit>
             <trans-unit id="action.delete">
                 <source>action.delete</source>
@@ -729,6 +733,10 @@
             <trans-unit id="dashboard_brokers_table">
                 <source>dashboard_brokers_table</source>
                 <target>Brokers list</target>
+            </trans-unit>
+            <trans-unit id="logged_in_as">
+                <source>logged_in_as</source>
+                <target>Logged in as: </target>
             </trans-unit>
             <trans-unit id="return_to_dashboard">
                 <source>return_to_dashboard</source>
