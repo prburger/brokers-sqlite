@@ -30,9 +30,15 @@
                 <tr>
                     <td>{{ broker.name }}</td>
                     <td class="return_to_list_label">
-                        <a href="{{ path('broker_show', {'id': broker.id}) }}" title="View"><i class="far fa-eye dashboard_icon"></i></a>
+                        <a href="{{ path('broker_show', {'id': broker.id}) }}" 
+                        title="{{'action.view'|trans|raw}}">
+                        <i class="far fa-eye dashboard_icon"></i>
+                        </a>
                         {% if is_granted('ROLE_ADMIN') or broker_id == broker.id %}
-                            <a href="{{ path('broker_edit', {'id': broker.id}) }}" title="Edit"><i class="fa fa-edit dashboard_icon"></i></a>
+                            <a href="{{ path('broker_edit', {'id': broker.id}) }}" 
+                            title="{{'action.edit'|trans|raw}}">
+                            <i class="fa fa-edit dashboard_icon"></i>
+                            </a>
                         {% endif %}
                     </td>
                 </tr>
