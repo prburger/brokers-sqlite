@@ -30,7 +30,7 @@ class CustomerController extends AbstractController
     /**
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="customer_index")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="customer_rss")
-     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="customer_index_paginated")
+     * @Route("/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="customer_index_paginated")
      * @Cache(smaxage="10")    
     */
     public function index(Request $_request, int $page = 1, string $_format="html", CustomerRepository $repository): Response
@@ -38,7 +38,7 @@ class CustomerController extends AbstractController
         $pageData = $repository->findLatest($page);
         return $this->render('customer/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
-            'broker_id'=> $this->getUser()->getBroker()->getId()
+            'broker'=> $this->getUser()->getBroker()
         ]);
     }
 
@@ -65,7 +65,8 @@ class CustomerController extends AbstractController
             'customer' => $customer,
             'form' => $form->createView(),
             'fresh_state'=>true,
-            'edit_state'=>false
+            'edit_state'=>false,
+            'broker'=>$this->getUser()->getBroker()
         ]);
     }
 

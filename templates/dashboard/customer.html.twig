@@ -3,7 +3,7 @@
 <div class="dashboard_title">
     {{'dashboard.title.customers'|trans|raw}}
         <div class="return_to_list_label"> 
-        {% if is_granted('ROLE_ADMIN') %}
+        {% if is_granted('ROLE_ADMIN') or broker.id is defined %}
             <a href="{{ path('customer_new') }}" 
             title="{{'customer_new'|trans|raw}}">
             <i class="fas fa-plus page_icon"></i>
@@ -24,7 +24,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="dashboard_table_body">
         {% for customer in customers %}
             <tr>
                 <td>{{ customer.name }}</td>

@@ -30,16 +30,15 @@ class SupplierController extends AbstractController
    /**
      * @Route("/", defaults={"page": "1", "_format"="html"}, methods="GET", name="supplier_index")
      * @Route("/rss.xml", defaults={"page": "1", "_format"="xml"}, methods="GET", name="supplier_rss")
-     * @Route("/page/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="supplier_index_paginated")
+     * @Route("/{page<[1-9]\d*>}", defaults={"_format"="html"}, methods="GET", name="supplier_index_paginated")
      * @Cache(smaxage="10")    
     */
     public function index(Request $_request, int $page = 1, string $_format="html", SupplierRepository $repository): Response
     {        
         $pageData = $repository->findLatest($page);
-
         return $this->render('supplier/index.'.$_format.'.twig', [            
             'paginator'=>$pageData,
-            'broker_id'=> $this->getUser()->getBroker()->getId()
+            'broker'=> $this->getUser()->getBroker()
         ]);
     }
 
@@ -59,7 +58,7 @@ class SupplierController extends AbstractController
             $entityManager->persist($supplier);
             $entityManager->flush();
 
-            return $this->redirectToRoute('supplier_edit', array('id'=>$supplier->getId()));
+            return $this->redirectToRoute('portal_index');
         }
 
         return $this->render('supplier/new.html.twig', [
@@ -67,7 +66,7 @@ class SupplierController extends AbstractController
             'form' => $form->createView(),
             'edit_state'=>false,
             'fresh_state'=>true,
-
+            'broker'=>$this->getUser()->getBroker()
         ]);
     }
 
