@@ -84,6 +84,13 @@ class User implements UserInterface, \Serializable
      */
     private $broker;
 
+    public function __construct()
+    {
+        $this->setId(1);
+        $this->setPassword("");
+        $this->setEmail("");
+    }
+    
     public function setId($id)
     {
         $this->id = $id;
