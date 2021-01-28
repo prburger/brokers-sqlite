@@ -21,8 +21,8 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
-        
         $broker = new Broker();
+        $user->setBroker($broker);     
         
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -30,15 +30,14 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $user = $form->getData();
-            $user->setBroker($broker);
 
             // encode the plain password
-            $user->setPassword(
+/*             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            );
+            ); */
 
             $broker->setName($user->getFullName());
 
