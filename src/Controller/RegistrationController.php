@@ -27,17 +27,17 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()){ //} && $form->isValid()) {
             
             $user = $form->getData();
 
             // encode the plain password
-/*             $user->setPassword(
+            $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            ); */
+            );
 
             $broker->setName($user->getFullName());
 
