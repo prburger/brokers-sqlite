@@ -27,6 +27,7 @@
   "dependencies": {
     "encore": "^0.0.30-beta",
     "handlebars": "^4.7.6",
+    "pg": "^8.5.1",
     "sass-loader": "9.0.1"
   }
 }
