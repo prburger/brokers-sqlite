@@ -12,8 +12,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidV4Generator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,7 +39,7 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -86,7 +88,7 @@ class User implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $this->setId(1);
+        // $this->setId(1);
         $this->setPassword("");
         $this->setEmail("");
     }
